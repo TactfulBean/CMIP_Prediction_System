@@ -24,15 +24,14 @@ export default {
 };
 </script>
 <style>
-.el-header {
-  font-size: 20px;
-  background-color: #434394;
-}
 .el-aside {
-  width: 200px;
   background-color: #99ccff;
 }
+.el-header {
+  padding: 0;
+}
 .el-main {
+  padding: 0;
   width: auto;
   position: relative;
   overflow: hidden;
