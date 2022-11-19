@@ -5,7 +5,7 @@
     :alwaysShow="true"
     :default-openeds="opened"
     :default-active="default_active"
-    active-text-color="#ffd04b"
+    active-text-color="#409EFF"
     background-color="#fff"
   >
     <template v-for="(item, index) in menulist" :key="index">
@@ -44,43 +44,43 @@ export default {
     // 菜单项点击事件
     let menulist = reactive([
       {
-        name: "1",
+        name: "功能集1",
         router: "1",
         child: [
           {
-            name: "11",
-            router: "select1",
+            name: "功能1",
+            router: "function1",
           },
           {
-            name: "2",
-            router: "select2",
+            name: "功能2",
+            router: "function2",
           },
         ],
       },
       {
-        name: "渲染",
+        name: "功能集2",
         router: "2",
         child: [
           {
-            name: "渲染1",
+            name: "功能1",
             router: "render1",
           },
           {
-            name: "渲染2",
+            name: "功能2",
             router: "render2",
           },
         ],
       },
       {
-        name: "分析",
+        name: "功能集3",
         router: "3",
         child: [
           {
-            name: "分析1",
+            name: "功能1",
             router: "analyze1",
           },
           {
-            name: "分析2",
+            name: "功能2",
             router: "analyze2",
           },
         ],

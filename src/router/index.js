@@ -7,6 +7,13 @@ const routes = [
     path: "/home",
     name: "home",
     component: () => import("@/views/HomeView.vue"),
+    children: [
+      {
+        path: "/function1",
+        name: "/function1",
+        component: () => import("@/views/function1.vue"),
+      },
+    ],
   },
 ];
 
