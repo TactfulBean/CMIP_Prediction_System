@@ -1,5 +1,5 @@
 <template>
-  <el-menu :ellipsis="false" mode="horizontal" background-color="#434394" text-color="#fff" active-text-color="#ffd04b">
+  <el-menu :ellipsis="false" mode="horizontal" background-color="#434394" text-color="#fff" active-text-color="#409EFF">
     <div class="title">测试</div>
     <div class="flex-grow" />
     <el-menu-item index="1" @click="jumpPage('https://tactfulbean.eu.org/')">
