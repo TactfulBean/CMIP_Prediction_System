@@ -3,9 +3,7 @@
     <div id="top-menu">
       <TopMenu></TopMenu>
     </div>
-    <div id="tool-bar">
-      <ToolBar></ToolBar>
-    </div>
+    <ToolBar></ToolBar>
   </div>
 </template>
 <script>
@@ -34,14 +32,15 @@ export default {
   left: 8px;
   padding-top: 4px;
   height: 22px;
-  width: 147px;
+  width: 120px;
   color: rgb(67, 67, 148);
   text-align: center;
   font-size: 14px;
   font-weight: 700;
   border-radius: 3px;
   background-color: rgba(153, 204, 255);
-  box-shadow: 2px 2px 3px rgb(0 0 0 / 20%);
+  box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
+  border: 3px solid rgb(255, 255, 255);
 }
 /* 比例尺 */
 .ol-scale-line.ol-unselectable {
@@ -51,7 +50,8 @@ export default {
   top: 35px;
   font-weight: 700;
   background-color: rgba(153, 204, 255);
-  box-shadow: 2px 2px 3px rgb(0 0 0 / 20%);
+  box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
+  border: 3px solid rgb(255, 255, 255);
 }
 .ol-scale-line-inner {
   color: rgb(67, 67, 148);

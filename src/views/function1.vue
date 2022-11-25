@@ -7,19 +7,41 @@
   <div id="render" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
     <el-card class="box-card">
       <!-- 指数选择器 -->
-      <span>极端指数选择：</span>
-      <el-select v-model="value" class="m-2" placeholder="Select" @change="monDisabled">
-        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-      </el-select>
+      <div id="selectRow">
+        <span>极端指数选择：</span>
+        <el-select v-model="CMIP_Value" class="m-2" placeholder="Select">
+          <el-option v-for="item in CMIP_Options" :key="item.value" :label="item.label" :value="item.value" />
+        </el-select>
+      </div>
+
+      <!-- 指数选择器 -->
+      <div id="selectRow">
+        <span>算法选择：</span>
+        <el-select v-model="Method_Value" class="m-2" placeholder="Select">
+          <el-option v-for="item in Method_Options" :key="item.value" :label="item.label" :value="item.value" />
+        </el-select>
+      </div>
+
+      <!-- 指数选择器 -->
+      <div id="selectRow">
+        <span>SSP选择：</span>
+        <el-select v-model="SSP_Value" class="m-2" placeholder="Select">
+          <el-option v-for="item in SSP_Options" :key="item.value" :label="item.label" :value="item.value" />
+        </el-select>
+      </div>
+      <div id="selectRow" style="float: right">
+        <el-button color="#409EFF" plain><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button>
+        <el-button color="#409EFF" plain><span class="iconfont">&#xe74b; </span><span>清除图层</span></el-button>
+      </div>
       <!-- 时间条 -->
-      <div class="slider-demo-block">
+      <!-- <div class="slider-demo-block">
         <span class="demonstration">年份选择：</span>
-        <el-slider v-model="yearValue" :min="yearMin" :max="yearMax" step="1" show-input />
+        <el-slider v-model="yearValue" :min="yearMin" :max="yearMax" step="1" show-input :disabled="disabled_year" />
       </div>
       <div class="slider-demo-block">
         <span class="demonstration">月份选择：</span>
-        <el-slider v-model="monValue" :min="monMin" :max="monMax" step="1" show-input :disabled="disabled" />
-      </div>
+        <el-slider v-model="monValue" :min="monMin" :max="monMax" step="1" show-input :disabled="disabled_mon" />
+      </div> -->
     </el-card>
   </div>
 </template>
@@ -29,69 +51,114 @@ export default {
   setup() {
     const global = getCurrentInstance().appContext.config.globalProperties;
     const message = ref({
-      msg: "收起结果",
+      msg: "收起",
       flag: true,
     });
     let resultShow = () => {
       if (message.value.flag) {
-        message.value.msg = "展开结果";
+        message.value.msg = "展开";
         message.value.flag = false;
       } else {
-        message.value.msg = "收起结果";
+        message.value.msg = "收起";
         message.value.flag = true;
       }
     };
-    const value = ref("Option1");
-    const options = [
+    // const yearValue = ref(2021);
+    // const monValue = ref(1);
+    // const yearMin = 2021;
+    // const yearMax = 2050;
+    // const monMin = 1;
+    // const monMax = 12;
+    // const disabled_year = ref(false);
+    // const disabled_mon = ref(false);
+    //
+    const CMIP_Value = ref("WSDI");
+    const CMIP_Options = [
       {
-        label: "指数1",
-        value: "Option1",
+        label: "TN10p",
+        value: "TN10p",
       },
       {
-        label: "指数2",
-        value: "Option2",
+        label: "TN90p",
+        value: "TN90p",
       },
       {
-        label: "指数3",
-        value: "Option3",
+        label: "TX10p",
+        value: "TX10p",
       },
       {
-        label: "指数4",
-        value: "Option4",
+        label: "TX90p",
+        value: "TX90p",
       },
       {
-        label: "指数5",
-        value: "Option5",
+        label: "CSDI",
+        value: "CSDI",
+      },
+      {
+        label: "WSDI",
+        value: "WSDI",
       },
     ];
-    let monDisabled = () => {
-      if (value.value == "Option5" || value.value == "Option4") {
-        disabled.value = true;
-      } else {
-        disabled.value = false;
-      }
-    };
+    const SSP_Value = ref("SSP1-2.6");
+    const SSP_Options = [
+      {
+        label: "SSP1-2.6",
+        value: "SSP1-2.6",
+      },
+      {
+        label: "SSP2-4.5",
+        value: "SSP2-4.5",
+      },
+      {
+        label: "SSP5-8.5",
+        value: "SSP5-8.5",
+      },
+    ];
+    const Method_Value = ref("MK");
+    const Method_Options = [
+      {
+        label: "MK",
+        value: "MK",
+      },
+      {
+        label: "SEN",
+        value: "SEN",
+      },
+    ];
+    // let monDisabled = () => {
+    //   let value2;
+    //   if (value.value == "CMIP:CSDI_") {
+    //     disabled_year.value = true;
+    //     disabled_mon.value = true;
+    //   } else {
+    //     disabled_year.value = false;
+    //     disabled_mon.value = false;
+    //   }
+    //   if (value.value == "CMIP:CSDI_") {
+    //     value2 = "_MK";
+    //   }
+    //   // CMIP:CSDI_SSP5-8.5_MK
+    //   global.$mapConfig.addLayer(value.value + SSP_Value.value + value2);
+    // };
 
-    const yearValue = ref(2021);
-    const monValue = ref(1);
-    const yearMin = 2021;
-    const yearMax = 2050;
-    const monMin = 1;
-    const monMax = 12;
-    const disabled = ref(false);
     return {
       message,
       resultShow,
-      value,
-      options,
-      monDisabled,
-      yearValue,
-      monValue,
-      yearMin,
-      yearMax,
-      monMin,
-      monMax,
-      disabled,
+      CMIP_Value,
+      CMIP_Options,
+      SSP_Value,
+      SSP_Options,
+      Method_Value,
+      Method_Options,
+      // monDisabled,
+      // yearValue,
+      // monValue,
+      // yearMin,
+      // yearMax,
+      // monMin,
+      // monMax,
+      // disabled_year,
+      // disabled_mon,
     };
   },
 };
@@ -100,16 +167,21 @@ export default {
 #show {
   position: absolute;
   z-index: 10;
-  bottom: 252px;
+  bottom: 92px;
+  left: 20px;
 }
 #render {
+  border-radius: 20px;
   position: absolute;
   z-index: 10;
   width: 100%;
   bottom: 0;
+  bottom: 10px;
+  box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
 }
 .box-card {
-  height: 250px;
+  height: 80px;
+  border-radius: 20px;
 }
 @keyframes result-open {
   from {
@@ -133,7 +205,7 @@ export default {
 }
 @keyframes open {
   from {
-    transform: translateY(252px);
+    transform: translateY(92px);
   }
   to {
     transform: translateY(0);
@@ -144,21 +216,27 @@ export default {
     transform: translateY(0);
   }
   to {
-    transform: translateY(252px);
+    transform: translateY(92px);
   }
 }
 .result-open {
-  animation: result-open 0.75s !important;
+  animation: result-open 0.8s !important;
+  opacity: 1;
 }
 .result-close {
-  animation: result-close 0.75s !important;
+  animation: result-close 0.7s !important;
   transform: translateY(100%);
+  opacity: 0;
 }
 .open {
   animation: open 0.75s !important;
 }
 .close {
   animation: close 0.75s !important;
-  transform: translateY(252px);
+  transform: translateY(92px);
+}
+#selectRow {
+  display: inline-block;
+  padding: 0 10px;
 }
 </style>

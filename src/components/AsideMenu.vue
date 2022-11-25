@@ -1,5 +1,6 @@
 <template>
   <el-menu
+    id="aside-menu"
     class="aside-menu"
     :router="true"
     :alwaysShow="true"
@@ -10,23 +11,24 @@
   >
     <template v-for="(item, index) in menulist" :key="index">
       <el-sub-menu v-if="item.child" :index="item.router">
-        <template #title>{{ item.name }}</template>
+        <template #title
+          ><span class="iconfont">{{ item.icon }} </span><span id="top_menu_title">{{ item.name }}</span></template
+        >
         <template v-for="(item2, index2) in item.child" :key="index2">
           <el-sub-menu v-if="item2.child" :index="item2.router">
             <template #title>{{ item2.name }}</template>
             <el-menu-item v-for="(child3, index3) in item2.child" :key="index3" :index="child3.router">
-              <!-- <el-icon><component :is="item.icon"></component></el-icon> -->
               <template #title> {{ child3.name }} </template>
             </el-menu-item>
           </el-sub-menu>
           <el-menu-item v-else :index="item2.router">
-            <!-- <el-icon><component :is="item.icon"></component></el-icon> -->
-            <template #title> {{ item2.name }} </template>
+            <template #title>
+              <span class="iconfont">{{ item2.icon }} </span><span id="top_menu_title">{{ item2.name }}</span>
+            </template>
           </el-menu-item>
         </template>
       </el-sub-menu>
       <el-menu-item v-else :index="item.router">
-        <!-- <el-icon><component :is="item.icon"></component></el-icon> -->
         <template #title>{{ item.name }} </template>
       </el-menu-item>
     </template>
@@ -44,44 +46,19 @@ export default {
     // 菜单项点击事件
     let menulist = reactive([
       {
-        name: "功能集1",
+        name: "分析结果",
         router: "1",
+        icon: "",
         child: [
           {
-            name: "功能1",
+            name: "趋势分析",
             router: "function1",
+            icon: "\ue600",
           },
           {
-            name: "功能2",
+            name: "均值图表",
             router: "function2",
-          },
-        ],
-      },
-      {
-        name: "功能集2",
-        router: "2",
-        child: [
-          {
-            name: "功能1",
-            router: "render1",
-          },
-          {
-            name: "功能2",
-            router: "render2",
-          },
-        ],
-      },
-      {
-        name: "功能集3",
-        router: "3",
-        child: [
-          {
-            name: "功能1",
-            router: "analyze1",
-          },
-          {
-            name: "功能2",
-            router: "analyze2",
+            icon: "\ueb96",
           },
         ],
       },

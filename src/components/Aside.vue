@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <AsideMenu></AsideMenu>
-  </div>
+  <AsideMenu></AsideMenu>
 </template>
 <script>
 import AsideMenu from "@/components/AsideMenu.vue";
