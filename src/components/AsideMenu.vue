@@ -52,12 +52,12 @@ export default {
         child: [
           {
             name: "趋势分析",
-            router: "function1",
+            router: "trend",
             icon: "\ue600",
           },
           {
             name: "均值图表",
-            router: "function2",
+            router: "mean",
             icon: "\ueb96",
           },
         ],

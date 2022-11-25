@@ -58,6 +58,12 @@ export default {
   border: 1px solid rgb(67, 67, 148);
   border-top: none;
 }
+.ol-overviewmap {
+  left: auto;
+  right: 10px;
+  top: 50px;
+  bottom: auto;
+}
 #top-menu {
   z-index: 10;
   position: absolute;

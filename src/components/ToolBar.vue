@@ -1,54 +1,48 @@
 <template>
   <div id="tool-bar">
     <div>
-      <el-tooltip class="box-item" effect="customized" content="测量" placement="left-start">
-        <el-button type="primary" class="tool-button" :plain="plain[0]" circle @click="isOn(0)"
-          ><span class="iconfont">&#xea07; </span></el-button
+      <el-tooltip class="box-item" effect="customized" content="返回初始位置" placement="left-start">
+        <el-button type="primary" class="tool-button" plain circle @click="btn1Click()"
+          ><span class="iconfont">&#xe60b; </span></el-button
         >
       </el-tooltip>
     </div>
     <div>
       <el-tooltip class="box-item" effect="customized" content="清除图层" placement="left-start">
-        <el-button type="primary" class="tool-button" :plain="plain[1]" circle @click="isOn(1)"
+        <el-button type="primary" class="tool-button" plain circle @click="btn2Click()"
           ><span class="iconfont">&#xe74b; </span></el-button
         >
       </el-tooltip>
     </div>
-    <div>
-      <el-tooltip class="box-item" effect="customized" content="旋转模块" placement="left-start">
-        <el-button type="primary" class="tool-button" :plain="plain[2]" circle @click="isOn(2)"
-          ><span class="iconfont">&#xe782; </span></el-button
-        >
-      </el-tooltip>
-    </div>
-    <div>
+    <!-- <div>
       <el-tooltip class="box-item" effect="customized" content="鹰眼模块" placement="left-start">
         <el-button type="primary" class="tool-button" :plain="plain[3]" circle @click="isOn(3)"
           ><span class="iconfont">&#xe76c; </span></el-button
         >
       </el-tooltip>
-    </div>
+    </div> -->
     <div>
       <el-tooltip class="box-item" effect="customized" content="卫星图" placement="left-start">
-        <el-button type="primary" class="tool-button" :plain="plain[4]" circle @click="isOn(4)"
+        <el-button type="primary" class="tool-button" plain circle @click="btn5Click()"
           ><span class="iconfont">&#xe608; </span></el-button
         >
       </el-tooltip>
     </div>
-    <div>
+    <!-- <div>
       <el-tooltip class="box-item" effect="customized" content="全屏" placement="left-start">
         <el-button type="primary" class="tool-button" :plain="plain[5]" circle @click="isOn(5)"
           ><span class="iconfont">&#xe615; </span></el-button
         >
       </el-tooltip>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
-import { ref } from "vue";
+import { ref, getCurrentInstance } from "vue";
 export default {
   components: {},
   setup() {
+    let global = getCurrentInstance().appContext.config.globalProperties;
     let plain = ref([true, true, true, true, true, true]);
 
     let isOn = (no) => {
@@ -58,9 +52,33 @@ export default {
         plain.value[no] = true;
       }
     };
+    let btn1Click = () => {
+      global.$mapConfig.location(110, 38);
+    };
+    let btn2Click = () => {
+      global.$mapConfig.removeLayer();
+    };
+    let btn3Click = () => {
+      // global.$mapConfig.changeMap();
+    };
+    let btn4Click = () => {
+      // global.$mapConfig.changeMap();
+    };
+    let btn5Click = () => {
+      global.$mapConfig.changeMap();
+    };
+    let btn6Click = () => {
+      // global.$mapConfig.changeMap();
+    };
     return {
       plain,
       isOn,
+      btn1Click,
+      btn2Click,
+      btn3Click,
+      btn4Click,
+      btn5Click,
+      btn6Click,
     };
   },
 };
