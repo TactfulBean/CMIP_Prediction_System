@@ -9,9 +9,14 @@ const routes = [
     component: () => import("@/views/HomeView.vue"),
     children: [
       {
-        path: "/function1",
-        name: "/function1",
-        component: () => import("@/views/function1.vue"),
+        path: "/trend",
+        name: "/trend",
+        component: () => import("@/views/trend.vue"),
+      },
+      {
+        path: "/mean",
+        name: "/mean",
+        component: () => import("@/views/mean.vue"),
       },
     ],
   },

@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "7556305",
+      "name": "对比",
+      "font_class": "duibi",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
       "icon_id": "4354248",
       "name": "图表-折线图",
       "font_class": "tubiao-zhexiantu",

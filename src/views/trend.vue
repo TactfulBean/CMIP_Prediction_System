@@ -9,7 +9,7 @@
       <!-- 指数选择器 -->
       <div id="selectRow">
         <span>极端指数选择：</span>
-        <el-select v-model="CMIP_Value" class="m-2" placeholder="Select">
+        <el-select v-model="CMIP_Value" class="m-2" placeholder="Select" @change="RasterLoad()">
           <el-option v-for="item in CMIP_Options" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </div>
@@ -17,7 +17,7 @@
       <!-- 指数选择器 -->
       <div id="selectRow">
         <span>算法选择：</span>
-        <el-select v-model="Method_Value" class="m-2" placeholder="Select">
+        <el-select v-model="Method_Value" class="m-2" placeholder="Select" @change="RasterLoad()">
           <el-option v-for="item in Method_Options" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </div>
@@ -25,13 +25,17 @@
       <!-- 指数选择器 -->
       <div id="selectRow">
         <span>SSP选择：</span>
-        <el-select v-model="SSP_Value" class="m-2" placeholder="Select">
+        <el-select v-model="SSP_Value" class="m-2" placeholder="Select" @change="RasterLoad()">
           <el-option v-for="item in SSP_Options" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </div>
       <div id="selectRow" style="float: right">
-        <el-button color="#409EFF" plain><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button>
-        <el-button color="#409EFF" plain><span class="iconfont">&#xe74b; </span><span>清除图层</span></el-button>
+        <el-button color="#409EFF" plain @click="RasterLoad()"
+          ><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button
+        >
+        <el-button color="#409EFF" plain @click="removeLayer()"
+          ><span class="iconfont">&#xe74b; </span><span>清除图层</span></el-button
+        >
       </div>
       <!-- 时间条 -->
       <!-- <div class="slider-demo-block">
@@ -46,13 +50,16 @@
   </div>
 </template>
 <script>
-import { ref, getCurrentInstance } from "vue";
+import { ref, onMounted, getCurrentInstance } from "vue";
 export default {
   setup() {
     const global = getCurrentInstance().appContext.config.globalProperties;
     const message = ref({
       msg: "收起",
       flag: true,
+    });
+    onMounted(() => {
+      global.$mapConfig.addLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value);
     });
     let resultShow = () => {
       if (message.value.flag) {
@@ -75,20 +82,20 @@ export default {
     const CMIP_Value = ref("WSDI");
     const CMIP_Options = [
       {
-        label: "TN10p",
-        value: "TN10p",
+        label: "TN10P",
+        value: "TN10P",
       },
       {
-        label: "TN90p",
-        value: "TN90p",
+        label: "TN90P",
+        value: "TN90P",
       },
       {
-        label: "TX10p",
-        value: "TX10p",
+        label: "TX10P",
+        value: "TX10P",
       },
       {
-        label: "TX90p",
-        value: "TX90p",
+        label: "TX90P",
+        value: "TX90P",
       },
       {
         label: "CSDI",
@@ -114,7 +121,7 @@ export default {
         value: "SSP5-8.5",
       },
     ];
-    const Method_Value = ref("MK");
+    const Method_Value = ref("SEN");
     const Method_Options = [
       {
         label: "MK",
@@ -141,6 +148,15 @@ export default {
     //   global.$mapConfig.addLayer(value.value + SSP_Value.value + value2);
     // };
 
+    // 结果图加载
+    let RasterLoad = () => {
+      global.$mapConfig.addLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value);
+      // global.$mapConfig.addLayer("CMIP:TX90P_SSP1-2.6_SEN");
+    };
+    let removeLayer = () => {
+      global.$mapConfig.removeLayer();
+    };
+
     return {
       message,
       resultShow,
@@ -150,6 +166,8 @@ export default {
       SSP_Options,
       Method_Value,
       Method_Options,
+      RasterLoad,
+      removeLayer,
       // monDisabled,
       // yearValue,
       // monValue,

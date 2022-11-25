@@ -1,5 +1,5 @@
 <template>
-  <el-menu :ellipsis="false" mode="horizontal" background-color="#434394" text-color="#fff" active-text-color="#409EFF">
+  <el-menu :ellipsis="false" mode="horizontal" background-color="#4c6cb3" text-color="#fff" active-text-color="#409EFF">
     <div class="title">CMIP6-极端气候预测系统</div>
     <div class="flex-grow" />
     <el-menu-item index="1" @click="jumpPage('https://tactfulbean.eu.org/')">
@@ -13,6 +13,8 @@
   </el-menu>
 </template>
 <script>
+// #4c6cb3
+// #434394
 export default {
   setup() {
     let jumpPage = (path) => {
