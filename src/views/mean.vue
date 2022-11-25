@@ -1,7 +1,189 @@
-<template></template>
+<template>
+  <div id="show-mean">
+    <el-button type="primary" :class="{ open_mean: message.flag, close_mean: !message.flag }" @click="resultShow">{{
+      message.msg
+    }}</el-button>
+  </div>
+  <div id="mean" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
+    <el-card class="box-card-mean">
+      <template #header>
+        <div class="card-header">
+          <span style="padding: 0 20px 0 0">均值图表</span>
+          <!-- 指数选择器 -->
+          <span>极端指数选择：</span>
+          <el-select v-model="CMIP_Value" class="m-2" placeholder="Select" @change="RasterLoad()">
+            <el-option v-for="item in CMIP_Options" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
+        </div>
+      </template>
+      <div id="chart"></div>
+    </el-card>
+  </div>
+</template>
 <script>
+import * as echarts from "echarts";
+import axios from "axios";
+import { ref, onMounted } from "vue";
 export default {
-  setup() {},
+  setup() {
+    onMounted(() => {
+      var chartDom = document.getElementById("chart");
+      var myChart = echarts.init(chartDom);
+      var option;
+
+      option = {
+        title: {
+          text: CMIP_Value.value + "年均趋势图",
+        },
+        tooltip: {
+          trigger: "axis",
+        },
+        legend: {
+          data: ["SSP1-2.6", "SSP2-4.5", "SSP5-8.5"],
+        },
+        xAxis: {
+          type: "category",
+          data: data,
+        },
+        yAxis: {
+          type: "value",
+        },
+        series: [
+          { name: "SSP1-2.6", data: [150, 230, 224, 218, 135, 147, 260], type: "line" },
+          { name: "SSP2-4.5", data: [100, 200, 204, 208, 105, 107, 200], type: "line" },
+          { name: "SSP5-8.5", data: [10, 20, 20, 20, 15, 17, 20], type: "line" },
+        ],
+      };
+      option && myChart.setOption(option);
+    });
+    const message = ref({
+      msg: "收起结果",
+      flag: true,
+    });
+    let resultShow = () => {
+      if (message.value.flag) {
+        message.value.msg = "展开结果";
+        message.value.flag = false;
+      } else {
+        message.value.msg = "收起结果";
+        message.value.flag = true;
+      }
+    };
+
+    const CMIP_Value = ref("WSDI");
+    const CMIP_Options = [
+      {
+        label: "TN10P",
+        value: "TN10P",
+      },
+      {
+        label: "TN90P",
+        value: "TN90P",
+      },
+      {
+        label: "TX10P",
+        value: "TX10P",
+      },
+      {
+        label: "TX90P",
+        value: "TX90P",
+      },
+      {
+        label: "CSDI",
+        value: "CSDI",
+      },
+      {
+        label: "WSDI",
+        value: "WSDI",
+      },
+    ];
+    let base = 2021;
+    let data = new Array(30);
+    for (let i = 0; i < data.length; i++) {
+      data[i] = base;
+      base += 1;
+    }
+    return {
+      message,
+      resultShow,
+      CMIP_Value,
+      CMIP_Options,
+    };
+  },
 };
 </script>
-<style></style>
+<style>
+#chart {
+  width: 100%;
+  height: 100%;
+}
+.el-card__body {
+  height: 350px;
+}
+
+#show-mean {
+  position: absolute;
+  z-index: 10;
+  bottom: 452px;
+}
+#mean {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  bottom: 0;
+}
+.box-card-mean {
+  height: 450px;
+}
+
+@keyframes result-open-mean {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+@keyframes result-close-mean {
+  from {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+@keyframes open-mean {
+  from {
+    transform: translateY(452px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes close-mean {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(452px);
+  }
+}
+.result-open {
+  animation: result-open-mean 0.75s !important;
+}
+.result-close {
+  animation: result-close-mean 0.75s !important;
+  transform: translateY(100%);
+}
+.open_mean {
+  animation: open-mean 0.75s !important;
+}
+.close_mean {
+  animation: close-mean 0.75s !important;
+  transform: translateY(452px);
+}
+</style>

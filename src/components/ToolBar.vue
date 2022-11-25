@@ -53,7 +53,7 @@ export default {
       }
     };
     let btn1Click = () => {
-      global.$mapConfig.location(110, 38);
+      global.$mapConfig.location(110, 35);
     };
     let btn2Click = () => {
       global.$mapConfig.removeLayer();
