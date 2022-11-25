@@ -11,7 +11,7 @@
           <span style="padding: 0 20px 0 0">均值图表</span>
           <!-- 指数选择器 -->
           <span>极端指数选择：</span>
-          <el-select v-model="CMIP_Value" class="m-2" placeholder="Select" @change="RasterLoad()">
+          <el-select v-model="CMIP_Value" class="m-2" placeholder="Select" @change="drawEchart()">
             <el-option v-for="item in CMIP_Options" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </div>
@@ -27,34 +27,7 @@ import { ref, onMounted } from "vue";
 export default {
   setup() {
     onMounted(() => {
-      var chartDom = document.getElementById("chart");
-      var myChart = echarts.init(chartDom);
-      var option;
-
-      option = {
-        title: {
-          text: CMIP_Value.value + "年均趋势图",
-        },
-        tooltip: {
-          trigger: "axis",
-        },
-        legend: {
-          data: ["SSP1-2.6", "SSP2-4.5", "SSP5-8.5"],
-        },
-        xAxis: {
-          type: "category",
-          data: data,
-        },
-        yAxis: {
-          type: "value",
-        },
-        series: [
-          { name: "SSP1-2.6", data: [150, 230, 224, 218, 135, 147, 260], type: "line" },
-          { name: "SSP2-4.5", data: [100, 200, 204, 208, 105, 107, 200], type: "line" },
-          { name: "SSP5-8.5", data: [10, 20, 20, 20, 15, 17, 20], type: "line" },
-        ],
-      };
-      option && myChart.setOption(option);
+      drawEchart();
     });
     const message = ref({
       msg: "收起结果",
@@ -103,11 +76,76 @@ export default {
       data[i] = base;
       base += 1;
     }
+
+    let drawEchart = () => {
+      let data1 = null;
+      let data2 = null;
+      let data3 = null;
+      const jsonUrl = "./json/SSP.json";
+      axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
+        let CMIP = CMIP_Value.value;
+        if (CMIP == "CSDI") {
+          data1 = res.data.CSDI[0].data;
+          data2 = res.data.CSDI[1].data;
+          data3 = res.data.CSDI[2].data;
+        } else if (CMIP == "WSDI") {
+          data1 = res.data.WSDI[0].data;
+          data2 = res.data.WSDI[1].data;
+          data3 = res.data.WSDI[2].data;
+        } else if (CMIP == "TN10P") {
+          data1 = res.data.TN10P[0].data;
+          data2 = res.data.TN10P[1].data;
+          data3 = res.data.TN10P[2].data;
+        } else if (CMIP == "TN90P") {
+          data1 = res.data.TN90P[0].data;
+          data2 = res.data.TN90P[1].data;
+          data3 = res.data.TN90P[2].data;
+        } else if (CMIP == "TX10P") {
+          data1 = res.data.TX10P[0].data;
+          data2 = res.data.TX10P[1].data;
+          data3 = res.data.TX10P[2].data;
+        } else {
+          data1 = res.data.TX90P[0].data;
+          data2 = res.data.TX90P[1].data;
+          data3 = res.data.TX90P[2].data;
+        }
+        var chartDom = document.getElementById("chart");
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        option = {
+          title: {
+            text: CMIP_Value.value + "年均趋势图",
+          },
+          tooltip: {
+            trigger: "axis",
+          },
+          legend: {
+            data: ["SSP1-2.6", "SSP2-4.5", "SSP5-8.5"],
+          },
+          xAxis: {
+            type: "category",
+            data: data,
+          },
+          yAxis: {
+            type: "value",
+          },
+          series: [
+            { name: "SSP1-2.6", data: data1, type: "line" },
+            { name: "SSP2-4.5", data: data2, type: "line" },
+            { name: "SSP5-8.5", data: data3, type: "line" },
+          ],
+        };
+        myChart.clear();
+        option && myChart.setOption(option);
+      });
+    };
     return {
       message,
       resultShow,
       CMIP_Value,
       CMIP_Options,
+      drawEchart,
     };
   },
 };
