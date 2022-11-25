@@ -57,7 +57,7 @@ const initMap = () => {
     layers: [TianDiTu_Map, TianDiTu_CVA],
     target: "map",
     view: new View({
-      center: fromLonLat([110, 38]),
+      center: fromLonLat([110, 35]),
       zoom: 4.5,
     }),
     controls: defaults({
@@ -148,7 +148,7 @@ const location = (lon, lat) => {
     center: loc,
     duration: 0,
   });
-  if ((lon == 110) & (lat == 38)) {
+  if ((lon == 110) & (lat == 35)) {
     view.setZoom(4.5);
   } else {
     view.setZoom(8);
