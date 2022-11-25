@@ -2,7 +2,9 @@
   <el-menu class="top-menu" :unique-opened="true" mode="horizontal" :alwaysShow="true" :ellipsis="false">
     <template v-for="(item, index) in menulist" :key="index">
       <el-sub-menu v-if="item.child" :index="item.router">
-        <template #title>{{ item.name }}</template>
+        <template #title
+          ><span class="iconfont">{{ item.icon }} </span><span id="top_menu_title">{{ item.name }}</span></template
+        >
         <template v-for="(item2, index2) in item.child" :key="index2">
           <el-sub-menu v-if="item2.child" :index="item2.router">
             <template #title>{{ item2.name }}</template>
@@ -16,7 +18,9 @@
             </el-menu-item>
           </el-sub-menu>
           <el-menu-item v-else :index="item2.router" @click="menuClick(item2.router)">
-            <template #title> {{ item2.name }} </template>
+            <template #title>
+              <span class="iconfont">{{ item2.icon }} </span><span id="top_menu_title">{{ item2.name }}</span>
+            </template>
           </el-menu-item>
         </template>
       </el-sub-menu>
@@ -38,40 +42,49 @@ export default {
       {
         name: "地图",
         router: "1",
+        icon: "\ue620",
         child: [
           {
-            name: "OSM地图",
-            router: "map1",
-          },
-          {
             name: "天地图",
+            router: "map1",
+            icon: "\ue620",
+          },
+          {
+            name: "天地图-卫星图",
             router: "map2",
-          },
-          {
-            name: "高德地图",
-            router: "map3",
-          },
-          {
-            name: "高德影像",
-            router: "map4",
+            icon: "\ue620",
           },
         ],
       },
       {
         name: "快速定位",
         router: "2",
+        icon: "\ue60b",
         child: [
           {
-            name: "定位1",
+            name: "北京",
             router: "position1",
+            icon: "\ue60b",
           },
           {
-            name: "定位2",
+            name: "河北",
             router: "position2",
+            icon: "\ue60b",
           },
           {
-            name: "定位3",
+            name: "四川",
             router: "position3",
+            icon: "\ue60b",
+          },
+          {
+            name: "上海",
+            router: "position4",
+            icon: "\ue60b",
+          },
+          {
+            name: "西藏",
+            router: "position5",
+            icon: "\ue60b",
           },
         ],
       },
@@ -92,5 +105,8 @@ export default {
   background-color: #ffffff;
   border-radius: 5px;
   box-shadow: 2px 2px 3px rgb(0 0 0 / 20%);
+}
+#top_menu_title {
+  padding: 0 5px;
 }
 </style>

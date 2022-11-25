@@ -8,6 +8,9 @@ import "element-plus/dist/index.css";
 import "@/assets/css/global.css";
 //
 import mapConfig from "@/assets/js/mapConfig";
+//
+import "@/assets/icon/iconfont.js";
+import "@/assets/icon/iconfont.css";
 
 const app = createApp(App);
 app.config.globalProperties.$mapConfig = mapConfig;

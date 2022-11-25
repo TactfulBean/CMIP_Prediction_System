@@ -1,0 +1,93 @@
+{
+  "id": "3791296",
+  "name": "CMIP",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "4354248",
+      "name": "图表-折线图",
+      "font_class": "tubiao-zhexiantu",
+      "unicode": "eb96",
+      "unicode_decimal": 60310
+    },
+    {
+      "icon_id": "7898737",
+      "name": "数据分析-宝贝分析",
+      "font_class": "shujufenxi-baobeifenxi",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "22894714",
+      "name": "github",
+      "font_class": "github",
+      "unicode": "e673",
+      "unicode_decimal": 58995
+    },
+    {
+      "icon_id": "27363226",
+      "name": "blog",
+      "font_class": "blog",
+      "unicode": "eaf9",
+      "unicode_decimal": 60153
+    },
+    {
+      "icon_id": "954148",
+      "name": "地图",
+      "font_class": "ditu",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "10635169",
+      "name": "定位-位置",
+      "font_class": "position",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "579385",
+      "name": "全屏",
+      "font_class": "quanping",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "577357",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e74b",
+      "unicode_decimal": 59211
+    },
+    {
+      "icon_id": "579551",
+      "name": "刷新",
+      "font_class": "shuaxin",
+      "unicode": "e782",
+      "unicode_decimal": 59266
+    },
+    {
+      "icon_id": "688062",
+      "name": "地球 全球",
+      "font_class": "diqiuquanqiu",
+      "unicode": "e76c",
+      "unicode_decimal": 59244
+    },
+    {
+      "icon_id": "2268437",
+      "name": "卫星",
+      "font_class": "weixing",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "18171091",
+      "name": "地图尺子,测量,测距,距离",
+      "font_class": "map-ruler",
+      "unicode": "ea07",
+      "unicode_decimal": 59911
+    }
+  ]
+}
