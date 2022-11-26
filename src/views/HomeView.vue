@@ -28,7 +28,8 @@ export default {
 </script>
 <style>
 .el-aside {
-  background-color: #99ccff;
+  background-color: #69a6e4;
+  /* background-color: #2a4073; */
   box-shadow: 2px 2px 3px rgb(0 0 0 / 20%);
   z-index: 10;
   overflow: hidden;
