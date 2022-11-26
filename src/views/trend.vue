@@ -1,4 +1,5 @@
 <template>
+  <div class="reciprocalLegend"></div>
   <div id="show">
     <el-button type="primary" :class="{ open: message.flag, close: !message.flag }" @click="resultShow">{{
       message.msg
@@ -50,6 +51,8 @@
   </div>
 </template>
 <script>
+import * as echarts from "echarts";
+import axios from "axios";
 import { ref, onMounted, getCurrentInstance } from "vue";
 export default {
   setup() {
@@ -59,7 +62,8 @@ export default {
       flag: true,
     });
     onMounted(() => {
-      global.$mapConfig.addLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value);
+      // global.$mapConfig.addLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value);
+      RasterLoad();
     });
     let resultShow = () => {
       if (message.value.flag) {
@@ -151,7 +155,55 @@ export default {
     // 结果图加载
     let RasterLoad = () => {
       global.$mapConfig.addLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value);
-      // global.$mapConfig.addLayer("CMIP:TX90P_SSP1-2.6_SEN");
+      const jsonUrl = "./json/legend.json";
+      axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
+        let data = null;
+        if (Method_Value.value == "MK") {
+          data = res.data.MK;
+        } else if (Method_Value.value == "SEN") {
+          data = res.data.SEN;
+        }
+        let color = null;
+        let text = null;
+        let type = null;
+        if (CMIP_Value.value == "CSDI") {
+          type = 0;
+        } else if (CMIP_Value.value == "WSDI") {
+          type = 1;
+        } else if (CMIP_Value.value == "TN10P") {
+          type = 2;
+        } else if (CMIP_Value.value == "TN90P") {
+          type = 3;
+        } else if (CMIP_Value.value == "TX10P") {
+          type = 4;
+        } else if (CMIP_Value.value == "TX90P") {
+          type = 5;
+        }
+        text = data[type].text;
+        color = data[type].color;
+        console.log(text);
+        console.log(color);
+        let barChart = echarts.init(document.querySelector(".reciprocalLegend"));
+        const option = {
+          xAxis: { name: "", axisLine: { show: false } },
+          yAxis: { type: "", axisLine: { show: false } },
+          visualMap: {
+            min: text[1],
+            max: text[0],
+            text: text,
+            inRange: {
+              color: color,
+            },
+            textStyle: {
+              color: "#434394",
+              fontSize: 14,
+              fontWeight: 700,
+            },
+          },
+        };
+        barChart.clear();
+        barChart.setOption(option);
+      });
     };
     let removeLayer = () => {
       global.$mapConfig.removeLayer();
@@ -256,5 +308,21 @@ export default {
 #selectRow {
   display: inline-block;
   padding: 0 10px;
+}
+.reciprocalLegend {
+  width: 200px;
+  height: 400px;
+  position: absolute;
+  left: 2%;
+  bottom: 150px;
+  animation: out 1s;
+}
+@keyframes out {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

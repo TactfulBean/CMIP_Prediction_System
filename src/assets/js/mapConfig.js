@@ -19,6 +19,7 @@ let mapFlag = 0;
 let CMIP_Raster = null;
 // 地图
 const TianDiTu_Map = new TileLayer({
+  className: "baseLayerClass",
   source: new XYZ({
     url:
       "http://t" +
