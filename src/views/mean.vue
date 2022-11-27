@@ -30,15 +30,15 @@ export default {
       drawEchart();
     });
     const message = ref({
-      msg: "收起结果",
+      msg: "收起",
       flag: true,
     });
     let resultShow = () => {
       if (message.value.flag) {
-        message.value.msg = "展开结果";
+        message.value.msg = "展开";
         message.value.flag = false;
       } else {
-        message.value.msg = "收起结果";
+        message.value.msg = "收起";
         message.value.flag = true;
       }
     };
@@ -81,30 +81,37 @@ export default {
       let data1 = null;
       let data2 = null;
       let data3 = null;
+      let CMIPText = null;
       const jsonUrl = "./json/SSP.json";
       axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
         let CMIP = CMIP_Value.value;
         if (CMIP == "CSDI") {
+          CMIPText = "寒潮持续时间指数";
           data1 = res.data.CSDI[0].data;
           data2 = res.data.CSDI[1].data;
           data3 = res.data.CSDI[2].data;
         } else if (CMIP == "WSDI") {
+          CMIPText = "暖期持续时间指数";
           data1 = res.data.WSDI[0].data;
           data2 = res.data.WSDI[1].data;
           data3 = res.data.WSDI[2].data;
         } else if (CMIP == "TN10P") {
+          CMIPText = "冷夜";
           data1 = res.data.TN10P[0].data;
           data2 = res.data.TN10P[1].data;
           data3 = res.data.TN10P[2].data;
         } else if (CMIP == "TN90P") {
+          CMIPText = "暖夜";
           data1 = res.data.TN90P[0].data;
           data2 = res.data.TN90P[1].data;
           data3 = res.data.TN90P[2].data;
         } else if (CMIP == "TX10P") {
+          CMIPText = "冷昼";
           data1 = res.data.TX10P[0].data;
           data2 = res.data.TX10P[1].data;
           data3 = res.data.TX10P[2].data;
         } else {
+          CMIPText = "暖昼";
           data1 = res.data.TX90P[0].data;
           data2 = res.data.TX90P[1].data;
           data3 = res.data.TX90P[2].data;
@@ -115,7 +122,7 @@ export default {
 
         option = {
           title: {
-            text: CMIP_Value.value + "年均趋势图",
+            text: CMIP_Value.value + "(" + CMIPText + ")" + "年均趋势图",
           },
           tooltip: {
             trigger: "axis",
