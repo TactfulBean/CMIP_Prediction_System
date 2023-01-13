@@ -3,19 +3,14 @@ import Map from "ol/Map";
 import View from "ol/View";
 import { defaults, ScaleLine, MousePosition, OverviewMap } from "ol/control";
 import { createStringXY } from "ol/coordinate";
-import { fromLonLat, get as getProjection } from "ol/proj";
-import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
-import { OSM, TileWMS, XYZ, Vector as VectorSource } from "ol/source";
-import { Stroke, Style, Fill, Circle } from "ol/style";
-import { WFS, GeoJSON } from "ol/format";
-import { equalTo, intersects } from "ol/format/filter";
-import Draw from "ol/interaction/Draw";
+import { fromLonLat } from "ol/proj";
+import { Tile as TileLayer } from "ol/layer";
+import { OSM, TileWMS, XYZ } from "ol/source";
 
 // 工作空间URL
 const urlRoot = "http://localhost:8080/geoserver/CMIP/wms";
 
 let map = null;
-let mapFlag = 0;
 let CMIP_Raster = null;
 // 地图
 const TianDiTu_Map = new TileLayer({
@@ -51,6 +46,11 @@ const TianDiTu_CIA = new TileLayer({
       ".tianditu.com/DataServer?T=cia_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
   }),
 });
+const ThunderForest = new TileLayer({
+  source: new XYZ({
+    url: "https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=214369c2e1984d369e2f13fcaed16233",
+  }),
+});
 
 // 地图初始化
 const initMap = () => {
@@ -64,45 +64,48 @@ const initMap = () => {
     controls: defaults({
       zoom: false,
       attribution: false,
-    }).extend([scaleControl, mousePositionControl, overviewMap]),
+    }).extend([scaleControl, mousePositionControl, overviewMapControl]),
   });
 };
-// 切换卫星图
-const changeMap = () => {
+// 清除所有图层
+const removeAllLayers = () => {
   let layers = map.getLayers().getArray();
   for (let i = layers.length - 1; i >= 0; i--) {
     map.removeLayer(layers[i]);
   }
-  if (mapFlag == 0) {
-    mapFlag = 1;
-    map.addLayer(TianDiTu_TMG);
-    map.addLayer(TianDiTu_CIA);
-  } else {
-    mapFlag = 0;
+};
+// 切换底图
+const changeMap = (type) => {
+  removeAllLayers();
+  if (type == 1) {
     map.addLayer(TianDiTu_Map);
     map.addLayer(TianDiTu_CVA);
+  } else if (type == 2) {
+    map.addLayer(TianDiTu_TMG);
+    map.addLayer(TianDiTu_CIA);
+  } else if (type == 3) {
+    map.addLayer(ThunderForest);
   }
 };
 // 菜单点击事件
 const menuClickEvent = (menu_router) => {
   if (menu_router == "map1") {
-    mapFlag = 1;
-    changeMap();
-  } else {
-    mapFlag = 0;
-    changeMap();
+    changeMap(1);
+  } else if (menu_router == "map2") {
+    changeMap(2);
+  } else if (menu_router == "map3") {
+    changeMap(3);
   }
+  return 1;
 };
 // 获取当前地图变量
 const getMap = () => {
   return map;
 };
-// 添加图层
-const addLayer = (value) => {
+// 添加栅格图层
+const addRasterLayer = (value) => {
   // 存在栅格图层时清除栅格图层
-  if (CMIP_Raster) {
-    map.removeLayer(CMIP_Raster);
-  }
+  removeRaster();
   // 栅格加载
   CMIP_Raster = new TileLayer({
     source: new TileWMS({
@@ -114,8 +117,8 @@ const addLayer = (value) => {
   });
   map.addLayer(CMIP_Raster);
 };
-// 清除图层
-const removeLayer = () => {
+// 清除栅格图层
+const removeRaster = () => {
   if (CMIP_Raster) {
     map.removeLayer(CMIP_Raster);
   }
@@ -132,35 +135,21 @@ const mousePositionControl = new MousePosition({
   target: document.getElementById("mouse-position"),
 });
 // 鹰眼
-const overviewMap = new OverviewMap({
+const overviewMapControl = new OverviewMap({
   collapsed: false,
   layers: [
     new TileLayer({
-      source: new XYZ({
-        url: "http://t0.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
+      source: new OSM({
+        url: "https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=214369c2e1984d369e2f13fcaed16233",
       }),
     }),
   ],
 });
-const location = (lon, lat) => {
-  let view = map.getView();
-  var loc = fromLonLat([lon, lat]);
-  view.animate({
-    center: loc,
-    duration: 0,
-  });
-  if ((lon == 110) & (lat == 35)) {
-    view.setZoom(4.5);
-  } else {
-    view.setZoom(8);
-  }
-};
 export default {
   initMap,
-  addLayer,
-  removeLayer,
+  addRasterLayer,
   getMap,
   changeMap,
+  removeRaster,
   menuClickEvent,
-  location,
 };

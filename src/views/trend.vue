@@ -38,15 +38,6 @@
           ><span class="iconfont">&#xe74b; </span><span>清除图层</span></el-button
         >
       </div>
-      <!-- 时间条 -->
-      <!-- <div class="slider-demo-block">
-        <span class="demonstration">年份选择：</span>
-        <el-slider v-model="yearValue" :min="yearMin" :max="yearMax" step="1" show-input :disabled="disabled_year" />
-      </div>
-      <div class="slider-demo-block">
-        <span class="demonstration">月份选择：</span>
-        <el-slider v-model="monValue" :min="monMin" :max="monMax" step="1" show-input :disabled="disabled_mon" />
-      </div> -->
     </el-card>
   </div>
 </template>
@@ -62,7 +53,6 @@ export default {
       flag: true,
     });
     onMounted(() => {
-      // global.$mapConfig.addLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value);
       RasterLoad();
     });
     let resultShow = () => {
@@ -74,15 +64,6 @@ export default {
         message.value.flag = true;
       }
     };
-    // const yearValue = ref(2021);
-    // const monValue = ref(1);
-    // const yearMin = 2021;
-    // const yearMax = 2050;
-    // const monMin = 1;
-    // const monMax = 12;
-    // const disabled_year = ref(false);
-    // const disabled_mon = ref(false);
-    //
     const CMIP_Value = ref("WSDI");
     const CMIP_Options = [
       {
@@ -136,25 +117,9 @@ export default {
         value: "SEN",
       },
     ];
-    // let monDisabled = () => {
-    //   let value2;
-    //   if (value.value == "CMIP:CSDI_") {
-    //     disabled_year.value = true;
-    //     disabled_mon.value = true;
-    //   } else {
-    //     disabled_year.value = false;
-    //     disabled_mon.value = false;
-    //   }
-    //   if (value.value == "CMIP:CSDI_") {
-    //     value2 = "_MK";
-    //   }
-    //   // CMIP:CSDI_SSP5-8.5_MK
-    //   global.$mapConfig.addLayer(value.value + SSP_Value.value + value2);
-    // };
-
     // 结果图加载
     let RasterLoad = () => {
-      global.$mapConfig.addLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value);
+      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value);
       const jsonUrl = "./json/legend.json";
       axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
         let data = null;
@@ -181,8 +146,6 @@ export default {
         }
         text = data[type].text;
         color = data[type].color;
-        console.log(text);
-        console.log(color);
         let barChart = echarts.init(document.querySelector(".reciprocalLegend"));
         const option = {
           xAxis: { name: "", axisLine: { show: false } },
@@ -220,15 +183,6 @@ export default {
       Method_Options,
       RasterLoad,
       removeLayer,
-      // monDisabled,
-      // yearValue,
-      // monValue,
-      // yearMin,
-      // yearMax,
-      // monMin,
-      // monMax,
-      // disabled_year,
-      // disabled_mon,
     };
   },
 };

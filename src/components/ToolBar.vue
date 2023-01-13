@@ -39,12 +39,13 @@
 </template>
 <script>
 import { ref, getCurrentInstance } from "vue";
+import { fromLonLat } from "ol/proj";
 export default {
   components: {},
   setup() {
     let global = getCurrentInstance().appContext.config.globalProperties;
     let plain = ref([true, true, true, true, true, true]);
-
+    let map = global.$mapConfig.getMap();
     let isOn = (no) => {
       if (plain.value[no] == true) {
         plain.value[no] = false;
@@ -53,22 +54,29 @@ export default {
       }
     };
     let btn1Click = () => {
-      global.$mapConfig.location(110, 35);
+      location(110, 35);
     };
     let btn2Click = () => {
-      global.$mapConfig.removeLayer();
+      global.$mapConfig.removeRaster();
     };
-    let btn3Click = () => {
-      // global.$mapConfig.changeMap();
-    };
-    let btn4Click = () => {
-      // global.$mapConfig.changeMap();
-    };
+    let btn3Click = () => {};
+    let btn4Click = () => {};
     let btn5Click = () => {
-      global.$mapConfig.changeMap();
+      global.$mapConfig.changeMap(2);
     };
-    let btn6Click = () => {
-      // global.$mapConfig.changeMap();
+    let btn6Click = () => {};
+    const location = (lon, lat) => {
+      let view = map.getView();
+      var loc = fromLonLat([lon, lat]);
+      view.animate({
+        center: loc,
+        duration: 0,
+      });
+      if ((lon == 110) & (lat == 35)) {
+        view.setZoom(4.5);
+      } else {
+        view.setZoom(8);
+      }
     };
     return {
       plain,
