@@ -71,7 +71,7 @@ export default {
       },
     ];
     let base = 2021;
-    let data = new Array(30);
+    let data = new Array(80);
     for (let i = 0; i < data.length; i++) {
       data[i] = base;
       base += 1;
