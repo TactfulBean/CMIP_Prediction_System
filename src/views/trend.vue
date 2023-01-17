@@ -44,7 +44,8 @@
 <script>
 import * as echarts from "echarts";
 import axios from "axios";
-import { ref, onMounted, getCurrentInstance } from "vue";
+import { ref, onMounted, onUnmounted, getCurrentInstance } from "vue";
+import { Circle, Fill, Stroke, Style } from "ol/style.js";
 export default {
   setup() {
     const global = getCurrentInstance().appContext.config.globalProperties;
@@ -54,6 +55,12 @@ export default {
     });
     onMounted(() => {
       RasterLoad();
+      designHoverOnMap();
+    });
+    //卸载完成
+    onUnmounted(() => {
+      DELdesignHoverOnMap();
+      console.log("onUnmounted");
     });
     let resultShow = () => {
       if (message.value.flag) {
@@ -120,6 +127,7 @@ export default {
     // 结果图加载
     let RasterLoad = () => {
       global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value);
+      global.$mapConfig.addFeatureLayer(Method_Value.value);
       const jsonUrl = "./json/legend.json";
       axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
         let data = null;
@@ -168,8 +176,62 @@ export default {
         barChart.setOption(option);
       });
     };
+    // 清除图层
     let removeLayer = () => {
-      global.$mapConfig.removeLayer();
+      global.$mapConfig.removeRaster();
+    };
+    // 鼠标选中样式
+    let highFeature = null;
+    let selectStyle = new Style({
+      stroke: new Stroke({
+        color: "#0095d9",
+        width: 3,
+      }),
+      fill: new Fill({
+        color: "rgba(56,161,219,0.2)",
+      }),
+    });
+    let defaultStyle = new Style({
+      stroke: new Stroke({
+        color: "#007bbb",
+        width: 0.5,
+      }),
+      fill: new Fill({
+        color: "rgba(0,0,0,0)",
+      }),
+    });
+    // 鼠标移动监听
+    // 鼠标移动监听器
+    let pointermove = (event) => {
+      let pixel = event.pixel;
+      let features = global.$mapConfig.getMap().forEachFeatureAtPixel(pixel, function (feature, layer) {
+        return {
+          feature: feature,
+          layer: layer,
+        };
+      });
+      if (features) {
+        // console.log(features);
+        global.$mapConfig.getMap().getTargetElement().style.cursor = "pointer";
+        if (highFeature != null) {
+          highFeature.setStyle(defaultStyle);
+        }
+        features.feature.setStyle(selectStyle);
+        highFeature = features.feature;
+      } else {
+        if (highFeature) {
+          highFeature.setStyle(defaultStyle);
+        }
+        global.$mapConfig.getMap().getTargetElement().style.cursor = "";
+      }
+    };
+    // 启用监听器
+    let designHoverOnMap = () => {
+      global.$mapConfig.getMap().on("pointermove", pointermove);
+    };
+    // 终止监听器
+    let DELdesignHoverOnMap = () => {
+      global.$mapConfig.getMap().un("pointermove", pointermove);
     };
 
     return {
@@ -278,5 +340,47 @@ export default {
   to {
     opacity: 1;
   }
+}
+.ol-popup {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #cccccc;
+  bottom: 12px;
+  left: -50px;
+  min-width: 280px;
+}
+.ol-popup:after,
+.ol-popup:before {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.ol-popup:after {
+  border-top-color: white;
+  border-width: 10px;
+  left: 48px;
+  margin-left: -10px;
+}
+.ol-popup:before {
+  border-top-color: #cccccc;
+  border-width: 11px;
+  left: 48px;
+  margin-left: -11px;
+}
+.ol-popup-closer {
+  text-decoration: none;
+  position: absolute;
+  top: 2px;
+  right: 8px;
+}
+.ol-popup-closer:after {
+  content: "✖";
 }
 </style>

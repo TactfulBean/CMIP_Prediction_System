@@ -6,12 +6,18 @@ import { createStringXY } from "ol/coordinate";
 import { fromLonLat } from "ol/proj";
 import { Tile as TileLayer } from "ol/layer";
 import { OSM, TileWMS, XYZ } from "ol/source";
+import VectorLayer from "ol/layer/Vector.js";
+import VectorSource from "ol/source/Vector.js";
+import GeoJSON from "ol/format/GeoJSON.js";
+import { Circle, Fill, Stroke, Style } from "ol/style.js";
+import axios from "axios";
 
 // 工作空间URL
 const urlRoot = "http://localhost:8080/geoserver/CMIP/wms";
 
 let map = null;
 let CMIP_Raster = null;
+let CMIP_Frature = null;
 // 地图
 const TianDiTu_Map = new TileLayer({
   className: "baseLayerClass",
@@ -22,6 +28,7 @@ const TianDiTu_Map = new TileLayer({
       ".tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
   }),
 });
+// 注记
 const TianDiTu_CVA = new TileLayer({
   source: new XYZ({
     url:
@@ -55,7 +62,7 @@ const ThunderForest = new TileLayer({
 // 地图初始化
 const initMap = () => {
   map = new Map({
-    layers: [TianDiTu_Map, TianDiTu_CVA],
+    layers: [TianDiTu_Map],
     target: "map",
     view: new View({
       center: fromLonLat([110, 35]),
@@ -67,6 +74,7 @@ const initMap = () => {
     }).extend([scaleControl, mousePositionControl, overviewMapControl]),
   });
 };
+
 // 清除所有图层
 const removeAllLayers = () => {
   let layers = map.getLayers().getArray();
@@ -79,10 +87,10 @@ const changeMap = (type) => {
   removeAllLayers();
   if (type == 1) {
     map.addLayer(TianDiTu_Map);
-    map.addLayer(TianDiTu_CVA);
+    // map.addLayer(TianDiTu_CVA);
   } else if (type == 2) {
     map.addLayer(TianDiTu_TMG);
-    map.addLayer(TianDiTu_CIA);
+    // map.addLayer(TianDiTu_CIA);
   } else if (type == 3) {
     map.addLayer(ThunderForest);
   }
@@ -99,8 +107,11 @@ const menuClickEvent = (menu_router) => {
   return 1;
 };
 // 获取当前地图变量
-const getMap = () => {
+let getMap = () => {
   return map;
+};
+let getCMIPFeature = () => {
+  return CMIP_Frature;
 };
 // 添加栅格图层
 const addRasterLayer = (value) => {
@@ -117,10 +128,46 @@ const addRasterLayer = (value) => {
   });
   map.addLayer(CMIP_Raster);
 };
+// 添加矢量图层
+const addFeatureLayer = (value) => {
+  // CMIP_Frature = new TileLayer({
+  //   source: new TileWMS({
+  //     url: urlRoot,
+  //     params: {
+  //       LAYERS: value,
+  //     },
+  //   }),
+  // });
+  const jsonUrl = "./geojson/China_" + value + ".geojson";
+  CMIP_Frature = new VectorLayer({
+    source: new VectorSource({
+      projection: "EPSG:3857",
+      url: jsonUrl,
+      format: new GeoJSON(),
+    }),
+    style: new Style({
+      stroke: new Stroke({
+        color: "#007bbb",
+        width: 0.5,
+      }),
+      fill: new Fill({
+        color: "rgba(0,0,0,0)",
+      }),
+    }),
+  });
+  map.addLayer(CMIP_Frature);
+  map.addLayer(TianDiTu_CVA);
+};
 // 清除栅格图层
 const removeRaster = () => {
   if (CMIP_Raster) {
     map.removeLayer(CMIP_Raster);
+  }
+  if (CMIP_Frature) {
+    map.removeLayer(CMIP_Frature);
+  }
+  if (TianDiTu_CVA) {
+    map.removeLayer(TianDiTu_CVA);
   }
 };
 // 比例尺
@@ -145,10 +192,13 @@ const overviewMapControl = new OverviewMap({
     }),
   ],
 });
+
 export default {
   initMap,
   addRasterLayer,
+  addFeatureLayer,
   getMap,
+  getCMIPFeature,
   changeMap,
   removeRaster,
   menuClickEvent,
