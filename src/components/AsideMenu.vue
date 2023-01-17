@@ -51,13 +51,23 @@ export default {
         icon: "",
         child: [
           {
-            name: "趋势分析",
+            name: "指数结果总览",
             router: "trend",
             icon: "\ue600",
           },
           {
-            name: "均值图表",
+            name: "指数均值趋势",
             router: "mean",
+            icon: "\ueb96",
+          },
+          {
+            name: "区域指数对比",
+            router: "3",
+            icon: "\ueb96",
+          },
+          {
+            name: "全球指数总览",
+            router: "4",
             icon: "\ueb96",
           },
         ],
