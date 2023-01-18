@@ -149,14 +149,6 @@ const addRasterLayer = (value) => {
 };
 // 添加矢量图层
 const addFeatureLayer = (value) => {
-  // CMIP_Frature = new TileLayer({
-  //   source: new TileWMS({
-  //     url: urlRoot,
-  //     params: {
-  //       LAYERS: value,
-  //     },
-  //   }),
-  // });
   const jsonUrl = "./geojson/China_" + value + ".geojson";
   CMIP_Frature = new VectorLayer({
     source: new VectorSource({
