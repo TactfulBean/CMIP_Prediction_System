@@ -473,7 +473,7 @@ export default {
   padding: 0 10px;
 }
 .reciprocalLegend {
-  width: 40px;
+  width: 80px;
   height: 200px;
   position: absolute;
   left: 2%;
