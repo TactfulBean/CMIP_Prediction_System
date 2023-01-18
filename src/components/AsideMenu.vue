@@ -63,12 +63,12 @@ export default {
           {
             name: "区域指数对比",
             router: "area",
-            icon: "\ueb96",
+            icon: "\ue626",
           },
           {
             name: "全球指数总览",
             router: "globe",
-            icon: "\ueb96",
+            icon: "\ue76c",
           },
         ],
       },

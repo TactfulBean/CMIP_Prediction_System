@@ -18,6 +18,16 @@ const routes = [
         name: "/mean",
         component: () => import("@/views/mean.vue"),
       },
+      {
+        path: "/area",
+        name: "/area",
+        component: () => import("@/views/area.vue"),
+      },
+      {
+        path: "/globe",
+        name: "/globe",
+        component: () => import("@/views/globe.vue"),
+      },
     ],
   },
 ];

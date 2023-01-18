@@ -64,7 +64,7 @@ export default {
       DELOverlay();
       DELdesignHoverOnMap();
       DELdesignClickOnMap();
-      console.log("onUnmounted");
+      // console.log("onUnmounted");
     });
     let resultShow = () => {
       if (message.value.flag) {
@@ -132,7 +132,7 @@ export default {
     let RasterLoad = () => {
       DELOverlay();
       global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value);
-      global.$mapConfig.addFeatureLayer(Method_Value.value);
+      global.$mapConfig.addVectorLayer(Method_Value.value);
       const jsonUrl = "./json/legend.json";
       axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
         let data = null;
@@ -250,7 +250,7 @@ export default {
         };
       });
       if (features) {
-        console.log(features.feature.values_);
+        // console.log(features.feature.values_);
         let title = features.feature.values_.NAME + "  " + CMIP_Value.value + "均值(" + Method_Value.value + ")";
         let data1;
         let data2;
@@ -360,7 +360,6 @@ export default {
         myChart.clear();
         option && myChart.setOption(option);
         // 设置弹窗位置
-        // console.log(overlay);
         global.$mapConfig.getMap().addOverlay(overlay);
       } else {
         DELOverlay();
@@ -378,7 +377,6 @@ export default {
     let DELOverlay = () => {
       let overlay = global.$mapConfig.getOverlay();
       overlay.setPosition(undefined);
-      global.$mapConfig.getMap().addOverlay(overlay);
     };
     return {
       message,
