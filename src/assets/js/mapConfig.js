@@ -11,6 +11,7 @@ import VectorSource from "ol/source/Vector.js";
 import GeoJSON from "ol/format/GeoJSON.js";
 import { Circle, Fill, Stroke, Style } from "ol/style.js";
 import axios from "axios";
+import Overlay from "ol/Overlay.js";
 
 // 工作空间URL
 const urlRoot = "http://localhost:8080/geoserver/CMIP/wms";
@@ -58,6 +59,18 @@ const ThunderForest = new TileLayer({
     url: "https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=214369c2e1984d369e2f13fcaed16233",
   }),
 });
+// 点击弹窗
+var container = document.getElementById("popup");
+var content = document.getElementById("popup-content");
+var closer = document.getElementById("popup-closer");
+
+var overlay = new Overlay({
+  element: container,
+  autoPan: true,
+  autoPanAnimation: {
+    duration: 250,
+  },
+});
 
 // 地图初始化
 const initMap = () => {
@@ -74,7 +87,13 @@ const initMap = () => {
     }).extend([scaleControl, mousePositionControl, overviewMapControl]),
   });
 };
-
+// 获取弹窗
+let getOverlay = () => {
+  return overlay;
+};
+let getContent = () => {
+  return content;
+};
 // 清除所有图层
 const removeAllLayers = () => {
   let layers = map.getLayers().getArray();
@@ -202,4 +221,6 @@ export default {
   changeMap,
   removeRaster,
   menuClickEvent,
+  getOverlay,
+  getContent,
 };

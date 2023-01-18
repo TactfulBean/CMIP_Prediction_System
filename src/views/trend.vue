@@ -47,6 +47,7 @@ import axios from "axios";
 import { ref, onMounted, onUnmounted, getCurrentInstance } from "vue";
 import { Circle, Fill, Stroke, Style } from "ol/style.js";
 export default {
+  components: {},
   setup() {
     const global = getCurrentInstance().appContext.config.globalProperties;
     const message = ref({
@@ -56,10 +57,13 @@ export default {
     onMounted(() => {
       RasterLoad();
       designHoverOnMap();
+      designClickOnMap();
     });
     //卸载完成
     onUnmounted(() => {
+      DELOverlay();
       DELdesignHoverOnMap();
+      DELdesignClickOnMap();
       console.log("onUnmounted");
     });
     let resultShow = () => {
@@ -126,6 +130,7 @@ export default {
     ];
     // 结果图加载
     let RasterLoad = () => {
+      DELOverlay();
       global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value);
       global.$mapConfig.addFeatureLayer(Method_Value.value);
       const jsonUrl = "./json/legend.json";
@@ -234,6 +239,147 @@ export default {
       global.$mapConfig.getMap().un("pointermove", pointermove);
     };
 
+    // 地图单击事件
+    let pointerclick = (event) => {
+      const coordinate = event.coordinate;
+      let pixel = event.pixel;
+      let features = global.$mapConfig.getMap().forEachFeatureAtPixel(pixel, function (feature, layer) {
+        return {
+          feature: feature,
+          layer: layer,
+        };
+      });
+      if (features) {
+        console.log(features.feature.values_);
+        let title = features.feature.values_.NAME + "  " + CMIP_Value.value + "均值(" + Method_Value.value + ")";
+        let data1;
+        let data2;
+        let data3;
+        if (CMIP_Value.value == "CSDI") {
+          data1 = features.feature.values_.CSDI126;
+          data2 = features.feature.values_.CSDI245;
+          data3 = features.feature.values_.CSDI585;
+        } else if (CMIP_Value.value == "WSDI") {
+          data1 = features.feature.values_.WSDI126;
+          data2 = features.feature.values_.WSDI245;
+          data3 = features.feature.values_.WSDI585;
+        } else if (CMIP_Value.value == "TN10P") {
+          data1 = features.feature.values_.TN10P126;
+          data2 = features.feature.values_.TN10P245;
+          data3 = features.feature.values_.TN10P585;
+        } else if (CMIP_Value.value == "TN90P") {
+          data1 = features.feature.values_.TN90P126;
+          data2 = features.feature.values_.TN90P245;
+          data3 = features.feature.values_.TN90P585;
+        } else if (CMIP_Value.value == "TX10P") {
+          data1 = features.feature.values_.TX10P126;
+          data2 = features.feature.values_.TX10P245;
+          data3 = features.feature.values_.TX10P585;
+        } else if (CMIP_Value.value == "TX90P") {
+          data1 = features.feature.values_.TX90P126;
+          data2 = features.feature.values_.TX90P245;
+          data3 = features.feature.values_.TX90P585;
+        }
+        let overlay = global.$mapConfig.getOverlay();
+        // 渲染统计表
+        var chartDom = global.$mapConfig.getContent();
+        var myChart = echarts.init(chartDom);
+        var option;
+        const labelRight = {
+          position: "right",
+        };
+
+        option = {
+          title: {
+            text: title,
+          },
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow",
+            },
+          },
+          grid: {
+            top: 40,
+            bottom: 20,
+            right: 60,
+            left: 60,
+          },
+          xAxis: {
+            type: "value",
+            position: "bottom",
+            splitLine: {
+              lineStyle: {
+                type: "dashed",
+              },
+            },
+          },
+          yAxis: {
+            type: "category",
+            axisLine: { show: false },
+            axisLabel: { show: false },
+            axisTick: { show: false },
+            splitLine: { show: false },
+            data: ["SSP1-2.6", "SSP2-4.5", "SSP5-8.5"],
+          },
+          series: [
+            {
+              name: "value",
+              type: "bar",
+              stack: "Total",
+              label: {
+                show: true,
+                formatter: "{b}",
+              },
+              data: [
+                {
+                  value: data1,
+                  label: labelRight,
+                  itemStyle: {
+                    color: "#91CC75",
+                  },
+                },
+                {
+                  value: data2,
+                  label: labelRight,
+                  itemStyle: {
+                    color: "#f39800",
+                  },
+                },
+                {
+                  value: data3,
+                  itemStyle: {
+                    color: "#a90000",
+                  },
+                },
+              ],
+            },
+          ],
+        };
+        overlay.setPosition(coordinate);
+        myChart.clear();
+        option && myChart.setOption(option);
+        // 设置弹窗位置
+        // console.log(overlay);
+        global.$mapConfig.getMap().addOverlay(overlay);
+      } else {
+        DELOverlay();
+      }
+    };
+    // 启用监听器
+    let designClickOnMap = () => {
+      global.$mapConfig.getMap().on("singleclick", pointerclick);
+    };
+    // 终止监听器
+    let DELdesignClickOnMap = () => {
+      global.$mapConfig.getMap().un("singleclick", pointerclick);
+    };
+    // 弹出框隐藏
+    let DELOverlay = () => {
+      let overlay = global.$mapConfig.getOverlay();
+      overlay.setPosition(undefined);
+      global.$mapConfig.getMap().addOverlay(overlay);
+    };
     return {
       message,
       resultShow,
@@ -245,6 +391,7 @@ export default {
       Method_Options,
       RasterLoad,
       removeLayer,
+      DELOverlay,
     };
   },
 };
@@ -326,8 +473,8 @@ export default {
   padding: 0 10px;
 }
 .reciprocalLegend {
-  width: 200px;
-  height: 400px;
+  width: 40px;
+  height: 200px;
   position: absolute;
   left: 2%;
   bottom: 150px;
@@ -340,47 +487,5 @@ export default {
   to {
     opacity: 1;
   }
-}
-.ol-popup {
-  position: absolute;
-  background-color: white;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #cccccc;
-  bottom: 12px;
-  left: -50px;
-  min-width: 280px;
-}
-.ol-popup:after,
-.ol-popup:before {
-  top: 100%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-}
-.ol-popup:after {
-  border-top-color: white;
-  border-width: 10px;
-  left: 48px;
-  margin-left: -10px;
-}
-.ol-popup:before {
-  border-top-color: #cccccc;
-  border-width: 11px;
-  left: 48px;
-  margin-left: -11px;
-}
-.ol-popup-closer {
-  text-decoration: none;
-  position: absolute;
-  top: 2px;
-  right: 8px;
-}
-.ol-popup-closer:after {
-  content: "✖";
 }
 </style>
