@@ -63,7 +63,6 @@ const ThunderForest = new TileLayer({
 var container = document.getElementById("popup");
 var content = document.getElementById("popup-content");
 var closer = document.getElementById("popup-closer");
-
 var overlay = new Overlay({
   element: container,
   autoPan: true,
@@ -71,7 +70,10 @@ var overlay = new Overlay({
     duration: 250,
   },
 });
-
+// 关闭弹窗
+closer.onclick = function () {
+  overlay.setPosition(undefined);
+};
 // 地图初始化
 const initMap = () => {
   map = new Map({
@@ -148,7 +150,7 @@ const addRasterLayer = (value) => {
   map.addLayer(CMIP_Raster);
 };
 // 添加矢量图层
-const addFeatureLayer = (value) => {
+const addVectorLayer = (value) => {
   const jsonUrl = "./geojson/China_" + value + ".geojson";
   CMIP_Frature = new VectorLayer({
     source: new VectorSource({
@@ -168,6 +170,18 @@ const addFeatureLayer = (value) => {
   });
   map.addLayer(CMIP_Frature);
   map.addLayer(TianDiTu_CVA);
+};
+const addFeatureLayer = (value) => {
+  removeRaster();
+  CMIP_Frature = new TileLayer({
+    source: new TileWMS({
+      url: urlRoot,
+      params: {
+        LAYERS: "CMIP:" + value,
+      },
+    }),
+  });
+  map.addLayer(CMIP_Frature);
 };
 // 清除栅格图层
 const removeRaster = () => {
@@ -208,6 +222,7 @@ export default {
   initMap,
   addRasterLayer,
   addFeatureLayer,
+  addVectorLayer,
   getMap,
   getCMIPFeature,
   changeMap,

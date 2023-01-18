@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "12889882",
+      "name": "统计分析-项目表格统计",
+      "font_class": "tongjifenxi-xiangmubiaogetongji",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
       "icon_id": "7556305",
       "name": "对比",
       "font_class": "duibi",

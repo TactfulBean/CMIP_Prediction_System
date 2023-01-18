@@ -66,7 +66,7 @@ export default {
     };
     let btn6Click = () => {};
     const location = (lon, lat) => {
-      let view = map.getView();
+      let view = global.$mapConfig.getMap().getView();
       var loc = fromLonLat([lon, lat]);
       view.animate({
         center: loc,
