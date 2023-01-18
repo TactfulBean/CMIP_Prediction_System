@@ -2,65 +2,186 @@
   "MK": [
     {
       "type": "CSDI",
-      "text": [2.1, -2.7],
-      "color": ["#1a9641", "#77c35d", "#c0e48a", "#ede89c", "#feecc3", "#e86c51", "#d7191c"]
+      "text": [1.4, -4.83],
+      "color": [
+        "#d7191c",
+        "#f07949",
+        "#fec57c",
+        "#fffab9",
+        "#ceebaf",
+        "#9ed4a6",
+        "#77b9ad",
+        "#ffffff",
+        "#519eb3",
+        "#2b83ba"
+      ]
     },
     {
       "type": "WSDI",
-      "text": [5.9, 0],
-      "color": ["#ffffff", "#1a9641", "#a6d96a", "#ffffc0", "#fdae61", "#d7191c"]
+      "text": [11.52, -0.2],
+      "color": [
+        "#2b83ba",
+        "#ffffff",
+        "#68aeb0",
+        "#a5d9a5",
+        "#d1edb0",
+        "#fcfebe",
+        "#fed992",
+        "#fdaf63",
+        "#ea653f",
+        "#d7191c"
+      ]
     },
     {
       "type": "TN10P",
-      "text": [1.3, -4.8],
-      "color": ["#1a9641", "#a6d96a", "#ffffc0", "#fdae61", "#ffffff", "#d7191c"]
+      "text": [1.1, -10],
+      "color": [
+        "#d7191c",
+        "#ec6b42",
+        "#fdb76b",
+        "#fee49f",
+        "#edf8b9",
+        "#bee5aa",
+        "#8ec9a9",
+        "#5da6b1",
+        "#ffffff",
+        "#2b83ba"
+      ]
     },
     {
       "type": "TN90P",
-      "text": [6.1, 0],
-      "color": ["#ffffff", "#8acc62", "#dbf09e", "#fedf9a", "#f59053", "#d7191c"]
+      "text": [11.84, 0],
+      "color": [
+        "#ffffff",
+        "#d7191c",
+        "#e85b3b",
+        "#f99d59",
+        "#fec980",
+        "#ffedaa",
+        "#ecf7b9",
+        "#c7e8ad",
+        "#9dd3a6",
+        "#64abb0"
+      ]
     },
     {
       "type": "TX10P",
-      "text": [0, -5.2],
-      "color": ["#1a9641", "#8acc62", "#dbf09e", "#fedf9a", "#f5b649", "#d7d7d7"]
+      "text": [0, -10],
+      "color": [
+        "#2b83ba",
+        "#519eb3",
+        "#ffffff",
+        "#77b9ad",
+        "#9ed4a6",
+        "#ceebaf",
+        "#fffab9",
+        "#fec57c",
+        "#f07949",
+        "#d7191c"
+      ]
     },
     {
       "type": "TX90P",
-      "text": [5.5, 0],
-      "color": ["#ffffff", "#1a9641", "#dbf09e", "#fedf9a", "#f59053", "#d7191c"]
+      "text": [11, 0],
+      "color": [
+        "#ffffff",
+        "#6cb1af",
+        "#acdda4",
+        "#d0ecb0",
+        "#f4fabb",
+        "#fee7a3",
+        "#fec57b",
+        "#f79857",
+        "#e75939",
+        "#d7191c"
+      ]
     }
   ],
   "SEN": [
     {
       "type": "CSDI",
-      "text": [0, -1.7],
-      "color": ["#1a9641", "#a6d96a", "#ffffc0", "#fdae61", "#d7191c", "#ffffff"]
+      "text": [0, -0.06],
+      "color": ["#d7191c", "#fdae61", "#ffffbf", "#abdda4", "#ffffff"]
     },
     {
       "type": "WSDI",
-      "text": [43.1, -2],
-      "color": ["#1a9641", "#ffffff", "#a6d96a", "#ffffc0", "#fdae61", "#d7191c"]
+      "text": [47.8, -0.2],
+      "color": [
+        "#2b83ba",
+        "#ffffff",
+        "#6aafaf",
+        "#a9dca4",
+        "#d4eeb1",
+        "#feffbf",
+        "#fed791",
+        "#fdae61",
+        "#ea643f",
+        "#d7191c"
+      ]
     },
     {
       "type": "TN10P",
-      "text": [0, -1.9],
-      "color": ["#d7191c", "#fdae61", "#ffffc0", "#a6d96a", "#1a9641", "#ffffff"]
+      "text": [0.06, -0.66],
+      "color": [
+        "#d7191c",
+        "#ec6a42",
+        "#fdb56a",
+        "#fee29d",
+        "#f0f9ba",
+        "#c2e6ab",
+        "#91cba8",
+        "#5ea7b1",
+        "#ffffff",
+        "#2b83ba"
+      ]
     },
     {
       "type": "TN90P",
-      "text": [9.9, 0],
-      "color": ["#ffffff", "#1a9641", "#a6d96a", "#ffffc0", "#fdae61", "#d7191c"]
+      "text": [10.02, 0],
+      "color": [
+        "#ffffff",
+        "#64abb0",
+        "#9dd3a6",
+        "#c7e8ad",
+        "#ecf7b9",
+        "#ffedaa",
+        "#fec980",
+        "#f99d59",
+        "#e85b3b",
+        "#d7191c"
+      ]
     },
     {
       "type": "TX10P",
-      "text": [0, -2],
-      "color": ["#d7191c", "#fdae61", "#ffffc0", "#a6d96a", "#1a9641", "#ffffff"]
+      "text": [0, -0.72],
+      "color": [
+        "#d7191c",
+        "#e85b3b",
+        "#f99d59",
+        "#fec980",
+        "#ffedaa",
+        "#ecf7b9",
+        "#c7e8ad",
+        "#9dd3a6",
+        "#64abb0",
+        "#ffffff"
+      ]
     },
     {
       "type": "TX90P",
-      "text": [12.5, 0],
-      "color": ["#ffffff", "#1a9641", "#a6d96a", "#ffffc0", "#fdae61", "#d7191c"]
+      "text": [10.12, 0],
+      "color": [
+        "#ffffff",
+        "#64abb0",
+        "#9dd3a6",
+        "#c7e8ad",
+        "#ecf7b9",
+        "#ffedaa",
+        "#fec980",
+        "#f99d59",
+        "#e85b3b",
+        "#d7191c"
+      ]
     }
   ]
 }
