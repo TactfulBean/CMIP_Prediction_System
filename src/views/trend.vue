@@ -1,9 +1,7 @@
 <template>
   <div class="reciprocalLegend"></div>
   <div id="show">
-    <el-button type="primary" :class="{ open: message.flag, close: !message.flag }" @click="resultShow">{{
-      message.msg
-    }}</el-button>
+    <el-button type="primary" :class="{ open: message.flag, close: !message.flag }" @click="resultShow">{{ message.msg }}</el-button>
   </div>
   <div id="render" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
     <el-card class="box-card">
@@ -31,12 +29,8 @@
         </el-select>
       </div>
       <div id="selectRow" style="float: right">
-        <el-button color="#409EFF" plain @click="RasterLoad()"
-          ><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button
-        >
-        <el-button color="#409EFF" plain @click="removeLayer()"
-          ><span class="iconfont">&#xe74b; </span><span>清除图层</span></el-button
-        >
+        <el-button color="#409EFF" plain @click="RasterLoad()"><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button>
+        <el-button color="#409EFF" plain @click="removeLayer()"><span class="iconfont">&#xe74b; </span><span>清除图层</span></el-button>
       </div>
     </el-card>
   </div>
@@ -45,7 +39,7 @@
 import * as echarts from "echarts";
 import axios from "axios";
 import { ref, onMounted, onUnmounted, getCurrentInstance } from "vue";
-import { Circle, Fill, Stroke, Style } from "ol/style.js";
+import { Fill, Stroke, Style } from "ol/style.js";
 export default {
   components: {},
   setup() {
