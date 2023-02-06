@@ -1,8 +1,6 @@
 <template>
   <div id="show-mean">
-    <el-button type="primary" :class="{ open_mean: message.flag, close_mean: !message.flag }" @click="resultShow">{{
-      message.msg
-    }}</el-button>
+    <el-button type="primary" :class="{ open_mean: message.flag, close_mean: !message.flag }" @click="resultShow">{{ message.msg }}</el-button>
   </div>
   <div id="mean" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
     <el-card class="box-card-mean">
@@ -21,12 +19,12 @@
   </div>
 </template>
 <script>
-import * as echarts from "echarts";
-import axios from "axios";
 import { ref, onMounted, getCurrentInstance } from "vue";
 export default {
   setup() {
     const global = getCurrentInstance().appContext.config.globalProperties;
+    let echarts = global.$echarts;
+    let axios = global.$axios;
     onMounted(() => {
       drawEchart();
       global.$mapConfig.addFeatureLayer("China_Area");
@@ -215,78 +213,4 @@ export default {
   },
 };
 </script>
-<style>
-#chart {
-  width: 100%;
-  height: 100%;
-}
-.el-card__body {
-  height: 350px;
-}
-
-#show-mean {
-  position: absolute;
-  z-index: 10;
-  bottom: 452px;
-}
-#mean {
-  position: absolute;
-  z-index: 10;
-  width: 100%;
-  bottom: 0;
-}
-.box-card-mean {
-  height: 450px;
-}
-
-@keyframes result-open-mean {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0%);
-    opacity: 1;
-  }
-}
-@keyframes result-close-mean {
-  from {
-    transform: translateY(0%);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-}
-@keyframes open-mean {
-  from {
-    transform: translateY(452px);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-@keyframes close-mean {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(452px);
-  }
-}
-.result-open {
-  animation: result-open-mean 0.75s !important;
-}
-.result-close {
-  animation: result-close-mean 0.75s !important;
-  transform: translateY(100%);
-}
-.open_mean {
-  animation: open-mean 0.75s !important;
-}
-.close_mean {
-  animation: close-mean 0.75s !important;
-  transform: translateY(452px);
-}
-</style>
+<style></style>

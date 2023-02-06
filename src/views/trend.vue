@@ -1,10 +1,10 @@
 <template>
   <div class="reciprocalLegend"></div>
-  <div id="show">
-    <el-button type="primary" :class="{ open: message.flag, close: !message.flag }" @click="resultShow">{{ message.msg }}</el-button>
+  <div id="show-trend">
+    <el-button type="primary" :class="{ open_trend: message.flag, close: !message.flag }" @click="resultShow">{{ message.msg }}</el-button>
   </div>
-  <div id="render" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
-    <el-card class="box-card">
+  <div id="trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
+    <el-card class="box-card-trend">
       <!-- 指数选择器 -->
       <div id="selectRow">
         <span>极端指数选择：</span>
@@ -12,7 +12,6 @@
           <el-option v-for="item in CMIP_Options" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </div>
-
       <!-- 指数选择器 -->
       <div id="selectRow">
         <span>算法选择：</span>
@@ -20,7 +19,6 @@
           <el-option v-for="item in Method_Options" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </div>
-
       <!-- 指数选择器 -->
       <div id="selectRow">
         <span>SSP选择：</span>
@@ -36,14 +34,14 @@
   </div>
 </template>
 <script>
-import * as echarts from "echarts";
-import axios from "axios";
 import { ref, onMounted, onUnmounted, getCurrentInstance } from "vue";
 import { Fill, Stroke, Style } from "ol/style.js";
 export default {
   components: {},
   setup() {
     const global = getCurrentInstance().appContext.config.globalProperties;
+    let echarts = global.$echarts;
+    let axios = global.$axios;
     const message = ref({
       msg: "收起",
       flag: true,
@@ -388,96 +386,4 @@ export default {
   },
 };
 </script>
-<style>
-#show {
-  position: absolute;
-  z-index: 10;
-  bottom: 92px;
-  left: 20px;
-}
-#render {
-  border-radius: 20px;
-  position: absolute;
-  z-index: 10;
-  width: 100%;
-  bottom: 0;
-  bottom: 10px;
-  box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
-}
-.box-card {
-  height: 80px;
-  border-radius: 20px;
-}
-@keyframes result-open {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0%);
-    opacity: 1;
-  }
-}
-@keyframes result-close {
-  from {
-    transform: translateY(0%);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-}
-@keyframes open {
-  from {
-    transform: translateY(92px);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-@keyframes close {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(92px);
-  }
-}
-.result-open {
-  animation: result-open 0.8s !important;
-  opacity: 1;
-}
-.result-close {
-  animation: result-close 0.7s !important;
-  transform: translateY(100%);
-  opacity: 0;
-}
-.open {
-  animation: open 0.75s !important;
-}
-.close {
-  animation: close 0.75s !important;
-  transform: translateY(92px);
-}
-#selectRow {
-  display: inline-block;
-  padding: 0 10px;
-}
-.reciprocalLegend {
-  width: 80px;
-  height: 200px;
-  position: absolute;
-  left: 2%;
-  bottom: 150px;
-  animation: out 1s;
-}
-@keyframes out {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-</style>
+<style></style>

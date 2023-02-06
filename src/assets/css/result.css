@@ -1,0 +1,111 @@
+#chart {
+  width: 100%;
+  height: 100%;
+}
+.el-card__body {
+  height: 350px;
+}
+.result-open {
+  animation: result-open 0.8s !important;
+  opacity: 1;
+}
+.result-close {
+  animation: result-close 0.7s !important;
+  transform: translateY(100%);
+  opacity: 0;
+}
+/* 图例 */
+.reciprocalLegend {
+  width: 80px;
+  height: 200px;
+  position: absolute;
+  left: 2%;
+  bottom: 150px;
+  animation: out 1s;
+}
+/* 指数结果与全球指数页面窗口 */
+#selectRow {
+  display: inline-block;
+  padding: 0 10px;
+}
+#trend {
+  border-radius: 20px;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  bottom: 0;
+  bottom: 10px;
+  box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
+}
+#show-trend {
+  position: absolute;
+  z-index: 10;
+  bottom: 92px;
+  left: 20px;
+}
+.box-card-trend {
+  height: 80px;
+  border-radius: 20px;
+}
+.open_trend {
+  animation: open_trend 0.75s !important;
+}
+.close_trend {
+  animation: close_trend 0.75s !important;
+  transform: translateY(92px);
+}
+@keyframes open_trend {
+  from {
+    transform: translateY(92px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes close_trend {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(92px);
+  }
+}
+
+/* 指数均值与区域指数页面窗口 */
+#mean {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  bottom: 0;
+}
+#show-mean {
+  position: absolute;
+  z-index: 10;
+  bottom: 452px;
+}
+.box-card-mean {
+  height: 450px;
+}
+.open_mean {
+  animation: open-mean 0.75s !important;
+}
+.close_mean {
+  animation: close-mean 0.75s !important;
+  transform: translateY(452px);
+}
+@keyframes open-mean {
+  from {
+    transform: translateY(452px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes close-mean {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(452px);
+  }
+}
