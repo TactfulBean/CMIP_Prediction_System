@@ -9,7 +9,7 @@
           <span style="padding: 0 20px 0 0">均值图表</span>
           <!-- 指数选择器 -->
           <span>极端指数选择：</span>
-          <el-select v-model="CMIP_Value" class="m-2" placeholder="Select" @change="drawEchart()">
+          <el-select v-model="CMIP_Value" placeholder="Select" @change="drawEchart()">
             <el-option v-for="item in CMIP_Options" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </div>
