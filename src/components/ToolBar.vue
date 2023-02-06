@@ -18,7 +18,7 @@
       </el-tooltip>
     </div> -->
     <div>
-      <el-tooltip class="box-item" effect="customized" content="卫星图" placement="left-start">
+      <el-tooltip class="box-item" effect="customized" content="切换卫星图" placement="left-start">
         <el-button type="primary" class="tool-button" plain circle @click="btn5Click()"><span class="iconfont">&#xe608; </span></el-button>
       </el-tooltip>
     </div>
@@ -48,7 +48,7 @@ export default {
       }
     };
     let btn1Click = () => {
-      location(110, 35);
+      global.$mapConfig.MapZoom(110, 35, 4.5);
     };
     let btn2Click = () => {
       global.$mapConfig.removeRaster();
@@ -56,22 +56,15 @@ export default {
     let btn3Click = () => {};
     let btn4Click = () => {};
     let btn5Click = () => {
-      global.$mapConfig.changeMap(2);
-    };
-    let btn6Click = () => {};
-    const location = (lon, lat) => {
-      let view = global.$mapConfig.getMap().getView();
-      var loc = fromLonLat([lon, lat]);
-      view.animate({
-        center: loc,
-        duration: 0,
-      });
-      if ((lon == 110) & (lat == 35)) {
-        view.setZoom(4.5);
+      let selectMap = global.$mapConfig.getMapSelect();
+      if (selectMap != 2) {
+        global.$mapConfig.menuClickEvent("map2");
       } else {
-        view.setZoom(8);
+        global.$mapConfig.menuClickEvent("map1");
       }
     };
+    let btn6Click = () => {};
+    // 位置切换
     return {
       plain,
       isOn,
@@ -117,7 +110,6 @@ export default {
   border: 2px solid rgb(255, 255, 255);
   background: rgb(153, 204, 255);
 }
-
 .el-popper.is-customized .el-popper__arrow::before {
   border: 2px solid rgb(255, 255, 255);
   background: rgb(153, 204, 255);

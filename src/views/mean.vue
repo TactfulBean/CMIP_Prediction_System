@@ -26,6 +26,8 @@ export default {
     let echarts = global.$echarts;
     let axios = global.$axios;
     onMounted(() => {
+      global.$mapConfig.removeRaster();
+      global.$mapConfig.addCAV();
       drawEchart();
     });
     const message = ref({
