@@ -1,10 +1,10 @@
 <template>
   <div class="reciprocalLegend"></div>
-  <div id="show">
-    <el-button type="primary" :class="{ open: message.flag, close: !message.flag }" @click="resultShow">{{ message.msg }}</el-button>
+  <div id="show-trend">
+    <el-button type="primary" :class="{ open_trend: message.flag, close: !message.flag }" @click="resultShow">{{ message.msg }}</el-button>
   </div>
-  <div id="render" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
-    <el-card class="box-card">
+  <div id="trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
+    <el-card class="box-card-trend">
       <!-- 指数选择器 -->
       <div id="selectRow">
         <span>极端指数选择：</span>
@@ -34,12 +34,12 @@
   </div>
 </template>
 <script>
-import * as echarts from "echarts";
-import axios from "axios";
-import { ref, onMounted, onUnmounted, getCurrentInstance } from "vue";
+import { ref, onMounted, getCurrentInstance } from "vue";
 export default {
   setup() {
     const global = getCurrentInstance().appContext.config.globalProperties;
+    let echarts = global.$echarts;
+    let axios = global.$axios;
     const message = ref({
       msg: "收起",
       flag: true,

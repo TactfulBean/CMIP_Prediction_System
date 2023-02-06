@@ -42,7 +42,7 @@ export default {
     // 默认展开的菜单
     let opened = reactive(["1", "2", "3"]);
     // 保持菜单刷新后选中项高亮
-    let default_active = global.$router.currentRoute._value.fullPath.split("/")[1];
+    let default_active = global.$router.currentRoute._value.fullPath.split("/")[1][1];
     // 菜单项点击事件
     let menulist = reactive([
       {

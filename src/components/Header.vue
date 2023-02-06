@@ -6,15 +6,11 @@
       <span class="nav-item" style="padding-left: 5px"><span class="iconfont">&#xeaf9; </span>Blog</span></el-menu-item
     >
     <el-menu-item index="2" @click="jumpPage('https://github.com/TactfulBean')"
-      ><span class="nav-item" style="padding-left: 5px"
-        ><span class="iconfont">&#xe673; </span>Github</span
-      ></el-menu-item
+      ><span class="nav-item" style="padding-left: 5px"><span class="iconfont">&#xe673; </span>Github</span></el-menu-item
     >
   </el-menu>
 </template>
 <script>
-// #4c6cb3
-// #434394
 export default {
   setup() {
     let jumpPage = (path) => {

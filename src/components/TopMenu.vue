@@ -8,12 +8,7 @@
         <template v-for="(item2, index2) in item.child" :key="index2">
           <el-sub-menu v-if="item2.child" :index="item2.router">
             <template #title>{{ item2.name }}</template>
-            <el-menu-item
-              v-for="(child3, index3) in item2.child"
-              :key="index3"
-              :index="child3.router"
-              @click="menuClick(child3.router, item3.type)"
-            >
+            <el-menu-item v-for="(child3, index3) in item2.child" :key="index3" :index="child3.router" @click="menuClick(child3.router, item3.type)">
               <template #title> {{ child3.name }} </template>
             </el-menu-item>
           </el-sub-menu>

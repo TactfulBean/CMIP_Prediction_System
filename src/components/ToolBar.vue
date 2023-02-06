@@ -2,16 +2,12 @@
   <div id="tool-bar">
     <div>
       <el-tooltip class="box-item" effect="customized" content="返回初始位置" placement="left-start">
-        <el-button type="primary" class="tool-button" plain circle @click="btn1Click()"
-          ><span class="iconfont">&#xe60b; </span></el-button
-        >
+        <el-button type="primary" class="tool-button" plain circle @click="btn1Click()"><span class="iconfont">&#xe60b; </span></el-button>
       </el-tooltip>
     </div>
     <div>
       <el-tooltip class="box-item" effect="customized" content="清除图层" placement="left-start">
-        <el-button type="primary" class="tool-button" plain circle @click="btn2Click()"
-          ><span class="iconfont">&#xe74b; </span></el-button
-        >
+        <el-button type="primary" class="tool-button" plain circle @click="btn2Click()"><span class="iconfont">&#xe74b; </span></el-button>
       </el-tooltip>
     </div>
     <!-- <div>
@@ -23,9 +19,7 @@
     </div> -->
     <div>
       <el-tooltip class="box-item" effect="customized" content="卫星图" placement="left-start">
-        <el-button type="primary" class="tool-button" plain circle @click="btn5Click()"
-          ><span class="iconfont">&#xe608; </span></el-button
-        >
+        <el-button type="primary" class="tool-button" plain circle @click="btn5Click()"><span class="iconfont">&#xe608; </span></el-button>
       </el-tooltip>
     </div>
     <!-- <div>
@@ -99,7 +93,6 @@ export default {
   width: 34px;
   top: 25%;
   border-radius: 10px;
-  /* rgb(110, 182, 255) */
   background-color: rgb(236, 246, 255);
   opacity: 0.75;
   right: 0;
