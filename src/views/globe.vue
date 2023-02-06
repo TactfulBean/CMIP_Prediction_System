@@ -8,21 +8,21 @@
       <!-- 指数选择器 -->
       <div id="selectRow">
         <span>极端指数选择：</span>
-        <el-select v-model="CMIP_Value" class="m-2" placeholder="Select" @change="RasterLoad()">
+        <el-select v-model="CMIP_Value" placeholder="Select" @change="RasterLoad()">
           <el-option v-for="item in CMIP_Options" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </div>
       <!-- 指数选择器 -->
       <div id="selectRow">
         <span>算法选择：</span>
-        <el-select v-model="Method_Value" class="m-2" placeholder="Select" @change="RasterLoad()">
+        <el-select v-model="Method_Value" placeholder="Select" @change="RasterLoad()">
           <el-option v-for="item in Method_Options" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </div>
       <!-- 指数选择器 -->
       <div id="selectRow">
         <span>SSP选择：</span>
-        <el-select v-model="SSP_Value" class="m-2" placeholder="Select" @change="RasterLoad()">
+        <el-select v-model="SSP_Value" placeholder="Select" @change="RasterLoad()">
           <el-option v-for="item in SSP_Options" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </div>
