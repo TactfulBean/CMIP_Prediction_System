@@ -1,7 +1,7 @@
 <template>
   <div class="reciprocalLegend"></div>
   <div id="show-trend">
-    <el-button type="primary" :class="{ open_trend: message.flag, close: !message.flag }" @click="resultShow">{{ message.msg }}</el-button>
+    <el-button type="primary" :class="{ open_trend: message.flag, close_trend: !message.flag }" @click="resultShow">{{ message.msg }}</el-button>
   </div>
   <div id="trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
     <el-card class="box-card-trend">
@@ -46,6 +46,7 @@ export default {
     });
     onMounted(() => {
       RasterLoad();
+      MapZoom();
     });
     let resultShow = () => {
       if (message.value.flag) {
@@ -109,10 +110,16 @@ export default {
         value: "SEN",
       },
     ];
+    // 底图缩放至初始位置
+    let MapZoom = () => {
+      global.$mapConfig.MapZoom(160, 20, 0);
+    };
     // 结果图加载
     let RasterLoad = () => {
-      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value);
-      global.$mapConfig.addVectorLayer(Method_Value.value);
+      global.$mapConfig.removeRaster();
+      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value + "_World");
+      global.$mapConfig.addFeatureLayer("World");
+      global.$mapConfig.addCAV();
       const jsonUrl = "./json/legend.json";
       axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
         let data = null;

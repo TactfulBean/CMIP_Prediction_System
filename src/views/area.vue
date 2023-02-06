@@ -6,7 +6,7 @@
     <el-card class="box-card-mean">
       <template #header>
         <div class="card-header">
-          <span style="padding: 0 20px 0 0">均值图表</span>
+          <span style="padding: 0 20px 0 0">区域指数均值盒须图</span>
           <!-- 指数选择器 -->
           <span>极端指数选择：</span>
           <el-select v-model="CMIP_Value" placeholder="Select" @change="drawEchart()">
@@ -26,8 +26,10 @@ export default {
     let echarts = global.$echarts;
     let axios = global.$axios;
     onMounted(() => {
+      global.$mapConfig.removeRaster();
       drawEchart();
       global.$mapConfig.addFeatureLayer("China_Area");
+      global.$mapConfig.addCAV();
     });
     const message = ref({
       msg: "收起",

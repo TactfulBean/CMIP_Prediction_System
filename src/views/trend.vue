@@ -1,7 +1,7 @@
 <template>
   <div class="reciprocalLegend"></div>
   <div id="show-trend">
-    <el-button type="primary" :class="{ open_trend: message.flag, close: !message.flag }" @click="resultShow">{{ message.msg }}</el-button>
+    <el-button type="primary" :class="{ open_trend: message.flag, close_trend: !message.flag }" @click="resultShow">{{ message.msg }}</el-button>
   </div>
   <div id="trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
     <el-card class="box-card-trend">
@@ -47,6 +47,7 @@ export default {
       flag: true,
     });
     onMounted(() => {
+      MapZoom();
       RasterLoad();
       designHoverOnMap();
       designClickOnMap();
@@ -120,11 +121,17 @@ export default {
         value: "SEN",
       },
     ];
+    // 底图缩放至初始位置
+    let MapZoom = () => {
+      global.$mapConfig.MapZoom(110, 35, 4.5);
+    };
     // 结果图加载
     let RasterLoad = () => {
       DELOverlay();
+      global.$mapConfig.removeRaster();
       global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value);
-      global.$mapConfig.addVectorLayer(Method_Value.value);
+      global.$mapConfig.addVectorLayer("./geojson/China_" + Method_Value.value + ".geojson", 0.5);
+      global.$mapConfig.addCAV();
       const jsonUrl = "./json/legend.json";
       axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
         let data = null;

@@ -35,7 +35,7 @@ export default {
         global.$mapConfig.menuClickEvent(menu_router);
       }
       if (type == "location") {
-        global.$mapConfig.location(menu_router[0], menu_router[1]);
+        global.$mapConfig.MapZoom(menu_router[0], menu_router[1], 9);
       }
     };
     const menulist = reactive([
