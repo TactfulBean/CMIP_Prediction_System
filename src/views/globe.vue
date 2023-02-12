@@ -13,18 +13,23 @@
         </el-select>
       </div>
       <!-- 指数选择器 -->
-      <div id="selectRow">
+      <!-- <div id="selectRow">
         <span>算法选择：</span>
         <el-select v-model="Method_Value" placeholder="Select" @change="RasterLoad()">
           <el-option v-for="item in Method_Options" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
-      </div>
+      </div> -->
       <!-- 指数选择器 -->
       <div id="selectRow">
-        <span>SSP选择：</span>
-        <el-select v-model="SSP_Value" placeholder="Select" @change="RasterLoad()">
+        <span>情景选择：</span>
+        <!-- <el-select v-model="SSP_Value" placeholder="Select" @change="RasterLoad()">
           <el-option v-for="item in SSP_Options" :key="item.value" :label="item.label" :value="item.value" />
-        </el-select>
+        </el-select> -->
+        <el-radio-group v-model="SSP_Value" @change="RasterLoad()">
+          <el-radio-button label="SSP1-2.6">SSP1-2.6</el-radio-button>
+          <el-radio-button label="SSP2-4.5">SSP2-4.5</el-radio-button>
+          <el-radio-button label="SSP5-8.5">SSP5-8.5</el-radio-button>
+        </el-radio-group>
       </div>
       <div id="selectRow" style="float: right">
         <el-button color="#409EFF" plain @click="RasterLoad()"><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button>
@@ -117,7 +122,8 @@ export default {
     // 结果图加载
     let RasterLoad = () => {
       global.$mapConfig.removeRaster();
-      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value + "_World");
+      // global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value + "_World");
+      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN_World");
       global.$mapConfig.addFeatureLayer("World");
       global.$mapConfig.addCAV();
       const jsonUrl = "./json/legend.json";
