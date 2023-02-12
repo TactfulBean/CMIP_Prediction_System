@@ -128,12 +128,12 @@ export default {
       global.$mapConfig.addCAV();
       const jsonUrl = "./json/legend.json";
       axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
-        let data = null;
-        if (Method_Value.value == "MK") {
-          data = res.data.MK;
-        } else if (Method_Value.value == "SEN") {
-          data = res.data.SEN;
-        }
+        let data = res.data.MK_SEN;
+        // if (Method_Value.value == "MK") {
+        //   data = res.data.MK;
+        // } else if (Method_Value.value == "SEN") {
+        //   data = res.data.SEN;
+        // }
         let color = null;
         let text = null;
         let type = null;

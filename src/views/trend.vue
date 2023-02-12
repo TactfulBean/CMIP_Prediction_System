@@ -1,42 +1,33 @@
 <template>
   <div class="reciprocalLegend"></div>
-  <div id="show-trend">
-    <el-button type="primary" :class="{ open_trend: message.flag, close_trend: !message.flag }" @click="resultShow">{{ message.msg }}</el-button>
-  </div>
-  <div id="trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
-    <el-card class="box-card-trend">
-      <!-- 指数选择器 -->
-      <div id="selectRow">
-        <span class="selectSpan">极端指数选择：</span>
-        <el-select v-model="CMIP_Value" placeholder="Select" @change="RasterLoad()">
-          <el-option v-for="item in CMIP_Options" :key="item.value" :label="item.label" :value="item.value" />
-        </el-select>
-      </div>
-      <!-- 指数选择器 -->
-      <!-- <div id="selectRow">
-        <span>算法选择：</span>
-        <el-select v-model="Method_Value" placeholder="Select" @change="RasterLoad()">
-          <el-option v-for="item in Method_Options" :key="item.value" :label="item.label" :value="item.value" />
-        </el-select>
-      </div> -->
-      <!-- 指数选择器 -->
-      <div id="selectRow">
-        <span class="selectSpan">情景选择：</span>
-        <!-- <el-select v-model="SSP_Value" placeholder="Select" @change="RasterLoad()">
-          <el-option v-for="item in SSP_Options" :key="item.value" :label="item.label" :value="item.value" />
-        </el-select> -->
-        <el-radio-group v-model="SSP_Value" @change="RasterLoad()">
-          <el-radio-button label="SSP1-2.6">SSP1-2.6</el-radio-button>
-          <el-radio-button label="SSP2-4.5">SSP2-4.5</el-radio-button>
-          <el-radio-button label="SSP5-8.5">SSP5-8.5</el-radio-button>
-        </el-radio-group>
-      </div>
-      <div id="selectRow" style="float: right">
-        <el-button color="#409EFF" plain @click="RasterLoad()"><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button>
-        <el-button color="#409EFF" plain @click="removeLayer()"><span class="iconfont">&#xe74b; </span><span>清除图层</span></el-button>
-      </div>
-    </el-card>
-  </div>
+  <el-button type="primary" id="show-trend" :class="{ open_trend: message.flag, close_trend: !message.flag }" @click="resultShow">{{
+    message.msg
+  }}</el-button>
+
+  <el-card id="trend" class="box-card-trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
+    <!-- 指数选择器 -->
+    <div id="selectRow">
+      <span class="selectSpan">极端指数选择：</span>
+      <el-select v-model="CMIP_Value" placeholder="Select" @change="RasterLoad()">
+        <el-option v-for="item in CMIP_Options" :key="item.value" :label="item.label" :value="item.value" />
+      </el-select>
+    </div>
+    <!-- 指数选择器 -->
+    <div id="selectRow">
+      <span class="selectSpan">情景选择：</span>
+      <el-radio-group v-model="SSP_Value" @change="RasterLoad()">
+        <el-radio-button label="SSP1-2.6">SSP1-2.6</el-radio-button>
+        <el-radio-button label="SSP2-4.5">SSP2-4.5</el-radio-button>
+        <el-radio-button label="SSP5-8.5">SSP5-8.5</el-radio-button>
+      </el-radio-group>
+    </div>
+    <div id="selectRow" style="float: right">
+      <el-button color="#409EFF" plain @click="RasterLoad()"><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button>
+      <el-button color="#409EFF" plain @click="removeLayer()"><span class="iconfont">&#xe74b; </span><span>清除图层</span></el-button>
+    </div>
+  </el-card>
+  <el-button type="primary" id="show-contrast" @click="resultShow1">{{ contrast.msg }}</el-button>
+  <el-card id="contrast" :class="{ 'open-contrast': contrast.flag, 'close-contrast': !contrast.flag }">111</el-card>
 </template>
 <script>
 import { ref, onMounted, onUnmounted, getCurrentInstance } from "vue";
@@ -49,6 +40,10 @@ export default {
     let axios = global.$axios;
     const message = ref({
       msg: "收起",
+      flag: true,
+    });
+    const contrast = ref({
+      msg: "收起对比窗口",
       flag: true,
     });
     onMounted(() => {
@@ -71,6 +66,15 @@ export default {
       } else {
         message.value.msg = "收起";
         message.value.flag = true;
+      }
+    };
+    let resultShow1 = () => {
+      if (contrast.value.flag) {
+        contrast.value.msg = "展开对比窗口";
+        contrast.value.flag = false;
+      } else {
+        contrast.value.msg = "收起对比窗口";
+        contrast.value.flag = true;
       }
     };
     const CMIP_Value = ref("WSDI");
@@ -101,31 +105,7 @@ export default {
       },
     ];
     const SSP_Value = ref("SSP1-2.6");
-    const SSP_Options = [
-      {
-        label: "SSP1-2.6",
-        value: "SSP1-2.6",
-      },
-      {
-        label: "SSP2-4.5",
-        value: "SSP2-4.5",
-      },
-      {
-        label: "SSP5-8.5",
-        value: "SSP5-8.5",
-      },
-    ];
     const Method_Value = ref("SEN");
-    const Method_Options = [
-      {
-        label: "MK",
-        value: "MK",
-      },
-      {
-        label: "SEN",
-        value: "SEN",
-      },
-    ];
     // 底图缩放至初始位置
     let MapZoom = () => {
       global.$mapConfig.MapZoom(110, 35, 4.5);
@@ -140,12 +120,12 @@ export default {
       global.$mapConfig.addCAV();
       const jsonUrl = "./json/legend.json";
       axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
-        let data = null;
-        if (Method_Value.value == "MK") {
-          data = res.data.MK;
-        } else if (Method_Value.value == "SEN") {
-          data = res.data.SEN;
-        }
+        let data = res.data.MK_SEN;
+        // if (Method_Value.value == "MK") {
+        //   data = res.data.MK;
+        // } else if (Method_Value.value == "SEN") {
+        //   data = res.data.SEN;
+        // }
         let color = null;
         let text = null;
         let type = null;
@@ -341,20 +321,20 @@ export default {
                   value: data1,
                   label: labelRight,
                   itemStyle: {
-                    color: "#91CC75",
+                    color: "#2ca9e1",
                   },
                 },
                 {
                   value: data2,
                   label: labelRight,
                   itemStyle: {
-                    color: "#f39800",
+                    color: "#ffea00",
                   },
                 },
                 {
                   value: data3,
                   itemStyle: {
-                    color: "#a90000",
+                    color: "#e83929",
                   },
                 },
               ],
@@ -385,13 +365,13 @@ export default {
     };
     return {
       message,
+      contrast,
       resultShow,
+      resultShow1,
       CMIP_Value,
       CMIP_Options,
       SSP_Value,
-      SSP_Options,
       Method_Value,
-      Method_Options,
       RasterLoad,
       removeLayer,
       DELOverlay,

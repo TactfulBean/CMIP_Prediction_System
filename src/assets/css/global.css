@@ -16,3 +16,6 @@ html,
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 5px;
 }
+#popup {
+  border: 1px solid #409eff;
+}
