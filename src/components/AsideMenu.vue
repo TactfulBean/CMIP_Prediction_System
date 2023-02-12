@@ -29,7 +29,9 @@
         </template>
       </el-sub-menu>
       <el-menu-item v-else :index="item.router">
-        <template #title>{{ item.name }} </template>
+        <template #title
+          ><span class="iconfont">{{ item.icon }} </span><span id="top_menu_title">{{ item.name }}</span>
+        </template>
       </el-menu-item>
     </template>
   </el-menu>
@@ -46,31 +48,24 @@ export default {
     // 菜单项点击事件
     let menulist = reactive([
       {
-        name: "分析结果",
-        router: "1",
-        icon: "",
-        child: [
-          {
-            name: "指数结果总览",
-            router: "trend",
-            icon: "\ue600",
-          },
-          {
-            name: "指数均值趋势",
-            router: "mean",
-            icon: "\ueb96",
-          },
-          {
-            name: "区域指数对比",
-            router: "area",
-            icon: "\ue626",
-          },
-          {
-            name: "全球指数总览",
-            router: "globe",
-            icon: "\ue76c",
-          },
-        ],
+        name: "指数结果总览",
+        router: "trend",
+        icon: "\ue600",
+      },
+      {
+        name: "指数均值趋势",
+        router: "mean",
+        icon: "\ueb96",
+      },
+      {
+        name: "区域指数对比",
+        router: "area",
+        icon: "\ue626",
+      },
+      {
+        name: "全球指数总览",
+        router: "globe",
+        icon: "\ue76c",
       },
     ]);
     return {

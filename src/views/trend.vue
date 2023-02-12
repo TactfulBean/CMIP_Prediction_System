@@ -7,24 +7,29 @@
     <el-card class="box-card-trend">
       <!-- 指数选择器 -->
       <div id="selectRow">
-        <span>极端指数选择：</span>
+        <span class="selectSpan">极端指数选择：</span>
         <el-select v-model="CMIP_Value" placeholder="Select" @change="RasterLoad()">
           <el-option v-for="item in CMIP_Options" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </div>
       <!-- 指数选择器 -->
-      <div id="selectRow">
+      <!-- <div id="selectRow">
         <span>算法选择：</span>
         <el-select v-model="Method_Value" placeholder="Select" @change="RasterLoad()">
           <el-option v-for="item in Method_Options" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
-      </div>
+      </div> -->
       <!-- 指数选择器 -->
       <div id="selectRow">
-        <span>SSP选择：</span>
-        <el-select v-model="SSP_Value" placeholder="Select" @change="RasterLoad()">
+        <span class="selectSpan">情景选择：</span>
+        <!-- <el-select v-model="SSP_Value" placeholder="Select" @change="RasterLoad()">
           <el-option v-for="item in SSP_Options" :key="item.value" :label="item.label" :value="item.value" />
-        </el-select>
+        </el-select> -->
+        <el-radio-group v-model="SSP_Value" @change="RasterLoad()">
+          <el-radio-button label="SSP1-2.6">SSP1-2.6</el-radio-button>
+          <el-radio-button label="SSP2-4.5">SSP2-4.5</el-radio-button>
+          <el-radio-button label="SSP5-8.5">SSP5-8.5</el-radio-button>
+        </el-radio-group>
       </div>
       <div id="selectRow" style="float: right">
         <el-button color="#409EFF" plain @click="RasterLoad()"><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button>
@@ -129,7 +134,8 @@ export default {
     let RasterLoad = () => {
       DELOverlay();
       global.$mapConfig.removeRaster();
-      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value);
+      // global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value);
+      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
       global.$mapConfig.addVectorLayer("./geojson/China_" + Method_Value.value + ".geojson", 0.5);
       global.$mapConfig.addCAV();
       const jsonUrl = "./json/legend.json";
@@ -249,8 +255,8 @@ export default {
         };
       });
       if (features) {
-        // console.log(features.feature.values_);
-        let title = features.feature.values_.NAME + "  " + CMIP_Value.value + "均值(" + Method_Value.value + ")";
+        // let title = features.feature.values_.NAME + "  " + CMIP_Value.value + "均值(" + Method_Value.value + ")";
+        let title = features.feature.values_.NAME + "  " + CMIP_Value.value + "区域变化均值(通过95%显著性检验)";
         let data1;
         let data2;
         let data3;
