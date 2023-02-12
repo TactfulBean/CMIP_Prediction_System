@@ -6,11 +6,11 @@
   height: 350px;
 }
 .result-open {
-  animation: result-open 0.8s !important;
+  animation: result-open 0.75s !important;
   opacity: 1;
 }
 .result-close {
-  animation: result-close 0.7s !important;
+  animation: result-close 0.5s !important;
   transform: translateY(100%);
   opacity: 0;
 }
@@ -21,7 +21,6 @@
   position: absolute;
   left: 2%;
   bottom: 150px;
-  animation: out 1s;
 }
 /* 指数结果与全球指数页面窗口 */
 #selectRow {
@@ -29,7 +28,7 @@
   padding: 0 10px;
 }
 #trend {
-  border-radius: 20px;
+  border-radius: 10px;
   position: absolute;
   z-index: 10;
   width: 100%;
@@ -90,7 +89,7 @@
   animation: open-mean 0.75s !important;
 }
 .close_mean {
-  animation: close-mean 0.75s !important;
+  animation: close-mean 0.5s !important;
   transform: translateY(452px);
 }
 @keyframes open-mean {
@@ -107,5 +106,42 @@
   }
   to {
     transform: translateY(452px);
+  }
+}
+/* 比较窗口 */
+#show-contrast {
+  position: absolute;
+  z-index: 10;
+  bottom: 100px;
+  right: 0;
+}
+#contrast {
+  position: absolute;
+  width: 500px;
+  height: 300px;
+  right: 0;
+  bottom: 100px;
+}
+.open-contrast {
+  animation: open-contrast, 0.75s !important;
+}
+.close-contrast {
+  animation: close-contrast 0.5s !important;
+  transform: translateX(100%);
+}
+@keyframes close-contrast {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes open-contrast {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
   }
 }
