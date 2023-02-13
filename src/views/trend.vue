@@ -3,13 +3,12 @@
   <el-button type="primary" id="show-trend" :class="{ open_trend: message.flag, close_trend: !message.flag }" @click="resultShow">{{
     message.msg
   }}</el-button>
-
   <el-card id="trend" class="box-card-trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
     <!-- 指数选择器 -->
     <div id="selectRow">
       <span>极端指数选择：</span>
       <el-select v-model="CMIP_Value" placeholder="Select" @change="RasterLoad()">
-        <el-option v-for="item in CMIP_Options" :key="item.value" :label="item.label" :value="item.value" />
+        <el-option v-for="item in CMIP_Options" :key="item.index" :value="item" />
       </el-select>
     </div>
     <!-- 指数选择器 -->
@@ -29,9 +28,9 @@
   <el-button type="primary" id="show-contrast" @click="resultShow1">{{ contrast.msg }}</el-button>
   <el-card id="contrast" :class="{ 'open-contrast': contrast.flag, 'close-contrast': !contrast.flag }">
     <el-button @click="contrastBtn">对比</el-button>
-    <span>{{ city2.CMIP_Value }}</span>
+    <span style="padding: 0 20px">{{ city2.CMIP_Value }}</span>
     <span style="padding: 0 20px">{{ city1.name }}</span
-    ><span>{{ city2.name }}</span>
+    ><span style="padding: 0 20px">{{ city2.name }}</span>
     <div id="contrast-content" style="width: 100%; height: 200px"></div>
   </el-card>
 </template>
@@ -39,12 +38,25 @@
 import { ref, onMounted, onUnmounted, getCurrentInstance } from "vue";
 import { Fill, Stroke, Style } from "ol/style.js";
 import Legend from "@/components/Legend.vue";
+import { ElMessage } from "element-plus";
 export default {
   components: { Legend },
   setup() {
     const global = getCurrentInstance().appContext.config.globalProperties;
     let echarts = global.$echarts;
     const Legend = ref(null);
+    onMounted(() => {
+      MapZoom();
+      RasterLoad();
+      drawContrast();
+      designHoverOnMap();
+      designClickOnMap();
+    });
+    onUnmounted(() => {
+      DELOverlay();
+      DELdesignHoverOnMap();
+      DELdesignClickOnMap();
+    });
     const message = ref({
       msg: "收起",
       flag: true,
@@ -63,19 +75,9 @@ export default {
       name: "云南",
       data: [11.1327442957, 21.3738245735, 38.8525626326],
     });
-    onMounted(() => {
-      MapZoom();
-      RasterLoad();
-      drawContrast();
-      designHoverOnMap();
-      designClickOnMap();
-    });
-    //卸载完成
-    onUnmounted(() => {
-      DELOverlay();
-      DELdesignHoverOnMap();
-      DELdesignClickOnMap();
-    });
+    const SSP_Value = ref("SSP2-4.5");
+    const CMIP_Value = ref("WSDI");
+    const CMIP_Options = ["TN10P", "TN90P", "TX10P", "TX90P", "CSDI", "WSDI"];
     let resultShow = () => {
       if (message.value.flag) {
         message.value.msg = "展开";
@@ -94,34 +96,6 @@ export default {
         contrast.value.flag = true;
       }
     };
-    const CMIP_Value = ref("WSDI");
-    const CMIP_Options = [
-      {
-        label: "TN10P",
-        value: "TN10P",
-      },
-      {
-        label: "TN90P",
-        value: "TN90P",
-      },
-      {
-        label: "TX10P",
-        value: "TX10P",
-      },
-      {
-        label: "TX90P",
-        value: "TX90P",
-      },
-      {
-        label: "CSDI",
-        value: "CSDI",
-      },
-      {
-        label: "WSDI",
-        value: "WSDI",
-      },
-    ];
-    const SSP_Value = ref("SSP2-4.5");
     // 底图缩放至初始位置
     let MapZoom = () => {
       global.$mapConfig.MapZoom(110, 35, 4.5);
@@ -159,7 +133,6 @@ export default {
         color: "rgba(0,0,0,0)",
       }),
     });
-    // 鼠标移动监听
     // 鼠标移动监听器
     let pointermove = (event) => {
       let pixel = event.pixel;
@@ -193,16 +166,16 @@ export default {
       global.$mapConfig.getMap().un("pointermove", pointermove);
     };
     // 对比及地图点击弹窗
-    // 对比按钮点击
-    let contrastBtn = () => {
-      city1.value.name = "";
-      city2.value.name = "";
-    };
     let drawContrast = () => {
       var chartDom = document.getElementById("contrast-content");
       var myChart = echarts.init(chartDom);
       var option;
-
+      ElMessage({
+        message: "完成",
+        type: "success",
+        duration: 1000,
+        offset: 5,
+      });
       option = {
         title: {
           text: "区域变化均值对比",
@@ -242,6 +215,17 @@ export default {
         ],
       };
       option && myChart.setOption(option);
+    };
+    // 对比按钮点击
+    let contrastBtn = () => {
+      ElMessage({
+        message: "请用鼠标选择要进行对比的第一个地区",
+        duration: 5000,
+        offset: 5,
+        customClass: "elmessage",
+      });
+      city1.value.name = "";
+      city2.value.name = "";
     };
     // 地图单击事件
     let pointerclick = (event) => {
@@ -291,6 +275,12 @@ export default {
           overlay.setPosition(undefined);
         }
         if (city1.value.name == "") {
+          ElMessage({
+            message: "请用鼠标选择要进行对比的第二个地区",
+            duration: 5000,
+            offset: 5,
+            customClass: "elmessage",
+          });
           city1.value.CMIP_Value = CMIP_Value.value;
           city1.value.name = features.feature.values_.NAME;
           city1.value.data[0] = data1;

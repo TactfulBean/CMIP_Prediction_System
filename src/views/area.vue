@@ -10,7 +10,7 @@
           <!-- 指数选择器 -->
           <span>极端指数选择：</span>
           <el-select v-model="CMIP_Value" placeholder="Select" @change="drawEchart()">
-            <el-option v-for="item in CMIP_Options" :key="item.value" :label="item.label" :value="item.value" />
+            <el-option v-for="item in CMIP_Options" :key="item.index" :value="item" />
           </el-select>
         </div>
       </template>
@@ -46,32 +46,7 @@ export default {
     };
 
     const CMIP_Value = ref("WSDI");
-    const CMIP_Options = [
-      {
-        label: "TN10P",
-        value: "TN10P",
-      },
-      {
-        label: "TN90P",
-        value: "TN90P",
-      },
-      {
-        label: "TX10P",
-        value: "TX10P",
-      },
-      {
-        label: "TX90P",
-        value: "TX90P",
-      },
-      {
-        label: "CSDI",
-        value: "CSDI",
-      },
-      {
-        label: "WSDI",
-        value: "WSDI",
-      },
-    ];
+    const CMIP_Options = ["TN10P", "TN90P", "TX10P", "TX90P", "CSDI", "WSDI"];
     let drawEchart = () => {
       let data1 = null;
       let data2 = null;

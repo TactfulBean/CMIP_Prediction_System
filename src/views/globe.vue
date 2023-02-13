@@ -3,13 +3,12 @@
   <el-button type="primary" id="show-trend" :class="{ open_trend: message.flag, close_trend: !message.flag }" @click="resultShow">{{
     message.msg
   }}</el-button>
-
   <el-card id="trend" class="box-card-trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
     <!-- 指数选择器 -->
     <div id="selectRow">
       <span>极端指数选择：</span>
       <el-select v-model="CMIP_Value" placeholder="Select" @change="RasterLoad()">
-        <el-option v-for="item in CMIP_Options" :key="item.value" :label="item.label" :value="item.value" />
+        <el-option v-for="item in CMIP_Options" :key="item.value" :value="item.value" />
       </el-select>
     </div>
     <!-- 指数选择器 -->
@@ -43,6 +42,9 @@ export default {
       RasterLoad();
       MapZoom();
     });
+    const SSP_Value = ref("SSP2-4.5");
+    const CMIP_Value = ref("WSDI");
+    const CMIP_Options = ["TN10P", "TN90P", "TX10P", "TX90P", "CSDI", "WSDI"];
     let resultShow = () => {
       if (message.value.flag) {
         message.value.msg = "展开";
@@ -52,34 +54,6 @@ export default {
         message.value.flag = true;
       }
     };
-    const CMIP_Value = ref("WSDI");
-    const CMIP_Options = [
-      {
-        label: "TN10P",
-        value: "TN10P",
-      },
-      {
-        label: "TN90P",
-        value: "TN90P",
-      },
-      {
-        label: "TX10P",
-        value: "TX10P",
-      },
-      {
-        label: "TX90P",
-        value: "TX90P",
-      },
-      {
-        label: "CSDI",
-        value: "CSDI",
-      },
-      {
-        label: "WSDI",
-        value: "WSDI",
-      },
-    ];
-    const SSP_Value = ref("SSP2-4.5");
     // 底图缩放至初始位置
     let MapZoom = () => {
       global.$mapConfig.MapZoom(160, 20, 0);
