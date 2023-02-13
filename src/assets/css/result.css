@@ -14,14 +14,6 @@
   transform: translateY(100%);
   opacity: 0;
 }
-/* 图例 */
-.reciprocalLegend {
-  width: 75px;
-  height: 200px;
-  position: absolute;
-  left: 2%;
-  bottom: 150px;
-}
 /* 指数结果与全球指数页面窗口 */
 #selectRow {
   display: inline-block;

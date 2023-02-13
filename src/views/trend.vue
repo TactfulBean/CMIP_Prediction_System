@@ -1,5 +1,5 @@
 <template>
-  <div class="reciprocalLegend"></div>
+  <Legend :CMIP_Value="CMIP_Value" ref="Legend"></Legend>
   <el-button type="primary" id="show-trend" :class="{ open_trend: message.flag, close_trend: !message.flag }" @click="resultShow">{{
     message.msg
   }}</el-button>
@@ -7,14 +7,14 @@
   <el-card id="trend" class="box-card-trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
     <!-- 指数选择器 -->
     <div id="selectRow">
-      <span class="selectSpan">极端指数选择：</span>
+      <span>极端指数选择：</span>
       <el-select v-model="CMIP_Value" placeholder="Select" @change="RasterLoad()">
         <el-option v-for="item in CMIP_Options" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>
     <!-- 指数选择器 -->
     <div id="selectRow">
-      <span class="selectSpan">情景选择：</span>
+      <span>情景选择：</span>
       <el-radio-group v-model="SSP_Value" @change="RasterLoad()">
         <el-radio-button label="SSP1-2.6">SSP1-2.6</el-radio-button>
         <el-radio-button label="SSP2-4.5">SSP2-4.5</el-radio-button>
@@ -38,12 +38,13 @@
 <script>
 import { ref, onMounted, onUnmounted, getCurrentInstance } from "vue";
 import { Fill, Stroke, Style } from "ol/style.js";
+import Legend from "@/components/Legend.vue";
 export default {
-  components: {},
+  components: { Legend },
   setup() {
     const global = getCurrentInstance().appContext.config.globalProperties;
     let echarts = global.$echarts;
-    let axios = global.$axios;
+    const Legend = ref(null);
     const message = ref({
       msg: "收起",
       flag: true,
@@ -121,7 +122,6 @@ export default {
       },
     ];
     const SSP_Value = ref("SSP2-4.5");
-    const Method_Value = ref("SEN");
     // 底图缩放至初始位置
     let MapZoom = () => {
       global.$mapConfig.MapZoom(110, 35, 4.5);
@@ -131,50 +131,9 @@ export default {
       DELOverlay();
       global.$mapConfig.removeRaster();
       global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
-      global.$mapConfig.addVectorLayer("./geojson/China_" + Method_Value.value + ".geojson", 0.5);
+      global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
       global.$mapConfig.addCAV();
-      const jsonUrl = "./json/legend.json";
-      axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
-        let data = res.data.MK_SEN;
-        let color = null;
-        let text = null;
-        let type = null;
-        if (CMIP_Value.value == "CSDI") {
-          type = 0;
-        } else if (CMIP_Value.value == "WSDI") {
-          type = 1;
-        } else if (CMIP_Value.value == "TN10P") {
-          type = 2;
-        } else if (CMIP_Value.value == "TN90P") {
-          type = 3;
-        } else if (CMIP_Value.value == "TX10P") {
-          type = 4;
-        } else if (CMIP_Value.value == "TX90P") {
-          type = 5;
-        }
-        text = data[type].text;
-        color = data[type].color;
-        let barChart = echarts.init(document.querySelector(".reciprocalLegend"));
-        const option = {
-          xAxis: { name: "", axisLine: { show: false } },
-          yAxis: { type: "", axisLine: { show: false } },
-          visualMap: {
-            min: text[1],
-            max: text[0],
-            text: text,
-            inRange: {
-              color: color,
-            },
-            textStyle: {
-              color: "#434394",
-              fontSize: 14,
-              fontWeight: 700,
-            },
-          },
-        };
-        barChart.clear();
-        barChart.setOption(option);
-      });
+      Legend.value.legendRender();
     };
     // 清除图层
     let removeLayer = () => {
@@ -441,6 +400,7 @@ export default {
       overlay.setPosition(undefined);
     };
     return {
+      Legend,
       message,
       city1,
       city2,
@@ -452,7 +412,6 @@ export default {
       CMIP_Value,
       CMIP_Options,
       SSP_Value,
-      Method_Value,
       RasterLoad,
       removeLayer,
       DELOverlay,
