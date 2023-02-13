@@ -89,7 +89,7 @@ export default {
         value: "WSDI",
       },
     ];
-    const SSP_Value = ref("SSP1-2.6");
+    const SSP_Value = ref("SSP2-4.5");
     const SSP_Options = [
       {
         label: "SSP1-2.6",

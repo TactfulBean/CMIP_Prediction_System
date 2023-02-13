@@ -16,7 +16,7 @@
 }
 /* 图例 */
 .reciprocalLegend {
-  width: 80px;
+  width: 75px;
   height: 200px;
   position: absolute;
   left: 2%;
@@ -32,7 +32,6 @@
   position: absolute;
   z-index: 10;
   width: 100%;
-  bottom: 0;
   bottom: 10px;
   box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
 }
@@ -123,11 +122,20 @@
   bottom: 100px;
 }
 .open-contrast {
-  animation: open-contrast, 0.75s !important;
+  animation: open-contrast 0.5s !important;
 }
 .close-contrast {
   animation: close-contrast 0.5s !important;
   transform: translateX(100%);
+}
+
+@keyframes open-contrast {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 @keyframes close-contrast {
   from {
@@ -135,13 +143,5 @@
   }
   to {
     transform: translateX(100%);
-  }
-}
-@keyframes open-contrast {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
   }
 }

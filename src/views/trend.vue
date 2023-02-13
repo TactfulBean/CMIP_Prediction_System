@@ -27,7 +27,13 @@
     </div>
   </el-card>
   <el-button type="primary" id="show-contrast" @click="resultShow1">{{ contrast.msg }}</el-button>
-  <el-card id="contrast" :class="{ 'open-contrast': contrast.flag, 'close-contrast': !contrast.flag }">111</el-card>
+  <el-card id="contrast" :class="{ 'open-contrast': contrast.flag, 'close-contrast': !contrast.flag }">
+    <el-button @click="contrastBtn">对比</el-button>
+    <span>{{ city2.CMIP_Value }}</span>
+    <span style="padding: 0 20px">{{ city1.name }}</span
+    ><span>{{ city2.name }}</span>
+    <div id="contrast-content" style="width: 100%; height: 200px"></div>
+  </el-card>
 </template>
 <script>
 import { ref, onMounted, onUnmounted, getCurrentInstance } from "vue";
@@ -46,9 +52,20 @@ export default {
       msg: "收起对比窗口",
       flag: true,
     });
+    let city1 = ref({
+      CMIP_Value: "WSDI",
+      name: "河北",
+      data: [1.88229888482, 6.91878883065, 20.0275192027],
+    });
+    let city2 = ref({
+      CMIP_Value: "WSDI",
+      name: "云南",
+      data: [11.1327442957, 21.3738245735, 38.8525626326],
+    });
     onMounted(() => {
       MapZoom();
       RasterLoad();
+      drawContrast();
       designHoverOnMap();
       designClickOnMap();
     });
@@ -57,7 +74,6 @@ export default {
       DELOverlay();
       DELdesignHoverOnMap();
       DELdesignClickOnMap();
-      // console.log("onUnmounted");
     });
     let resultShow = () => {
       if (message.value.flag) {
@@ -104,7 +120,7 @@ export default {
         value: "WSDI",
       },
     ];
-    const SSP_Value = ref("SSP1-2.6");
+    const SSP_Value = ref("SSP2-4.5");
     const Method_Value = ref("SEN");
     // 底图缩放至初始位置
     let MapZoom = () => {
@@ -114,18 +130,12 @@ export default {
     let RasterLoad = () => {
       DELOverlay();
       global.$mapConfig.removeRaster();
-      // global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_" + Method_Value.value);
       global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
       global.$mapConfig.addVectorLayer("./geojson/China_" + Method_Value.value + ".geojson", 0.5);
       global.$mapConfig.addCAV();
       const jsonUrl = "./json/legend.json";
       axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
         let data = res.data.MK_SEN;
-        // if (Method_Value.value == "MK") {
-        //   data = res.data.MK;
-        // } else if (Method_Value.value == "SEN") {
-        //   data = res.data.SEN;
-        // }
         let color = null;
         let text = null;
         let type = null;
@@ -223,7 +233,57 @@ export default {
     let DELdesignHoverOnMap = () => {
       global.$mapConfig.getMap().un("pointermove", pointermove);
     };
+    // 对比及地图点击弹窗
+    // 对比按钮点击
+    let contrastBtn = () => {
+      city1.value.name = "";
+      city2.value.name = "";
+    };
+    let drawContrast = () => {
+      var chartDom = document.getElementById("contrast-content");
+      var myChart = echarts.init(chartDom);
+      var option;
 
+      option = {
+        title: {
+          text: "区域变化均值对比",
+        },
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow",
+          },
+        },
+        legend: {},
+        grid: {
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true,
+        },
+        xAxis: {
+          type: "value",
+          boundaryGap: [0, 0.01],
+        },
+        yAxis: {
+          type: "category",
+          data: ["SSP1-2.6", "SSP2-4.5", "SSP5-8.5"],
+        },
+        series: [
+          {
+            name: city1.value.name,
+            type: "bar",
+            data: [city1.value.data[0], city1.value.data[1], city1.value.data[2]],
+          },
+          {
+            name: city2.value.name,
+            type: "bar",
+            data: [city2.value.data[0], city2.value.data[1], city2.value.data[2]],
+          },
+        ],
+      };
+      option && myChart.setOption(option);
+    };
     // 地图单击事件
     let pointerclick = (event) => {
       const coordinate = event.coordinate;
@@ -235,7 +295,6 @@ export default {
         };
       });
       if (features) {
-        // let title = features.feature.values_.NAME + "  " + CMIP_Value.value + "均值(" + Method_Value.value + ")";
         let title = features.feature.values_.NAME + "  " + CMIP_Value.value + "区域变化均值(通过95%显著性检验)";
         let data1;
         let data2;
@@ -265,7 +324,27 @@ export default {
           data2 = features.feature.values_.TX90P245;
           data3 = features.feature.values_.TX90P585;
         }
+        // 对比事件数据
         let overlay = global.$mapConfig.getOverlay();
+        if (city2.value.name != "") {
+          overlay.setPosition(coordinate);
+        } else {
+          overlay.setPosition(undefined);
+        }
+        if (city1.value.name == "") {
+          city1.value.CMIP_Value = CMIP_Value.value;
+          city1.value.name = features.feature.values_.NAME;
+          city1.value.data[0] = data1;
+          city1.value.data[1] = data2;
+          city1.value.data[2] = data3;
+        } else if (city2.value.name == "") {
+          city2.value.CMIP_Value = CMIP_Value.value;
+          city2.value.name = features.feature.values_.NAME;
+          city2.value.data[0] = data1;
+          city2.value.data[1] = data2;
+          city2.value.data[2] = data3;
+          drawContrast();
+        }
         // 渲染统计表
         var chartDom = global.$mapConfig.getContent();
         var myChart = echarts.init(chartDom);
@@ -273,7 +352,6 @@ export default {
         const labelRight = {
           position: "right",
         };
-
         option = {
           title: {
             text: title,
@@ -341,7 +419,6 @@ export default {
             },
           ],
         };
-        overlay.setPosition(coordinate);
         myChart.clear();
         option && myChart.setOption(option);
         // 设置弹窗位置
@@ -365,7 +442,11 @@ export default {
     };
     return {
       message,
+      city1,
+      city2,
       contrast,
+      contrastBtn,
+      drawContrast,
       resultShow,
       resultShow1,
       CMIP_Value,
