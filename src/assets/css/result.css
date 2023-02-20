@@ -14,10 +14,20 @@
   transform: translateY(100%);
   opacity: 0;
 }
+.select-span {
+  height: 33px !important;
+  display: block;
+  float: left;
+  line-height: 33px;
+}
+
 /* 指数结果与全球指数页面窗口 */
 #selectRow {
   display: inline-block;
-  padding: 0 10px;
+  padding: 5px 10px;
+  border: 1px solid #409eff;
+  border-radius: 8px;
+  margin: 0 10px;
 }
 #trend {
   border-radius: 10px;

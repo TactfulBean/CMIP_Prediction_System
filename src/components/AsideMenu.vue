@@ -48,7 +48,12 @@ export default {
     // 菜单项点击事件
     let menulist = reactive([
       {
-        name: "指数结果总览",
+        name: "区域时间变化",
+        router: "timeline",
+        icon: "\ue600",
+      },
+      {
+        name: "指数空间趋势",
         router: "trend",
         icon: "\ue600",
       },
@@ -63,7 +68,7 @@ export default {
         icon: "\ue626",
       },
       {
-        name: "全球指数总览",
+        name: "全球空间趋势总览",
         router: "globe",
         icon: "\ue76c",
       },

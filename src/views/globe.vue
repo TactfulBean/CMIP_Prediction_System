@@ -6,14 +6,19 @@
   <el-card id="trend" class="box-card-trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
     <!-- 指数选择器 -->
     <div id="selectRow">
-      <span>极端指数选择：</span>
-      <el-select v-model="CMIP_Value" placeholder="Select" @change="RasterLoad()">
-        <el-option v-for="item in CMIP_Options" :key="item.value" :value="item.value" />
-      </el-select>
+      <span class="select-span">极端指数选择：</span>
+      <el-radio-group v-model="CMIP_Value" @change="RasterLoad()">
+        <el-radio-button label="WSDI">WSDI</el-radio-button>
+        <el-radio-button label="CSDI">CSDI</el-radio-button>
+        <el-radio-button label="TN10P">TN10P</el-radio-button>
+        <el-radio-button label="TN90P">TN90P</el-radio-button>
+        <el-radio-button label="TX10P">TX10P</el-radio-button>
+        <el-radio-button label="TX90P">TX90P</el-radio-button>
+      </el-radio-group>
     </div>
     <!-- 指数选择器 -->
     <div id="selectRow">
-      <span>情景选择：</span>
+      <span class="select-span">情景选择：</span>
       <el-radio-group v-model="SSP_Value" @change="RasterLoad()">
         <el-radio-button label="SSP1-2.6">SSP1-2.6</el-radio-button>
         <el-radio-button label="SSP2-4.5">SSP2-4.5</el-radio-button>
@@ -39,12 +44,11 @@ export default {
       flag: true,
     });
     onMounted(() => {
+      global.$mapConfig.MapZoom(160, 20, 0);
       RasterLoad();
-      MapZoom();
     });
     const SSP_Value = ref("SSP2-4.5");
     const CMIP_Value = ref("WSDI");
-    const CMIP_Options = ["TN10P", "TN90P", "TX10P", "TX90P", "CSDI", "WSDI"];
     let resultShow = () => {
       if (message.value.flag) {
         message.value.msg = "展开";
@@ -53,10 +57,6 @@ export default {
         message.value.msg = "收起";
         message.value.flag = true;
       }
-    };
-    // 底图缩放至初始位置
-    let MapZoom = () => {
-      global.$mapConfig.MapZoom(160, 20, 0);
     };
     // 结果图加载
     let RasterLoad = () => {
@@ -75,7 +75,6 @@ export default {
       Legend,
       resultShow,
       CMIP_Value,
-      CMIP_Options,
       SSP_Value,
       RasterLoad,
       removeLayer,

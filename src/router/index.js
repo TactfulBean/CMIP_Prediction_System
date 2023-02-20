@@ -9,6 +9,11 @@ const routes = [
     component: () => import("@/views/HomeView.vue"),
     children: [
       {
+        path: "/timeline",
+        name: "/timeline",
+        component: () => import("@/views/timeLine.vue"),
+      },
+      {
         path: "/trend",
         name: "/trend",
         component: () => import("@/views/trend.vue"),

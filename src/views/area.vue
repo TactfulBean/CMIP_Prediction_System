@@ -6,12 +6,17 @@
     <el-card class="box-card-mean">
       <template #header>
         <div class="card-header">
-          <span style="padding: 0 20px 0 0">区域指数均值盒须图</span>
-          <!-- 指数选择器 -->
-          <span>极端指数选择：</span>
-          <el-select v-model="CMIP_Value" placeholder="Select" @change="drawEchart()">
-            <el-option v-for="item in CMIP_Options" :key="item.index" :value="item" />
-          </el-select>
+          <div id="selectRow">
+            <span class="select-span">极端指数选择：</span>
+            <el-radio-group v-model="CMIP_Value" @change="drawEchart()">
+              <el-radio-button label="WSDI">WSDI</el-radio-button>
+              <el-radio-button label="CSDI">CSDI</el-radio-button>
+              <el-radio-button label="TN10P">TN10P</el-radio-button>
+              <el-radio-button label="TN90P">TN90P</el-radio-button>
+              <el-radio-button label="TX10P">TX10P</el-radio-button>
+              <el-radio-button label="TX90P">TX90P</el-radio-button>
+            </el-radio-group>
+          </div>
         </div>
       </template>
       <div id="chart"></div>
@@ -26,6 +31,7 @@ export default {
     let echarts = global.$echarts;
     let axios = global.$axios;
     onMounted(() => {
+      global.$mapConfig.MapZoom(110, 35, 4.5);
       global.$mapConfig.removeRaster();
       drawEchart();
       global.$mapConfig.addFeatureLayer("China_Area");
@@ -46,7 +52,6 @@ export default {
     };
 
     const CMIP_Value = ref("WSDI");
-    const CMIP_Options = ["TN10P", "TN90P", "TX10P", "TX90P", "CSDI", "WSDI"];
     let drawEchart = () => {
       let data1 = null;
       let data2 = null;
@@ -184,7 +189,6 @@ export default {
       message,
       resultShow,
       CMIP_Value,
-      CMIP_Options,
       drawEchart,
     };
   },
