@@ -8,12 +8,24 @@
     <div id="selectRow">
       <span class="select-span">极端指数选择：</span>
       <el-radio-group v-model="CMIP_Value" @change="RasterLoad()">
-        <el-radio-button label="WSDI">WSDI</el-radio-button>
-        <el-radio-button label="CSDI">CSDI</el-radio-button>
-        <el-radio-button label="TN10P">TN10P</el-radio-button>
-        <el-radio-button label="TN90P">TN90P</el-radio-button>
-        <el-radio-button label="TX10P">TX10P</el-radio-button>
-        <el-radio-button label="TX90P">TX90P</el-radio-button>
+        <el-tooltip class="box-item" effect="customized" content="暖期持续时间指数" placement="top">
+          <el-radio-button label="WSDI">WSDI</el-radio-button>
+        </el-tooltip>
+        <el-tooltip class="box-item" effect="customized" content="寒潮持续时间指数" placement="top">
+          <el-radio-button label="CSDI">CSDI</el-radio-button>
+        </el-tooltip>
+        <el-tooltip class="box-item" effect="customized" content="冷夜指数" placement="top">
+          <el-radio-button label="TN10P">TN10P</el-radio-button>
+        </el-tooltip>
+        <el-tooltip class="box-item" effect="customized" content="暖夜指数" placement="top">
+          <el-radio-button label="TN90P">TN90P</el-radio-button>
+        </el-tooltip>
+        <el-tooltip class="box-item" effect="customized" content="冷昼指数" placement="top">
+          <el-radio-button label="TX10P">TX10P</el-radio-button>
+        </el-tooltip>
+        <el-tooltip class="box-item" effect="customized" content="暖昼指数" placement="top">
+          <el-radio-button label="TX90P">TX90P</el-radio-button>
+        </el-tooltip>
       </el-radio-group>
     </div>
     <!-- 指数选择器 -->
@@ -26,12 +38,12 @@
       </el-radio-group>
     </div>
     <div id="selectRow" style="float: right">
-      <el-button color="#409EFF" plain @click="RasterLoad()"><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button>
+      <el-button color="#409EFF" plain @click="ReLoad()"><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button>
       <el-button color="#409EFF" plain @click="removeLayer()"><span class="iconfont">&#xe74b; </span><span>清除图层</span></el-button>
     </div>
   </el-card>
   <el-button type="primary" id="show-contrast" @click="resultShow1">{{ contrast.msg }}</el-button>
-  <el-card id="contrast" :class="{ 'open-contrast': contrast.flag, 'close-contrast': !contrast.flag }">
+  <el-card id="contrast" :class="{ 'open-card-X': contrast.flag, 'close-card-X': !contrast.flag }">
     <el-button @click="contrastBtn">对比</el-button>
     <span style="padding: 0 20px">{{ city2.CMIP_Value }}</span>
     <span style="padding: 0 20px">{{ city1.name }}</span
@@ -51,13 +63,20 @@ export default {
     let echarts = global.$echarts;
     const Legend = ref(null);
     onMounted(() => {
+      // 窗口复位
       global.$mapConfig.MapZoom(110, 35, 4.5);
+      // 清除现有图层
       global.$mapConfig.removeRaster();
+      // 加载栅格图
       global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
+      // 加载geojson边界线
       global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
+      // 加载注记图层
       global.$mapConfig.addCAV();
+      // 渲染图例
       Legend.value.legendRender();
       // RasterLoad();
+      // 对比窗口
       drawContrast();
       designHoverOnMap();
       designClickOnMap();
@@ -140,6 +159,12 @@ export default {
         color: "rgba(0,0,0,0)",
       }),
     });
+    let ReLoad = () => {
+      global.$mapConfig.removeRaster();
+      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
+      global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
+      global.$mapConfig.addCAV();
+    };
     // 鼠标移动监听器
     let pointermove = (event) => {
       let pixel = event.pixel;
@@ -409,6 +434,7 @@ export default {
       CMIP_Value,
       SSP_Value,
       RasterLoad,
+      ReLoad,
       removeLayer,
       DELOverlay,
       Type,

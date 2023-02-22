@@ -11,6 +11,10 @@ html,
 #popup {
   border: 1px solid #409eff;
 }
+
+#mean,
+#time,
+#trend,
 #timeLine,
 #contrast {
   border: 1px solid #409eff;

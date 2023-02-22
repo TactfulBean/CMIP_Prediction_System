@@ -105,14 +105,14 @@ export default {
 }
 .el-popper.is-customized {
   font-size: 14px;
-  color: #fff;
+  color: #000;
   box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
-  border: 2px solid rgb(255, 255, 255);
-  background: rgb(153, 204, 255);
+  border: 1px solid #409eff;
+  background: #fff;
 }
 .el-popper.is-customized .el-popper__arrow::before {
-  border: 2px solid rgb(255, 255, 255);
-  background: rgb(153, 204, 255);
+  border: 1px solid #409eff;
+  background: #fff;
   right: 0;
 }
 </style>

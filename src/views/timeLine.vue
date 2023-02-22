@@ -10,12 +10,24 @@
           <div id="selectRow">
             <span class="select-span">极端指数选择：</span>
             <el-radio-group v-model="CMIP_Value" @change="RasterLoad()">
-              <el-radio-button label="WSDI">WSDI</el-radio-button>
-              <el-radio-button label="CSDI">CSDI</el-radio-button>
-              <el-radio-button label="TN10P">TN10P</el-radio-button>
-              <el-radio-button label="TN90P">TN90P</el-radio-button>
-              <el-radio-button label="TX10P">TX10P</el-radio-button>
-              <el-radio-button label="TX90P">TX90P</el-radio-button>
+              <el-tooltip class="box-item" effect="customized" content="暖期持续时间指数" placement="top">
+                <el-radio-button label="WSDI">WSDI</el-radio-button>
+              </el-tooltip>
+              <el-tooltip class="box-item" effect="customized" content="寒潮持续时间指数" placement="top">
+                <el-radio-button label="CSDI">CSDI</el-radio-button>
+              </el-tooltip>
+              <el-tooltip class="box-item" effect="customized" content="冷夜指数" placement="top">
+                <el-radio-button label="TN10P">TN10P</el-radio-button>
+              </el-tooltip>
+              <el-tooltip class="box-item" effect="customized" content="暖夜指数" placement="top">
+                <el-radio-button label="TN90P">TN90P</el-radio-button>
+              </el-tooltip>
+              <el-tooltip class="box-item" effect="customized" content="冷昼指数" placement="top">
+                <el-radio-button label="TX10P">TX10P</el-radio-button>
+              </el-tooltip>
+              <el-tooltip class="box-item" effect="customized" content="暖昼指数" placement="top">
+                <el-radio-button label="TX90P">TX90P</el-radio-button>
+              </el-tooltip>
             </el-radio-group>
           </div>
           <div id="selectRow" style="float: right">
@@ -31,7 +43,7 @@
     </el-card>
   </div>
   <el-button type="primary" id="show-timeLine" @click="resultShow1">{{ timeLine.msg }}</el-button>
-  <el-card id="timeLine" :class="{ 'open-timeLine': timeLine.flag, 'close-timeLine': !timeLine.flag }">
+  <el-card id="timeLine" :class="{ 'open-card-X': timeLine.flag, 'close-card-X': !timeLine.flag }">
     <div id="timeLine-content" style="width: 100%; height: 100%"></div>
   </el-card>
 </template>
@@ -304,42 +316,5 @@ export default {
 }
 .slider-demo-block {
   padding: 0 30px;
-}
-#show-timeLine {
-  position: absolute;
-  z-index: 10;
-  bottom: 160px;
-  right: 0;
-}
-#timeLine {
-  position: absolute;
-  width: 700px;
-  height: 300px;
-  right: 0;
-  bottom: 160px;
-}
-.open-timeLine {
-  animation: open-timeLine 0.75s !important;
-}
-.close-timeLine {
-  animation: close-timeLine 0.75s !important;
-  transform: translateX(100%);
-}
-
-@keyframes open-timeLine {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-@keyframes close-timeLine {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(100%);
-  }
 }
 </style>

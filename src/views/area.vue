@@ -118,7 +118,7 @@ export default {
             },
           ],
           legend: {
-            top: "10%",
+            right: "20%",
           },
           tooltip: {
             trigger: "item",
