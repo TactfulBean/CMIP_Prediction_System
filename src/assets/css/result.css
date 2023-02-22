@@ -124,10 +124,10 @@
   bottom: 100px;
 }
 .open-contrast {
-  animation: open-contrast 0.5s !important;
+  animation: open-contrast 0.75s !important;
 }
 .close-contrast {
-  animation: close-contrast 0.5s !important;
+  animation: close-contrast 0.75s !important;
   transform: translateX(100%);
 }
 

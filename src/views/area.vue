@@ -137,21 +137,21 @@ export default {
             axisLabel: {
               formatter: function (value) {
                 if (value == 0) {
-                  return "NEC";
+                  return "NEC(东北)";
                 } else if (value == 1) {
-                  return "NC";
+                  return "NC(北部)";
                 } else if (value == 2) {
-                  return "NWC";
+                  return "NWC(西北)";
                 } else if (value == 3) {
-                  return "EC";
+                  return "EC(东部)";
                 } else if (value == 4) {
-                  return "CC";
+                  return "CC(中部)";
                 } else if (value == 5) {
-                  return "SWC1";
+                  return "SWC1(西南1)";
                 } else if (value == 6) {
-                  return "SWC2";
+                  return "SWC2(西南2)";
                 } else if (value == 7) {
-                  return "SC";
+                  return "SC(南部)";
                 }
               },
             },
