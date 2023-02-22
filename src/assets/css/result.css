@@ -3,7 +3,7 @@
   height: 100%;
 }
 .el-card__body {
-  height: 350px;
+  height: 80%;
 }
 .result-open {
   animation: result-open 0.75s !important;

@@ -4,7 +4,7 @@
 <script>
 import { getCurrentInstance } from "vue";
 export default {
-  props: ["CMIP_Value"],
+  props: ["CMIP_Value", "Type"],
   setup(props) {
     const global = getCurrentInstance().appContext.config.globalProperties;
     let axios = global.$axios;
@@ -12,7 +12,13 @@ export default {
     const legendRender = () => {
       const jsonUrl = "./json/legend.json";
       axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
-        let data = res.data.MK_SEN;
+        // 选择类型
+        let data = null;
+        if (props.Type == 1) {
+          data = res.data.MK_SEN;
+        } else if (props.Type == 2) {
+          data = res.data.TIME_LINE;
+        }
         let color = null;
         let text = null;
         let type = null;
@@ -65,7 +71,7 @@ export default {
   height: 200px;
   position: absolute;
   left: 2%;
-  bottom: 150px;
+  bottom: 190px;
   border: 1px solid #409eff;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 10px;

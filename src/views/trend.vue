@@ -1,5 +1,5 @@
 <template>
-  <Legend :CMIP_Value="CMIP_Value" ref="Legend"></Legend>
+  <Legend :CMIP_Value="CMIP_Value" :Type="Type" ref="Legend"></Legend>
   <el-button type="primary" id="show-trend" :class="{ open_trend: message.flag, close_trend: !message.flag }" @click="resultShow">{{
     message.msg
   }}</el-button>
@@ -82,6 +82,7 @@ export default {
     });
     const SSP_Value = ref("SSP2-4.5");
     const CMIP_Value = ref("WSDI");
+    const Type = ref(1);
     let resultShow = () => {
       if (message.value.flag) {
         message.value.msg = "展开";
@@ -404,6 +405,7 @@ export default {
       RasterLoad,
       removeLayer,
       DELOverlay,
+      Type,
     };
   },
 };
