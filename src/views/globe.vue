@@ -8,12 +8,24 @@
     <div id="selectRow">
       <span class="select-span">极端指数选择：</span>
       <el-radio-group v-model="CMIP_Value" @change="RasterLoad()">
-        <el-radio-button label="WSDI">WSDI</el-radio-button>
-        <el-radio-button label="CSDI">CSDI</el-radio-button>
-        <el-radio-button label="TN10P">TN10P</el-radio-button>
-        <el-radio-button label="TN90P">TN90P</el-radio-button>
-        <el-radio-button label="TX10P">TX10P</el-radio-button>
-        <el-radio-button label="TX90P">TX90P</el-radio-button>
+        <el-tooltip class="box-item" effect="customized" content="暖期持续时间指数" placement="top">
+          <el-radio-button label="WSDI">WSDI</el-radio-button>
+        </el-tooltip>
+        <el-tooltip class="box-item" effect="customized" content="寒潮持续时间指数" placement="top">
+          <el-radio-button label="CSDI">CSDI</el-radio-button>
+        </el-tooltip>
+        <el-tooltip class="box-item" effect="customized" content="冷夜指数" placement="top">
+          <el-radio-button label="TN10P">TN10P</el-radio-button>
+        </el-tooltip>
+        <el-tooltip class="box-item" effect="customized" content="暖夜指数" placement="top">
+          <el-radio-button label="TN90P">TN90P</el-radio-button>
+        </el-tooltip>
+        <el-tooltip class="box-item" effect="customized" content="冷昼指数" placement="top">
+          <el-radio-button label="TX10P">TX10P</el-radio-button>
+        </el-tooltip>
+        <el-tooltip class="box-item" effect="customized" content="暖昼指数" placement="top">
+          <el-radio-button label="TX90P">TX90P</el-radio-button>
+        </el-tooltip>
       </el-radio-group>
     </div>
     <!-- 指数选择器 -->
@@ -26,7 +38,7 @@
       </el-radio-group>
     </div>
     <div id="selectRow" style="float: right">
-      <el-button color="#409EFF" plain @click="RasterLoad()"><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button>
+      <el-button color="#409EFF" plain @click="ReLoad()"><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button>
       <el-button color="#409EFF" plain @click="removeLayer()"><span class="iconfont">&#xe74b; </span><span>清除图层</span></el-button>
     </div>
   </el-card>
@@ -73,6 +85,12 @@ export default {
       global.$mapConfig.changeSource("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN_World");
       Legend.value.legendRender();
     };
+    let ReLoad = () => {
+      global.$mapConfig.removeRaster();
+      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
+      global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
+      global.$mapConfig.addCAV();
+    };
     // 清除图层
     let removeLayer = () => {
       global.$mapConfig.removeRaster();
@@ -85,6 +103,7 @@ export default {
       Type,
       SSP_Value,
       RasterLoad,
+      ReLoad,
       removeLayer,
     };
   },

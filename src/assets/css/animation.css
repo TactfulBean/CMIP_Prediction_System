@@ -1,4 +1,4 @@
-@keyframes result-open {
+@keyframes result-open-Y {
   from {
     transform: translateY(100%);
   }
@@ -6,11 +6,27 @@
     transform: translateY(0%);
   }
 }
-@keyframes result-close {
+@keyframes result-close-Y {
   from {
     transform: translateY(0%);
   }
   to {
     transform: translateY(100%);
+  }
+}
+@keyframes result-open-X {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes result-close-X {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
   }
 }

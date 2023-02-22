@@ -6,13 +6,11 @@
   height: 80%;
 }
 .result-open {
-  animation: result-open 0.75s !important;
-  opacity: 1;
+  animation: result-open-Y 0.75s !important;
 }
 .result-close {
-  animation: result-close 0.5s !important;
+  animation: result-close-Y 0.5s !important;
   transform: translateY(100%);
-  opacity: 0;
 }
 .select-span {
   height: 33px !important;
@@ -34,13 +32,13 @@
   position: absolute;
   z-index: 10;
   width: 100%;
-  bottom: 10px;
+  bottom: 0px;
   box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
 }
 #show-trend {
   position: absolute;
   z-index: 10;
-  bottom: 92px;
+  bottom: 82px;
   left: 20px;
 }
 .box-card-trend {
@@ -51,12 +49,12 @@
   animation: open_trend 0.75s !important;
 }
 .close_trend {
-  animation: close_trend 0.75s !important;
-  transform: translateY(92px);
+  animation: close_trend 0.5s !important;
+  transform: translateY(82px);
 }
 @keyframes open_trend {
   from {
-    transform: translateY(92px);
+    transform: translateY(82px);
   }
   to {
     transform: translateY(0);
@@ -67,7 +65,7 @@
     transform: translateY(0);
   }
   to {
-    transform: translateY(92px);
+    transform: translateY(82px);
   }
 }
 
@@ -113,7 +111,7 @@
 #show-contrast {
   position: absolute;
   z-index: 10;
-  bottom: 100px;
+  bottom: 90px;
   right: 0;
 }
 #contrast {
@@ -121,29 +119,26 @@
   width: 500px;
   height: 300px;
   right: 0;
-  bottom: 100px;
+  bottom: 90px;
 }
-.open-contrast {
-  animation: open-contrast 0.75s !important;
+/* 折线图窗口 */
+#show-timeLine {
+  position: absolute;
+  z-index: 10;
+  bottom: 160px;
+  right: 0;
 }
-.close-contrast {
-  animation: close-contrast 0.75s !important;
+#timeLine {
+  position: absolute;
+  width: 700px;
+  height: 300px;
+  right: 0;
+  bottom: 160px;
+}
+.open-card-X {
+  animation: result-open-X 0.75s !important;
+}
+.close-card-X {
+  animation: result-close-X 0.75s !important;
   transform: translateX(100%);
-}
-
-@keyframes open-contrast {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-@keyframes close-contrast {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(100%);
-  }
 }
