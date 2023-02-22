@@ -116,6 +116,16 @@ let getMap = () => {
 let getCMIPFeature = () => {
   return CMIP_Frature;
 };
+// 更换Source
+const changeSource = (value) => {
+  let source = new TileWMS({
+    url: urlRoot,
+    params: {
+      LAYERS: value,
+    },
+  });
+  CMIP_Raster.setSource(source);
+};
 // 添加栅格图层
 const addRasterLayer = (value) => {
   // 存在栅格图层时清除栅格图层
@@ -233,4 +243,6 @@ export default {
   addCAV,
   getMapSelect,
   MapZoom,
+  //
+  changeSource,
 };
