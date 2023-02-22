@@ -48,7 +48,7 @@ export default {
     // 菜单项点击事件
     let menulist = reactive([
       {
-        name: "区域时间变化",
+        name: "指数时间变化",
         router: "timeline",
         icon: "\ue600",
       },
@@ -57,11 +57,11 @@ export default {
         router: "trend",
         icon: "\ue600",
       },
-      {
-        name: "指数均值趋势",
-        router: "mean",
-        icon: "\ueb96",
-      },
+      // {
+      //   name: "指数均值趋势",
+      //   router: "mean",
+      //   icon: "\ueb96",
+      // },
       {
         name: "区域指数对比",
         router: "area",

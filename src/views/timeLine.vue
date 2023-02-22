@@ -65,8 +65,10 @@ export default {
       2100: "2100",
     });
     onMounted(() => {
-      global.$mapConfig.MapZoom(127, 35, 4.5);
+      global.$mapConfig.MapZoom(115, 35, 4.5);
+
       global.$mapConfig.removeRaster();
+      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
       global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
       global.$mapConfig.addCAV();
       // global.$mapConfig.changeSource("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
@@ -122,17 +124,17 @@ export default {
         timeSet.value.flag = false;
         console.log("计时器调用" + year.value);
         // 方法体
-        global.$mapConfig.removeRaster();
-        global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
-        global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
-        global.$mapConfig.addCAV();
-        // global.$mapConfig.changeSource("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
+        // global.$mapConfig.removeRaster();
+        // global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
+        // global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
+        // global.$mapConfig.addCAV();
+        global.$mapConfig.changeSource("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
         //
         if (year.value >= 2100) {
           timeSet.value.message = "重新播放";
           clearInterval(timeSet.value.interval);
         }
-      }, 2000);
+      }, 2500);
       timeSet.value.message = "暂停播放";
     };
     let reTimeSet = () => {
@@ -153,11 +155,11 @@ export default {
       if (year.value != 2100 && timeSet.value.message == "重新播放") {
         timeSet.value.message = "继续播放";
       }
-      global.$mapConfig.removeRaster();
-      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
-      global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
-      global.$mapConfig.addCAV();
-      // global.$mapConfig.changeSource("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
+      // global.$mapConfig.removeRaster();
+      // global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
+      // global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
+      // global.$mapConfig.addCAV();
+      global.$mapConfig.changeSource("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
       console.log("手动选择" + year.value);
     };
     let base = 2021;
@@ -311,16 +313,16 @@ export default {
 }
 #timeLine {
   position: absolute;
-  width: 800px;
+  width: 700px;
   height: 300px;
   right: 0;
   bottom: 160px;
 }
 .open-timeLine {
-  animation: open-timeLine 0.5s !important;
+  animation: open-timeLine 0.75s !important;
 }
 .close-timeLine {
-  animation: close-timeLine 0.5s !important;
+  animation: close-timeLine 0.75s !important;
   transform: translateX(100%);
 }
 

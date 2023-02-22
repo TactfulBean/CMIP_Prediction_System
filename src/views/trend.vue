@@ -52,7 +52,12 @@ export default {
     const Legend = ref(null);
     onMounted(() => {
       global.$mapConfig.MapZoom(110, 35, 4.5);
-      RasterLoad();
+      global.$mapConfig.removeRaster();
+      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
+      global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
+      global.$mapConfig.addCAV();
+      Legend.value.legendRender();
+      // RasterLoad();
       drawContrast();
       designHoverOnMap();
       designClickOnMap();
@@ -104,10 +109,11 @@ export default {
     // 结果图加载
     let RasterLoad = () => {
       DELOverlay();
-      global.$mapConfig.removeRaster();
-      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
-      global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
-      global.$mapConfig.addCAV();
+      // global.$mapConfig.removeRaster();
+      // global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
+      // global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
+      // global.$mapConfig.addCAV();
+      global.$mapConfig.changeSource("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
       Legend.value.legendRender();
     };
     // 清除图层
