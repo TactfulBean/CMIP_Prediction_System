@@ -52,22 +52,6 @@
   animation: close_trend 0.5s !important;
   transform: translateY(82px);
 }
-@keyframes open_trend {
-  from {
-    transform: translateY(82px);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-@keyframes close_trend {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(82px);
-  }
-}
 
 /* 指数均值与区域指数页面窗口 */
 #mean {
@@ -91,22 +75,7 @@
   animation: close-mean 0.5s !important;
   transform: translateY(452px);
 }
-@keyframes open-mean {
-  from {
-    transform: translateY(452px);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-@keyframes close-mean {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(452px);
-  }
-}
+
 /* 比较窗口 */
 #show-contrast {
   position: absolute;
@@ -141,4 +110,26 @@
 .close-card-X {
   animation: result-close-X 0.75s !important;
   transform: translateX(100%);
+}
+/* 时间轴 */
+#time {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  bottom: 0;
+}
+#show-time {
+  position: absolute;
+  z-index: 10;
+  bottom: 152px;
+}
+.box-card-time {
+  height: 150px;
+}
+.open_time {
+  animation: open-tean 0.75s !important;
+}
+.close_time {
+  animation: close-time 0.5s !important;
+  transform: translateY(152px);
 }
