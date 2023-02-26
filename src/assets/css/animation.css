@@ -30,3 +30,52 @@
     transform: translateX(100%);
   }
 }
+/* 各页面展开收起按钮 */
+@keyframes open_trend {
+  from {
+    transform: translateY(82px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes close_trend {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(82px);
+  }
+}
+@keyframes open-mean {
+  from {
+    transform: translateY(452px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes close-mean {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(452px);
+  }
+}
+@keyframes open-tean {
+  from {
+    transform: translateY(152px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes close-time {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(152px);
+  }
+}

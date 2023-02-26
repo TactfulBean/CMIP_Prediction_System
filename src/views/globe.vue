@@ -51,14 +51,14 @@ export default {
   setup() {
     const global = getCurrentInstance().appContext.config.globalProperties;
     const Legend = ref(null);
-    const message = ref({
-      msg: "收起",
-      flag: true,
-    });
     onMounted(() => {
       global.$mapConfig.MapZoom(160, 20, 0);
       ReLoad();
       Legend.value.legendRender();
+    });
+    const message = ref({
+      msg: "收起",
+      flag: true,
     });
     const SSP_Value = ref("SSP2-4.5");
     const CMIP_Value = ref("WSDI");

@@ -266,43 +266,6 @@ export default {
 };
 </script>
 <style>
-#time {
-  position: absolute;
-  z-index: 10;
-  width: 100%;
-  bottom: 0;
-}
-#show-time {
-  position: absolute;
-  z-index: 10;
-  bottom: 152px;
-}
-.box-card-time {
-  height: 150px;
-}
-.open_time {
-  animation: open-tean 0.75s !important;
-}
-.close_time {
-  animation: close-time 0.5s !important;
-  transform: translateY(152px);
-}
-@keyframes open-tean {
-  from {
-    transform: translateY(152px);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-@keyframes close-time {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(152px);
-  }
-}
 .slider-demo-block {
   padding: 0 30px;
 }
