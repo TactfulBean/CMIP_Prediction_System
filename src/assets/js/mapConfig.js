@@ -102,7 +102,7 @@ const changeFeature = (value) => {
   let source = new TileWMS({
     url: urlRoot,
     params: {
-      LAYERS: "CMIP:" + value,
+      LAYERS: value,
     },
   });
   featureLayer.setSource(source);

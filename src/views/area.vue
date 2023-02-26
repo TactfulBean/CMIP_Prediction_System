@@ -34,7 +34,7 @@ export default {
       global.$mapConfig.MapZoom(110, 35, 4.5);
       global.$mapConfig.removeLayer();
       drawEchart();
-      global.$mapConfig.changeFeature("China_Area");
+      global.$mapConfig.changeFeature("CMIP:China_Area");
     });
     const message = ref({
       msg: "收起",
