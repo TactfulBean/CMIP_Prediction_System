@@ -19,11 +19,6 @@ const routes = [
         component: () => import("@/views/trend.vue"),
       },
       {
-        path: "/mean",
-        name: "/mean",
-        component: () => import("@/views/mean.vue"),
-      },
-      {
         path: "/area",
         name: "/area",
         component: () => import("@/views/area.vue"),

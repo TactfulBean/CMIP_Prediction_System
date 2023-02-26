@@ -57,12 +57,6 @@ export default {
             icon: "\ue620",
             type: "map",
           },
-          {
-            name: "雷林",
-            router: "map3",
-            icon: "\ue620",
-            type: "map",
-          },
         ],
       },
       {

@@ -57,12 +57,8 @@ export default {
     });
     onMounted(() => {
       global.$mapConfig.MapZoom(160, 20, 0);
-      global.$mapConfig.removeRaster();
-      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN_World");
-      global.$mapConfig.addFeatureLayer("World");
-      global.$mapConfig.addCAV();
+      ReLoad();
       Legend.value.legendRender();
-      // RasterLoad();
     });
     const SSP_Value = ref("SSP2-4.5");
     const CMIP_Value = ref("WSDI");
@@ -78,22 +74,17 @@ export default {
     };
     // 结果图加载
     let RasterLoad = () => {
-      // global.$mapConfig.removeRaster();
-      // global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN_World");
-      // global.$mapConfig.addFeatureLayer("World");
-      // global.$mapConfig.addCAV();
-      global.$mapConfig.changeSource("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN_World");
+      global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN_World");
       Legend.value.legendRender();
     };
     let ReLoad = () => {
-      global.$mapConfig.removeRaster();
-      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
-      global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
-      global.$mapConfig.addCAV();
+      global.$mapConfig.removeLayer();
+      global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN_World");
+      global.$mapConfig.changeFeature("World");
     };
     // 清除图层
     let removeLayer = () => {
-      global.$mapConfig.removeRaster();
+      global.$mapConfig.removeLayer();
     };
     return {
       message,

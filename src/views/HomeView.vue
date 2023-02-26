@@ -3,7 +3,7 @@
     <el-container>
       <el-header><Header></Header></el-header>
       <el-container>
-        <el-aside width="160px"><Aside></Aside></el-aside>
+        <el-aside width="200px" id="asideMenu"><Aside></Aside></el-aside>
         <el-main>
           <Main></Main>
           <router-view></router-view>
@@ -45,5 +45,9 @@ export default {
   width: auto;
   position: relative;
   overflow: hidden;
+}
+#top_menu_title {
+  font-size: 16px;
+  padding: 0 8px;
 }
 </style>
