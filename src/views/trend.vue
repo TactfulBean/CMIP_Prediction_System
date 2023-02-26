@@ -44,10 +44,13 @@
   </el-card>
   <el-button type="primary" id="show-contrast" @click="resultShow1">{{ contrast.msg }}</el-button>
   <el-card id="contrast" :class="{ 'open-card-X': contrast.flag, 'close-card-X': !contrast.flag }">
-    <el-button @click="contrastBtn">对比</el-button>
-    <span style="padding: 0 20px">{{ city2.CMIP_Value }}</span>
-    <span style="padding: 0 20px">{{ city1.name }}</span
-    ><span style="padding: 0 20px">{{ city2.name }}</span>
+    <div>
+      <el-button @click="contrastBtn" type="primary">对比</el-button>
+      <span class="contrastSpan">{{ city2.CMIP_Value }}</span>
+      <span class="contrastSpan">{{ city1.name }}</span
+      >对比<span class="contrastSpan">{{ city2.name }}</span>
+    </div>
+
     <div id="contrast-content" style="width: 100%; height: 200px"></div>
   </el-card>
 </template>
@@ -430,4 +433,14 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.contrastSpan {
+  font-size: 14px;
+  font-family: Arial;
+  display: inline-block;
+  padding: 6px 20px;
+  margin: 0 5px;
+  border: 1px solid #409eff;
+  border-radius: 10px;
+}
+</style>

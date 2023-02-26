@@ -80,7 +80,7 @@ export default {
     let ReLoad = () => {
       global.$mapConfig.removeLayer();
       global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN_World");
-      global.$mapConfig.changeFeature("World");
+      global.$mapConfig.changeFeature("CMIP:World");
     };
     // 清除图层
     let removeLayer = () => {
