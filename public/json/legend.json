@@ -34,8 +34,8 @@
   "TIME_LINE": [
     {
       "type": "CSDI",
-      "text": [0, -0.06],
-      "color": ["#253494", "#2a66ac", "#3391bc", "#41b6c4", "#81ceb9", "#c0e6bc", "#ffffff"]
+      "text": [27, 0],
+      "color": ["#ffffff", "#ffffb2", "#ffe687", "#fecc5c", "#fead4c", "#fd8d3c", "#f7642e", "#f03b20", "#d71e23", "#bd0026"]
     },
     {
       "type": "WSDI",
@@ -44,23 +44,23 @@
     },
     {
       "type": "TN10P",
-      "text": [0, -0.6],
-      "color": ["#253494", "#2a66ac", "#3391bc", "#41b6c4", "#81ceb9", "#c0e6bc", "#ffffff"]
+      "text": [14, 0],
+      "color": ["#ffffff", "#ffffb2", "#ffe687", "#fecc5c", "#fead4c", "#fd8d3c", "#f7642e", "#f03b20", "#d71e23", "#bd0026"]
     },
     {
       "type": "TN90P",
-      "text": [9, 0],
-      "color": ["#ffffff", "#ffffb2", "#fed66d", "#fda649", "#f86c31", "#e62f21", "#bd0026"]
+      "text": [90, 10],
+      "color": ["#ffffff", "#ffffb2", "#ffe687", "#fecc5c", "#fead4c", "#fd8d3c", "#f7642e", "#f03b20", "#d71e23", "#bd0026"]
     },
     {
       "type": "TX10P",
-      "text": [0, -0.65],
-      "color": ["#253494", "#2a66ac", "#3391bc", "#41b6c4", "#81ceb9", "#c0e6bc", "#ffffff"]
+      "text": [11, 0],
+      "color": ["#ffffff", "#ffffb2", "#ffe687", "#fecc5c", "#fead4c", "#fd8d3c", "#f7642e", "#f03b20", "#d71e23", "#bd0026"]
     },
     {
       "type": "TX90P",
-      "text": [9, 0],
-      "color": ["#ffffff", "#ffffb2", "#fed66d", "#fda649", "#f86c31", "#e62f21", "#bd0026"]
+      "text": [85, 9],
+      "color": ["#ffffff", "#ffffb2", "#ffe687", "#fecc5c", "#fead4c", "#fd8d3c", "#f7642e", "#f03b20", "#d71e23", "#bd0026"]
     }
   ]
 }

@@ -16,19 +16,8 @@ import Overlay from "ol/Overlay.js";
 const urlRoot = "http://localhost:8080/geoserver/CMIP/wms";
 
 let map = null;
-// 地图
-
-const BaseLayer = new TileLayer({
-  source: new XYZ({
-    url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
-  }),
-});
-const CVALayer = new TileLayer({
-  source: new XYZ({
-    url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
-  }),
-});
-
+const BaseLayer = new TileLayer({});
+const CVALayer = new TileLayer({});
 const VEC = new XYZ({
   url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
 });
@@ -46,6 +35,8 @@ const featureLayer = new TileLayer({});
 const rasterLayer = new TileLayer({});
 // 地图初始化
 const initMap = () => {
+  BaseLayer.setSource(VEC);
+  CVALayer.setSource(CAV);
   map = new Map({
     layers: [BaseLayer, rasterLayer, featureLayer, vectorLayer, CVALayer],
     target: "map",
