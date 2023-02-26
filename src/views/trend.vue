@@ -65,19 +65,14 @@ export default {
     onMounted(() => {
       // 窗口复位
       global.$mapConfig.MapZoom(110, 35, 4.5);
-      // 清除现有图层
-      global.$mapConfig.removeRaster();
-      // 加载栅格图
-      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
-      // 加载geojson边界线
-      global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
-      // 加载注记图层
-      global.$mapConfig.addCAV();
+      // 图层加载
+      global.$mapConfig.removeLayer();
+      ReLoad();
       // 渲染图例
       Legend.value.legendRender();
-      // RasterLoad();
       // 对比窗口
       drawContrast();
+      // 启用鼠标监听器
       designHoverOnMap();
       designClickOnMap();
     });
@@ -128,16 +123,16 @@ export default {
     // 结果图加载
     let RasterLoad = () => {
       DELOverlay();
-      // global.$mapConfig.removeRaster();
-      // global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
-      // global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
-      // global.$mapConfig.addCAV();
-      global.$mapConfig.changeSource("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
+      global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
       Legend.value.legendRender();
     };
     // 清除图层
     let removeLayer = () => {
-      global.$mapConfig.removeRaster();
+      global.$mapConfig.removeLayer();
+    };
+    let ReLoad = () => {
+      global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
+      global.$mapConfig.changeVector("./geojson/China_SEN.geojson", 0.5);
     };
     // 鼠标选中样式
     let highFeature = null;
@@ -159,12 +154,6 @@ export default {
         color: "rgba(0,0,0,0)",
       }),
     });
-    let ReLoad = () => {
-      global.$mapConfig.removeRaster();
-      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
-      global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
-      global.$mapConfig.addCAV();
-    };
     // 鼠标移动监听器
     let pointermove = (event) => {
       let pixel = event.pixel;
@@ -175,7 +164,6 @@ export default {
         };
       });
       if (features) {
-        // console.log(features);
         global.$mapConfig.getMap().getTargetElement().style.cursor = "pointer";
         if (highFeature != null) {
           highFeature.setStyle(defaultStyle);
@@ -225,11 +213,11 @@ export default {
           bottom: "3%",
           containLabel: true,
         },
-        xAxis: {
+        yAxis: {
           type: "value",
           boundaryGap: [0, 0.01],
         },
-        yAxis: {
+        xAxis: {
           type: "category",
           data: ["SSP1-2.6", "SSP2-4.5", "SSP5-8.5"],
         },

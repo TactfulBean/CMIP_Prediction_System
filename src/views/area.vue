@@ -32,10 +32,9 @@ export default {
     let axios = global.$axios;
     onMounted(() => {
       global.$mapConfig.MapZoom(110, 35, 4.5);
-      global.$mapConfig.removeRaster();
+      global.$mapConfig.removeLayer();
       drawEchart();
-      global.$mapConfig.addFeatureLayer("China_Area");
-      global.$mapConfig.addCAV();
+      global.$mapConfig.changeFeature("China_Area");
     });
     const message = ref({
       msg: "收起",

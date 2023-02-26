@@ -15,37 +15,50 @@ import Overlay from "ol/Overlay.js";
 // 工作空间URL
 const urlRoot = "http://localhost:8080/geoserver/CMIP/wms";
 
-let selectMap = 1;
 let map = null;
-let CMIP_Raster = null;
-let CMIP_Frature = null;
 // 地图
-const TianDiTu_Map = new TileLayer({
+
+const BaseLayer = new TileLayer({
   source: new XYZ({
     url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
   }),
 });
-// 注记
-const TianDiTu_CVA = new TileLayer({
+const CVALayer = new TileLayer({
   source: new XYZ({
     url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
   }),
 });
-const TianDiTu_TMG = new TileLayer({
-  source: new XYZ({
-    url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
-  }),
+
+const VEC = new XYZ({
+  url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
 });
-const TianDiTu_CIA = new TileLayer({
-  source: new XYZ({
-    url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=cia_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
-  }),
+const CAV = new XYZ({
+  url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
 });
-const ThunderForest = new TileLayer({
-  source: new XYZ({
-    url: "https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=214369c2e1984d369e2f13fcaed16233",
-  }),
+const IMG = new XYZ({
+  url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
 });
+const CIA = new XYZ({
+  url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=cia_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
+});
+const vectorLayer = new VectorLayer({});
+const featureLayer = new TileLayer({});
+const rasterLayer = new TileLayer({});
+// 地图初始化
+const initMap = () => {
+  map = new Map({
+    layers: [BaseLayer, rasterLayer, featureLayer, vectorLayer, CVALayer],
+    target: "map",
+    view: new View({
+      center: fromLonLat([110, 35]),
+      zoom: 4.5,
+    }),
+    controls: defaults({
+      zoom: false,
+      attribution: false,
+    }).extend([scaleControl, mousePositionControl, overviewMapControl]),
+  });
+};
 // 点击弹窗
 var container = document.getElementById("popup");
 var content = document.getElementById("popup-content");
@@ -61,21 +74,6 @@ var overlay = new Overlay({
 closer.onclick = function () {
   overlay.setPosition(undefined);
 };
-// 地图初始化
-const initMap = () => {
-  map = new Map({
-    layers: [TianDiTu_Map],
-    target: "map",
-    view: new View({
-      center: fromLonLat([110, 35]),
-      zoom: 4.5,
-    }),
-    controls: defaults({
-      zoom: false,
-      attribution: false,
-    }).extend([scaleControl, mousePositionControl, overviewMapControl]),
-  });
-};
 // 获取弹窗
 let getOverlay = () => {
   return overlay;
@@ -83,117 +81,66 @@ let getOverlay = () => {
 let getContent = () => {
   return content;
 };
-// 菜单点击事件
+// 切换地图
 const menuClickEvent = (menu_router) => {
   if (menu_router == "map1") {
-    selectMap = 1;
+    BaseLayer.setSource(VEC);
+    CVALayer.setSource(CAV);
   } else if (menu_router == "map2") {
-    selectMap = 2;
-  } else if (menu_router == "map3") {
-    selectMap = 3;
-  }
-  changeMap();
-};
-// 获取底图值
-const getMapSelect = () => {
-  return selectMap;
-};
-// 切换底图
-const changeMap = () => {
-  removeAllLayers();
-  if (selectMap == 1) {
-    map.addLayer(TianDiTu_Map);
-  } else if (selectMap == 2) {
-    map.addLayer(TianDiTu_TMG);
-  } else if (selectMap == 3) {
-    map.addLayer(ThunderForest);
+    BaseLayer.setSource(IMG);
+    CVALayer.setSource(CIA);
   }
 };
 // 获取当前地图变量
 let getMap = () => {
   return map;
 };
-let getCMIPFeature = () => {
-  return CMIP_Frature;
-};
-// 更换Source
-const changeSource = (value) => {
+
+// 更换栅格图层
+const changeRaster = (value) => {
   let source = new TileWMS({
     url: urlRoot,
     params: {
       LAYERS: value,
     },
   });
-  CMIP_Raster.setSource(source);
+  rasterLayer.setSource(source);
 };
-// 添加栅格图层
-const addRasterLayer = (value) => {
-  // 存在栅格图层时清除栅格图层
-  CMIP_Raster = new TileLayer({
-    source: new TileWMS({
-      url: urlRoot,
-      params: {
-        LAYERS: value,
-      },
+// 更换矢量图层
+const changeFeature = (value) => {
+  let source = new TileWMS({
+    url: urlRoot,
+    params: {
+      LAYERS: "CMIP:" + value,
+    },
+  });
+  featureLayer.setSource(source);
+};
+// 更换矢量图层geojson
+const changeVector = (value, width) => {
+  let source = new VectorSource({
+    projection: "EPSG:3857",
+    url: value,
+    format: new GeoJSON(),
+  });
+  let style = new Style({
+    stroke: new Stroke({
+      color: "#007bbb",
+      width: width,
+    }),
+    fill: new Fill({
+      color: "rgba(0,0,0,0)",
     }),
   });
-  map.addLayer(CMIP_Raster);
+  vectorLayer.setSource(source);
+  vectorLayer.setStyle(style);
 };
-// 添加矢量图层geojson
-const addVectorLayer = (value, width) => {
-  CMIP_Frature = new VectorLayer({
-    source: new VectorSource({
-      projection: "EPSG:3857",
-      url: value,
-      format: new GeoJSON(),
-    }),
-    style: new Style({
-      stroke: new Stroke({
-        color: "#007bbb",
-        width: width,
-      }),
-      fill: new Fill({
-        color: "rgba(0,0,0,0)",
-      }),
-    }),
-  });
-  map.addLayer(CMIP_Frature);
+const removeLayer = () => {
+  vectorLayer.setSource(null);
+  featureLayer.setSource(null);
+  rasterLayer.setSource(null);
 };
-// 添加地图注记
-const addCAV = () => {
-  map.addLayer(TianDiTu_CVA);
-};
-// 添加矢量图层WMS
-const addFeatureLayer = (value) => {
-  CMIP_Frature = new TileLayer({
-    source: new TileWMS({
-      url: urlRoot,
-      params: {
-        LAYERS: "CMIP:" + value,
-      },
-    }),
-  });
-  map.addLayer(CMIP_Frature);
-};
-// 清除栅格图层
-const removeRaster = () => {
-  if (CMIP_Raster) {
-    map.removeLayer(CMIP_Raster);
-  }
-  if (CMIP_Frature) {
-    map.removeLayer(CMIP_Frature);
-  }
-  if (TianDiTu_CVA) {
-    map.removeLayer(TianDiTu_CVA);
-  }
-};
-// 清除所有图层，包括底图
-const removeAllLayers = () => {
-  let layers = map.getLayers().getArray();
-  for (let i = layers.length - 1; i >= 0; i--) {
-    map.removeLayer(layers[i]);
-  }
-};
+
 // 底图缩放
 let MapZoom = (lon, lat, zoom) => {
   let view = map.getView();
@@ -229,20 +176,13 @@ const overviewMapControl = new OverviewMap({
 
 export default {
   initMap,
-  addRasterLayer,
-  addFeatureLayer,
-  addVectorLayer,
+  changeRaster,
+  changeFeature,
+  changeVector,
+  removeLayer,
   getMap,
-  getCMIPFeature,
-  changeMap,
-  removeRaster,
-  removeAllLayers,
   menuClickEvent,
   getOverlay,
   getContent,
-  addCAV,
-  getMapSelect,
   MapZoom,
-  //
-  changeSource,
 };

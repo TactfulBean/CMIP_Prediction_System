@@ -56,6 +56,19 @@ export default {
     const global = getCurrentInstance().appContext.config.globalProperties;
     let echarts = global.$echarts;
     let axios = global.$axios;
+    onMounted(() => {
+      global.$mapConfig.MapZoom(115, 35, 4.5);
+
+      global.$mapConfig.removeLayer();
+      global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
+      global.$mapConfig.changeVector("./geojson/China_SEN.geojson", 0.5);
+
+      drawEchart();
+      RasterLoad();
+    });
+    onUnmounted(() => {
+      clearInterval(timeSet.value.interval);
+    });
     const message = ref({
       msg: "收起",
       flag: true,
@@ -75,20 +88,6 @@ export default {
       2081: "2081",
       2091: "2091",
       2100: "2100",
-    });
-    onMounted(() => {
-      global.$mapConfig.MapZoom(115, 35, 4.5);
-
-      global.$mapConfig.removeRaster();
-      global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
-      global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
-      global.$mapConfig.addCAV();
-      // global.$mapConfig.changeSource("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
-      drawEchart();
-      RasterLoad();
-    });
-    onUnmounted(() => {
-      clearInterval(timeSet.value.interval);
     });
     let resultShow = () => {
       if (message.value.flag) {
@@ -134,13 +133,7 @@ export default {
           }
         }
         timeSet.value.flag = false;
-        console.log("计时器调用" + year.value);
-        // 方法体
-        // global.$mapConfig.removeRaster();
-        // global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
-        // global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
-        // global.$mapConfig.addCAV();
-        global.$mapConfig.changeSource("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
+        global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
         //
         if (year.value >= 2100) {
           timeSet.value.message = "重新播放";
@@ -155,7 +148,7 @@ export default {
         timeSet.value.message = "暂停播放";
       } else if (timeSet.value.message == "暂停播放") {
         clearInterval(timeSet.value.interval);
-        console.log("计时器停止");
+        // console.log("计时器停止");
         timeSet.value.message = "继续播放";
       } else if (timeSet.value.message == "重新播放") {
         year.value = 2021;
@@ -167,12 +160,8 @@ export default {
       if (year.value != 2100 && timeSet.value.message == "重新播放") {
         timeSet.value.message = "继续播放";
       }
-      // global.$mapConfig.removeRaster();
-      // global.$mapConfig.addRasterLayer("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
-      // global.$mapConfig.addVectorLayer("./geojson/China_SEN.geojson", 0.5);
-      // global.$mapConfig.addCAV();
-      global.$mapConfig.changeSource("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
-      console.log("手动选择" + year.value);
+      global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
+      // console.log("手动选择" + year.value);
     };
     let base = 2021;
     let data = new Array(80);

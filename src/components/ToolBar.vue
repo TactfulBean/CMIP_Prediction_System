@@ -17,11 +17,11 @@
         >
       </el-tooltip>
     </div> -->
-    <div>
+    <!-- <div>
       <el-tooltip class="box-item" effect="customized" content="切换卫星图" placement="left-start">
         <el-button type="primary" class="tool-button" plain circle @click="btn5Click()"><span class="iconfont">&#xe608; </span></el-button>
       </el-tooltip>
-    </div>
+    </div> -->
     <!-- <div>
       <el-tooltip class="box-item" effect="customized" content="全屏" placement="left-start">
         <el-button type="primary" class="tool-button" :plain="plain[5]" circle @click="isOn(5)"
@@ -55,14 +55,7 @@ export default {
     };
     let btn3Click = () => {};
     let btn4Click = () => {};
-    let btn5Click = () => {
-      let selectMap = global.$mapConfig.getMapSelect();
-      if (selectMap != 2) {
-        global.$mapConfig.menuClickEvent("map2");
-      } else {
-        global.$mapConfig.menuClickEvent("map1");
-      }
-    };
+    let btn5Click = () => {};
     let btn6Click = () => {};
     // 位置切换
     return {
