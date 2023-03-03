@@ -10,36 +10,15 @@
         <el-button type="primary" class="tool-button" plain circle @click="btn2Click()"><span class="iconfont">&#xe74b; </span></el-button>
       </el-tooltip>
     </div>
-    <!-- <div>
-      <el-tooltip class="box-item" effect="customized" content="鹰眼模块" placement="left-start">
-        <el-button type="primary" class="tool-button" :plain="plain[3]" circle @click="isOn(3)"
-          ><span class="iconfont">&#xe76c; </span></el-button
-        >
-      </el-tooltip>
-    </div> -->
-    <!-- <div>
-      <el-tooltip class="box-item" effect="customized" content="切换卫星图" placement="left-start">
-        <el-button type="primary" class="tool-button" plain circle @click="btn5Click()"><span class="iconfont">&#xe608; </span></el-button>
-      </el-tooltip>
-    </div> -->
-    <!-- <div>
-      <el-tooltip class="box-item" effect="customized" content="全屏" placement="left-start">
-        <el-button type="primary" class="tool-button" :plain="plain[5]" circle @click="isOn(5)"
-          ><span class="iconfont">&#xe615; </span></el-button
-        >
-      </el-tooltip>
-    </div> -->
   </div>
 </template>
 <script>
 import { ref, getCurrentInstance } from "vue";
-import { fromLonLat } from "ol/proj";
 export default {
   components: {},
   setup() {
     let global = getCurrentInstance().appContext.config.globalProperties;
     let plain = ref([true, true, true, true, true, true]);
-    let map = global.$mapConfig.getMap();
     let isOn = (no) => {
       if (plain.value[no] == true) {
         plain.value[no] = false;
@@ -51,22 +30,14 @@ export default {
       global.$mapConfig.MapZoom(110, 35, 4.5);
     };
     let btn2Click = () => {
-      global.$mapConfig.removeRaster();
+      global.$mapConfig.removeLayer();
     };
-    let btn3Click = () => {};
-    let btn4Click = () => {};
-    let btn5Click = () => {};
-    let btn6Click = () => {};
     // 位置切换
     return {
       plain,
       isOn,
       btn1Click,
       btn2Click,
-      btn3Click,
-      btn4Click,
-      btn5Click,
-      btn6Click,
     };
   },
 };
