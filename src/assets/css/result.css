@@ -90,6 +90,14 @@
   right: 0;
   bottom: 90px;
 }
+/*  */
+#contrast_world {
+  position: absolute;
+  width: 700px;
+  height: 450px;
+  right: 0;
+  bottom: 90px;
+}
 /* 折线图窗口 */
 #show-timeLine {
   position: absolute;

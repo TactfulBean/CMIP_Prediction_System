@@ -42,6 +42,7 @@
       <el-button color="#409EFF" plain @click="removeLayer()"><span class="iconfont">&#xe74b; </span><span>清除图层</span></el-button>
     </div>
   </el-card>
+  <!-- 对比窗口 -->
   <el-button type="primary" id="show-contrast" @click="resultShow1">{{ contrast.msg }}</el-button>
   <el-card id="contrast" :class="{ 'open-card-X': contrast.flag, 'close-card-X': !contrast.flag }">
     <div>
@@ -50,7 +51,6 @@
       <span class="contrastSpan">{{ city1.name }}</span
       >对比<span class="contrastSpan">{{ city2.name }}</span>
     </div>
-
     <div id="contrast-content" style="width: 100%; height: 200px"></div>
   </el-card>
 </template>

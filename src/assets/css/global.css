@@ -16,7 +16,8 @@ html,
 #time,
 #trend,
 #timeLine,
-#contrast {
+#contrast,
+#contrast_world {
   border: 1px solid #409eff;
   border-radius: 10px;
 }
