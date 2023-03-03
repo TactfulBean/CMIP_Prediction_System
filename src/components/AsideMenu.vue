@@ -49,22 +49,17 @@ export default {
     // 菜单项点击事件
     let menulist = reactive([
       {
+        name: "气候指数空间趋势",
+        router: "trend",
+        icon: "\ue600",
+      },
+      {
         name: "极端气候变化格局",
         router: "timeline",
         icon: "\ue600",
       },
       {
-        name: "指数空间趋势",
-        router: "trend",
-        icon: "\ue600",
-      },
-      // {
-      //   name: "指数均值趋势",
-      //   router: "mean",
-      //   icon: "\ueb96",
-      // },
-      {
-        name: "区域指数对比",
+        name: "区域气候指数对比",
         router: "area",
         icon: "\ue626",
       },

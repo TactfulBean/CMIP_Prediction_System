@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
-  { path: "/", redirect: "/home" },
+  { path: "/", redirect: "/trend" },
   {
     // 主页
     path: "/home",
