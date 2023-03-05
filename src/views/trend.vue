@@ -141,7 +141,7 @@ export default {
     };
     let ReLoad = () => {
       global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
-      global.$mapConfig.changeVector("./geojson/China_SEN.geojson", 0.5);
+      global.$mapConfig.changeVector("./geojson/China_MK_SEN.geojson", 0.5);
     };
     // 鼠标选中样式
     let highFeature = null;

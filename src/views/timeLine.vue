@@ -61,7 +61,7 @@ export default {
 
       global.$mapConfig.removeLayer();
       global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
-      global.$mapConfig.changeVector("./geojson/China_SEN.geojson", 0.5);
+      global.$mapConfig.changeVector("./geojson/China_MK_SEN.geojson", 0.5);
 
       drawEchart();
       RasterLoad();
