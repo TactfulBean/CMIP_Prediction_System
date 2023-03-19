@@ -384,7 +384,7 @@ export default {
                   value: data2,
                   label: labelRight,
                   itemStyle: {
-                    color: "#ffea00",
+                    color: "#f6ad49",
                   },
                 },
                 {

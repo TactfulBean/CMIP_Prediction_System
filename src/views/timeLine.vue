@@ -237,9 +237,36 @@ export default {
             type: "value",
           },
           series: [
-            { name: "SSP1-2.6", data: data1, type: "line" },
-            { name: "SSP2-4.5", data: data2, type: "line" },
-            { name: "SSP5-8.5", data: data3, type: "line" },
+            {
+              name: "SSP1-2.6",
+              data: data1,
+              type: "line",
+              smooth: true,
+              symbol: "none",
+              itemStyle: {
+                color: "#2ca9e1",
+              },
+            },
+            {
+              name: "SSP2-4.5",
+              data: data2,
+              type: "line",
+              smooth: true,
+              symbol: "none",
+              itemStyle: {
+                color: "#f6ad49",
+              },
+            },
+            {
+              name: "SSP5-8.5",
+              data: data3,
+              type: "line",
+              smooth: true,
+              symbol: "none",
+              itemStyle: {
+                color: "#e83929",
+              },
+            },
           ],
         };
         myChart.clear();
