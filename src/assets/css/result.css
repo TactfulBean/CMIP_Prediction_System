@@ -28,7 +28,7 @@
   margin: 0 10px;
 }
 #trend {
-  border-radius: 10px;
+  /* border-radius: 10px; */
   position: absolute;
   z-index: 10;
   width: 100%;
@@ -98,6 +98,13 @@
   right: 0;
   bottom: 90px;
 }
+#contrast_area {
+  position: absolute;
+  width: 900px;
+  height: 350px;
+  right: 0;
+  bottom: 90px;
+}
 /* 折线图窗口 */
 #show-timeLine {
   position: absolute;
@@ -143,6 +150,7 @@
 }
 #popup,
 #contrast_world,
+#contrast_area,
 #timeLine,
 #contrast {
   background-color: rgba(255, 255, 255, 0.7);
