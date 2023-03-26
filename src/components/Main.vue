@@ -6,19 +6,14 @@
     <ToolBar></ToolBar>
   </div>
 </template>
-<script>
+<script setup>
 import { onMounted, getCurrentInstance } from "vue";
 import TopMenu from "@/components/TopMenu.vue";
 import ToolBar from "@/components/ToolBar.vue";
-export default {
-  setup() {
-    const global = getCurrentInstance().appContext.config.globalProperties;
-    onMounted(() => {
-      global.$mapConfig.initMap();
-    });
-  },
-  components: { TopMenu, ToolBar },
-};
+const global = getCurrentInstance().appContext.config.globalProperties;
+onMounted(() => {
+  global.$mapConfig.initMap();
+});
 </script>
 <style>
 #map {

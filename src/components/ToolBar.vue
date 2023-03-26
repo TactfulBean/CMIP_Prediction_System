@@ -12,34 +12,14 @@
     </div>
   </div>
 </template>
-<script>
-import { ref, getCurrentInstance } from "vue";
-export default {
-  components: {},
-  setup() {
-    let global = getCurrentInstance().appContext.config.globalProperties;
-    let plain = ref([true, true, true, true, true, true]);
-    let isOn = (no) => {
-      if (plain.value[no] == true) {
-        plain.value[no] = false;
-      } else {
-        plain.value[no] = true;
-      }
-    };
-    let btn1Click = () => {
-      global.$mapConfig.MapZoom(110, 35, 4.5);
-    };
-    let btn2Click = () => {
-      global.$mapConfig.removeLayer();
-    };
-    // 位置切换
-    return {
-      plain,
-      isOn,
-      btn1Click,
-      btn2Click,
-    };
-  },
+<script setup>
+import { getCurrentInstance } from "vue";
+let global = getCurrentInstance().appContext.config.globalProperties;
+let btn1Click = () => {
+  global.$mapConfig.MapZoom(110, 35, 4.5);
+};
+let btn2Click = () => {
+  global.$mapConfig.removeLayer();
 };
 </script>
 <style>
