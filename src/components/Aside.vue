@@ -1,11 +1,7 @@
 <template>
   <AsideMenu></AsideMenu>
 </template>
-<script>
+<script setup>
 import AsideMenu from "@/components/AsideMenu.vue";
-export default {
-  components: { AsideMenu },
-  setup() {},
-};
 </script>
 <style></style>

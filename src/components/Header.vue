@@ -14,23 +14,12 @@
     >
   </el-menu>
 </template>
-<script>
-export default {
-  setup() {
-    let jumpPage = (path) => {
-      window.location.href = path;
-    };
-    return {
-      jumpPage,
-    };
-  },
-  components: {},
+<script setup>
+let jumpPage = (path) => {
+  window.location.href = path;
 };
 </script>
 <style>
-/* 
-  #4c6cb3
- */
 .title {
   display: flex;
   justify-content: center;
