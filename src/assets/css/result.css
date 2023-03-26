@@ -17,6 +17,7 @@
   display: block;
   float: left;
   line-height: 33px;
+  font-weight: 700;
 }
 
 /* 指数结果与全球指数页面窗口 */
@@ -153,5 +154,5 @@
 #contrast_area,
 #timeLine,
 #contrast {
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.85);
 }
