@@ -86,7 +86,6 @@ const menuClickEvent = (menu_router) => {
 let getMap = () => {
   return map;
 };
-
 // 更换栅格图层
 const changeRaster = (value) => {
   let source = new TileWMS({
@@ -131,7 +130,6 @@ const removeLayer = () => {
   featureLayer.setSource(null);
   rasterLayer.setSource(null);
 };
-
 // 底图缩放
 let MapZoom = (lon, lat, zoom) => {
   let view = map.getView();

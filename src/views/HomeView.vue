@@ -20,7 +20,7 @@ import Main from "@/components/Main.vue";
 <style>
 .el-aside {
   /* background-color: #69a6e4; */
-  background-color: #dbe2ef;
+  background-color: #e0e0e0;
   box-shadow: 2px 2px 3px rgb(0 0 0 / 20%);
   z-index: 10;
   overflow: hidden;
