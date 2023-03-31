@@ -103,37 +103,10 @@ let RasterLoad = () => {
   LegendRef.value.legendRender();
 };
 let drawEchart = () => {
-  let data1 = null;
-  let data2 = null;
-  let data3 = null;
   const jsonUrl = "./json/area.json";
   axios.get(jsonUrl, {}).then((res) => {
     let CMIP = CMIP_Value.value;
-    if (CMIP == "CSDI") {
-      data1 = res.data.CSDI[0];
-      data2 = res.data.CSDI[1];
-      data3 = res.data.CSDI[2];
-    } else if (CMIP == "WSDI") {
-      data1 = res.data.WSDI[0];
-      data2 = res.data.WSDI[1];
-      data3 = res.data.WSDI[2];
-    } else if (CMIP == "TN10P") {
-      data1 = res.data.TN10P[0];
-      data2 = res.data.TN10P[1];
-      data3 = res.data.TN10P[2];
-    } else if (CMIP == "TN90P") {
-      data1 = res.data.TN90P[0];
-      data2 = res.data.TN90P[1];
-      data3 = res.data.TN90P[2];
-    } else if (CMIP == "TX10P") {
-      data1 = res.data.TX10P[0];
-      data2 = res.data.TX10P[1];
-      data3 = res.data.TX10P[2];
-    } else {
-      data1 = res.data.TX90P[0];
-      data2 = res.data.TX90P[1];
-      data3 = res.data.TX90P[2];
-    }
+    let data = res.data[CMIP];
     var chartDom = document.getElementById("chart");
     var myChart = echarts.init(chartDom);
     var option;
@@ -143,13 +116,13 @@ let drawEchart = () => {
       },
       dataset: [
         {
-          source: data1,
+          source: data[0],
         },
         {
-          source: data2,
+          source: data[1],
         },
         {
-          source: data3,
+          source: data[2],
         },
         {
           fromDatasetIndex: 0,
@@ -183,23 +156,8 @@ let drawEchart = () => {
         type: "category",
         axisLabel: {
           formatter: function (value) {
-            if (value == 0) {
-              return "NEC(东北)";
-            } else if (value == 1) {
-              return "NC(北部)";
-            } else if (value == 2) {
-              return "NWC(西北)";
-            } else if (value == 3) {
-              return "EC(东部)";
-            } else if (value == 4) {
-              return "CC(中部)";
-            } else if (value == 5) {
-              return "SWC1(西南1)";
-            } else if (value == 6) {
-              return "SWC2(西南2)";
-            } else if (value == 7) {
-              return "SC(南部)";
-            }
+            const regions = ["NEC(东北)", "NC(北部)", "NWC(西北)", "EC(东部)", "CC(中部)", "SWC1(西南1)", "SWC2(西南2)", "SC(南部)"];
+            return regions[value];
           },
         },
       },
