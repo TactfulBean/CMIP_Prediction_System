@@ -3,7 +3,9 @@
     <el-container>
       <el-header><Header></Header></el-header>
       <el-container>
-        <el-aside width="200px" id="asideMenu"><Aside></Aside></el-aside>
+        <!-- <el-aside width="200px" id="asideMenu"> -->
+        <Aside></Aside>
+        <!-- </el-aside> -->
         <el-main>
           <Main></Main>
           <router-view></router-view>
@@ -28,7 +30,7 @@ import Main from "@/components/Main.vue";
 .el-header {
   padding: 0;
   height: 58px;
-  box-shadow: 2px 2px 3px rgb(0 0 0 / 20%);
+  box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
   z-index: 10;
 }
 .el-main {

@@ -23,7 +23,7 @@ onMounted(() => {
 .custom-mouse-position {
   display: inline-block;
   position: absolute;
-  top: 2px;
+  top: 47px;
   left: 8px;
   padding-top: 4px;
   height: 22px;
@@ -42,7 +42,7 @@ onMounted(() => {
   display: inline-block;
   position: absolute;
   height: 19px;
-  top: 35px;
+  top: 80px;
   font-weight: 700;
   background-color: rgba(153, 204, 255);
   box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);

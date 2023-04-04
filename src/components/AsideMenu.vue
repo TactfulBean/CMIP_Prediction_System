@@ -7,6 +7,8 @@
     :default-active="default_active"
     active-text-color="#409EFF"
     background-color="#fff"
+    mode="horizontal"
+    :ellipsis="false"
   >
     <template v-for="item in menulist" :key="index">
       <el-menu-item :index="item.router">
@@ -44,4 +46,17 @@ let menulist = reactive([
   },
 ]);
 </script>
-<style></style>
+<style scoped>
+.aside-menu {
+  left: 0.5%;
+  position: absolute;
+  z-index: 99;
+  height: 40px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
+}
+#top_menu_title {
+  padding: 0 5px;
+}
+</style>

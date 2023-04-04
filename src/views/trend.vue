@@ -254,6 +254,7 @@ let contrastBtn = () => {
 // 地图单击事件
 let pointerclick = (event) => {
   const coordinate = event.coordinate;
+  let overlay = global.$mapConfig.getOverlay();
   let pixel = event.pixel;
   let features = global.$mapConfig.getMap().forEachFeatureAtPixel(pixel, function (feature, layer) {
     return {
@@ -292,7 +293,6 @@ let pointerclick = (event) => {
       data3 = features.feature.values_.TX90P585;
     }
     // 对比事件数据
-    let overlay = global.$mapConfig.getOverlay();
     if (city2.value.name != "") {
       overlay.setPosition(coordinate);
     } else {
