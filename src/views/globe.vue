@@ -26,6 +26,12 @@
         <el-tooltip class="box-item" effect="customized" content="暖昼指数" placement="top">
           <el-radio-button label="TX90P">TX90P</el-radio-button>
         </el-tooltip>
+        <el-tooltip class="box-item" effect="customized" content="持续干旱指数" placement="top">
+          <el-radio-button label="CDD">CDD</el-radio-button>
+        </el-tooltip>
+        <el-tooltip class="box-item" effect="customized" content="持续湿润指数" placement="top">
+          <el-radio-button label="CWD">CWD</el-radio-button>
+        </el-tooltip>
       </el-radio-group>
     </div>
     <!-- 指数选择器 -->
@@ -183,7 +189,7 @@ let drawEchart = () => {
           type: "bar",
           data: [data[0][1], data[1][1], data[2][1], data[3][1], data[4][1], data[5][1], data[6][1]],
           itemStyle: {
-            color: "#ffea00",
+            color: "#f6ad49",
           },
         },
         {
@@ -268,6 +274,7 @@ let pointerclick = (event) => {
     let data1;
     let data2;
     let data3;
+    console.log(features.feature.values_);
     if (CMIP_Value.value == "CSDI") {
       data1 = features.feature.values_.CSDI126;
       data2 = features.feature.values_.CSDI245;
