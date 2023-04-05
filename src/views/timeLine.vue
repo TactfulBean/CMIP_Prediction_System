@@ -60,7 +60,7 @@ const global = getCurrentInstance().appContext.config.globalProperties;
 let echarts = global.$echarts;
 let axios = global.$axios;
 onMounted(() => {
-  global.$mapConfig.MapZoom(115, 35, 4.5);
+  global.$mapConfig.MapZoom(110, 35, 4.5);
   global.$mapConfig.removeLayer();
   global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
   global.$mapConfig.changeVector("./geojson/China_MK_SEN.geojson", 0.5);
@@ -180,6 +180,8 @@ let drawEchart = () => {
     TN90P: "暖夜",
     TX10P: "冷昼",
     TX90P: "暖昼",
+    CDD: "持续干旱指数",
+    CWD: "持续湿润指数",
   };
 
   const jsonUrl = "./json/SSP.json";
