@@ -122,14 +122,14 @@ let RasterLoad = () => {
 let ReLoad = () => {
   global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN_World");
   // global.$mapConfig.changeFeature("CMIP:World");
-  global.$mapConfig.changeVector("./geojson/world.geojson", 1.5);
+  global.$mapConfig.changeVector("./geojson/World_MK_SEN.geojson", 1.5);
 };
 // 清除图层
 let removeLayer = () => {
   global.$mapConfig.removeLayer();
 };
 let drawEchart = () => {
-  const jsonUrl = "./json/world.json";
+  const jsonUrl = "./json/World.json";
   let data = null;
   axios.get(jsonUrl, {}).then((res) => {
     let CMIP = CMIP_Value.value;

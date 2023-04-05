@@ -29,6 +29,16 @@
       "type": "TX90P",
       "text": [9, 0],
       "color": ["#ffffff", "#ffffb2", "#fed66d", "#fda649", "#f86c31", "#e62f21", "#bd0026"]
+    },
+    {
+      "type": "CDD",
+      "text": [],
+      "color": []
+    },
+    {
+      "type": "CWD",
+      "text": [],
+      "color": []
     }
   ],
   "TIME_LINE": [
@@ -61,6 +71,16 @@
       "type": "TX90P",
       "text": [85, 9],
       "color": ["#ffffff", "#ffffb2", "#ffe687", "#fecc5c", "#fead4c", "#fd8d3c", "#f7642e", "#f03b20", "#d71e23", "#bd0026"]
+    },
+    {
+      "type": "CDD",
+      "text": [],
+      "color": []
+    },
+    {
+      "type": "CWD",
+      "text": [],
+      "color": []
     }
   ]
 }
