@@ -48,6 +48,12 @@ const legendRender = () => {
     } else if (props.CMIP_Value == "TX90P") {
       type = 5;
       unit.value = "(%)";
+    } else if (props.CMIP_Value == "CDD") {
+      type = 6;
+      unit.value = "(天)";
+    } else if (props.CMIP_Value == "CWD") {
+      type = 7;
+      unit.value = "(天)";
     }
     text = data[type].text;
     color = data[type].color;

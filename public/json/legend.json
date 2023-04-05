@@ -32,13 +32,13 @@
     },
     {
       "type": "CDD",
-      "text": [],
-      "color": []
+      "text": [5, -7],
+      "color": ["#2b83ba", "#6bb0af", "#abdda4", "#ffffff", "#ffffbf", "#fed790", "#fdae61", "#ea643f", "#d7191c"]
     },
     {
       "type": "CWD",
-      "text": [],
-      "color": []
+      "text": [6, -4],
+      "color": ["#2b83ba", "#6bb0af", "#abdda4", "#ffffff", "#ffffbf", "#fed790", "#fdae61", "#ea643f", "#d7191c"]
     }
   ],
   "TIME_LINE": [
