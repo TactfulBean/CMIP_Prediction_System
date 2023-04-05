@@ -28,6 +28,12 @@
               <el-tooltip class="box-item" effect="customized" content="暖昼指数" placement="top">
                 <el-radio-button label="TX90P">TX90P</el-radio-button>
               </el-tooltip>
+              <el-tooltip class="box-item" effect="customized" content="持续干旱指数" placement="top">
+                <el-radio-button label="CDD">CDD</el-radio-button>
+              </el-tooltip>
+              <el-tooltip class="box-item" effect="customized" content="持续湿润指数" placement="top">
+                <el-radio-button label="CWD">CWD</el-radio-button>
+              </el-tooltip>
             </el-radio-group>
           </div>
           <div id="selectRow" style="float: right">
@@ -145,7 +151,6 @@ let reTimeSet = () => {
     timeSet.value.message = "暂停播放";
   } else if (timeSet.value.message == "暂停播放") {
     clearInterval(timeSet.value.interval);
-    // console.log("计时器停止");
     timeSet.value.message = "继续播放";
   } else if (timeSet.value.message == "重新播放") {
     year.value = 2021;
@@ -166,45 +171,24 @@ for (let i = 0; i < data.length; i++) {
   data[i] = base;
   base += 1;
 }
+// 折线图渲染
 let drawEchart = () => {
-  let data1 = null;
-  let data2 = null;
-  let data3 = null;
-  let CMIPText = null;
+  const CMIPTexts = {
+    CSDI: "寒潮持续时间指数",
+    WSDI: "暖期持续时间指数",
+    TN10P: "冷夜",
+    TN90P: "暖夜",
+    TX10P: "冷昼",
+    TX90P: "暖昼",
+  };
+
   const jsonUrl = "./json/SSP.json";
   axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
-    let CMIP = CMIP_Value.value;
-    if (CMIP == "CSDI") {
-      CMIPText = "寒潮持续时间指数";
-      data1 = res.data.CSDI[0].data;
-      data2 = res.data.CSDI[1].data;
-      data3 = res.data.CSDI[2].data;
-    } else if (CMIP == "WSDI") {
-      CMIPText = "暖期持续时间指数";
-      data1 = res.data.WSDI[0].data;
-      data2 = res.data.WSDI[1].data;
-      data3 = res.data.WSDI[2].data;
-    } else if (CMIP == "TN10P") {
-      CMIPText = "冷夜";
-      data1 = res.data.TN10P[0].data;
-      data2 = res.data.TN10P[1].data;
-      data3 = res.data.TN10P[2].data;
-    } else if (CMIP == "TN90P") {
-      CMIPText = "暖夜";
-      data1 = res.data.TN90P[0].data;
-      data2 = res.data.TN90P[1].data;
-      data3 = res.data.TN90P[2].data;
-    } else if (CMIP == "TX10P") {
-      CMIPText = "冷昼";
-      data1 = res.data.TX10P[0].data;
-      data2 = res.data.TX10P[1].data;
-      data3 = res.data.TX10P[2].data;
-    } else {
-      CMIPText = "暖昼";
-      data1 = res.data.TX90P[0].data;
-      data2 = res.data.TX90P[1].data;
-      data3 = res.data.TX90P[2].data;
-    }
+    const CMIP = CMIP_Value.value;
+    const data = res.data[CMIP];
+    const [data1, data2, data3] = [data[0].data, data[1].data, data[2].data];
+    const CMIPText = CMIPTexts[CMIP];
+
     var chartDom = document.getElementById("timeLine-content");
     var myChart = echarts.init(chartDom);
     var option;
@@ -228,7 +212,7 @@ let drawEchart = () => {
       },
       xAxis: {
         type: "category",
-        data: data,
+        data: data[0].year,
       },
       yAxis: {
         type: "value",

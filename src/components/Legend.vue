@@ -18,7 +18,7 @@ const props = defineProps({
 let unit = ref(null);
 
 const legendRender = () => {
-  const jsonUrl = "./json/legend.json";
+  const jsonUrl = "./json/Legend.json";
   axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
     // 选择类型
     let data = null;

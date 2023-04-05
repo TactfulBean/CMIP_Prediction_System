@@ -26,6 +26,12 @@
         <el-tooltip class="box-item" effect="customized" content="暖昼指数" placement="top">
           <el-radio-button label="TX90P">TX90P</el-radio-button>
         </el-tooltip>
+        <el-tooltip class="box-item" effect="customized" content="持续干旱指数" placement="top">
+          <el-radio-button label="CDD">CDD</el-radio-button>
+        </el-tooltip>
+        <el-tooltip class="box-item" effect="customized" content="持续湿润指数" placement="top">
+          <el-radio-button label="CWD">CWD</el-radio-button>
+        </el-tooltip>
       </el-radio-group>
     </div>
     <!-- 指数选择器 -->
@@ -103,7 +109,7 @@ let RasterLoad = () => {
   LegendRef.value.legendRender();
 };
 let drawEchart = () => {
-  const jsonUrl = "./json/area.json";
+  const jsonUrl = "./json/Area.json";
   axios.get(jsonUrl, {}).then((res) => {
     let CMIP = CMIP_Value.value;
     let data = res.data[CMIP];
