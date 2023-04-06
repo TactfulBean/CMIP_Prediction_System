@@ -4,9 +4,9 @@ html,
 .el-aside,
 .el-container,
 .home-container {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+	height: 100%;
+	margin: 0;
+	padding: 0;
 }
 /* #popup {
   border: 1px solid #409eff;
@@ -22,5 +22,5 @@ html,
   border-radius: 10px;
 } */
 * {
-  font-family: "Noto Sans SC", "SF Pro SC", "SF Pro Text", "SF Pro Icons", "PingFang SC", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	font-family: "Noto Sans SC", "SF Pro SC", "SF Pro Text", "SF Pro Icons", "PingFang SC", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }

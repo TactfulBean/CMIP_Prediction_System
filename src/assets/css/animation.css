@@ -1,81 +1,81 @@
 @keyframes result-open-Y {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0%);
-  }
+	from {
+		transform: translateY(100%);
+	}
+	to {
+		transform: translateY(0%);
+	}
 }
 @keyframes result-close-Y {
-  from {
-    transform: translateY(0%);
-  }
-  to {
-    transform: translateY(100%);
-  }
+	from {
+		transform: translateY(0%);
+	}
+	to {
+		transform: translateY(100%);
+	}
 }
 @keyframes result-open-X {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0);
+	}
 }
 @keyframes result-close-X {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(100%);
-  }
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(100%);
+	}
 }
 /* 各页面展开收起按钮 */
 @keyframes open_trend {
-  from {
-    transform: translateY(82px);
-  }
-  to {
-    transform: translateY(0);
-  }
+	from {
+		transform: translateY(82px);
+	}
+	to {
+		transform: translateY(0);
+	}
 }
 @keyframes close_trend {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(82px);
-  }
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(82px);
+	}
 }
 @keyframes open-mean {
-  from {
-    transform: translateY(452px);
-  }
-  to {
-    transform: translateY(0);
-  }
+	from {
+		transform: translateY(452px);
+	}
+	to {
+		transform: translateY(0);
+	}
 }
 @keyframes close-mean {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(452px);
-  }
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(452px);
+	}
 }
 @keyframes open-tean {
-  from {
-    transform: translateY(152px);
-  }
-  to {
-    transform: translateY(0);
-  }
+	from {
+		transform: translateY(152px);
+	}
+	to {
+		transform: translateY(0);
+	}
 }
 @keyframes close-time {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(152px);
-  }
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(152px);
+	}
 }
