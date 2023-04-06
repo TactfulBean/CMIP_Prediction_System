@@ -164,4 +164,41 @@ let drawEchart = () => {
 	});
 };
 </script>
-<style scoped></style>
+<style scoped>
+#trend {
+	position: absolute;
+	z-index: 10;
+	width: 100%;
+	bottom: 0px;
+	box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
+}
+#show-trend {
+	position: absolute;
+	z-index: 10;
+	bottom: 79px;
+	left: 20px;
+}
+.open_trend {
+	animation: open_trend 0.75s !important;
+}
+.close_trend {
+	animation: close_trend 0.75s !important;
+	transform: translateY(82px);
+}
+#show-contrast {
+	position: absolute;
+	z-index: 10;
+	right: 0;
+	bottom: 90px;
+}
+#contrast_area {
+	position: absolute;
+	width: 900px;
+	height: 350px;
+	right: 0;
+	bottom: 90px;
+}
+#trend ::v-deep .el-card__body {
+	display: flex;
+}
+</style>

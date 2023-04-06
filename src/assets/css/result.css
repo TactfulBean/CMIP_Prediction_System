@@ -5,121 +5,15 @@
 .el-card__body {
 	height: 80%;
 }
+/* 下侧窗口动画 */
 .result-open {
 	animation: result-open-Y 0.75s !important;
 }
 .result-close {
-	animation: result-close-Y 0.5s !important;
+	animation: result-close-Y 0.75s !important;
 	transform: translateY(100%);
 }
-.select-span {
-	height: 33px !important;
-	display: block;
-	float: left;
-	line-height: 33px;
-	font-weight: 700;
-}
-
-/* 指数结果与全球指数页面窗口 */
-#selectRow {
-	display: inline-block;
-	padding: 5px 10px;
-	/* border: 1px solid #409eff; */
-	border-radius: 8px;
-	margin: 0 10px;
-}
-#trend {
-	/* border-radius: 10px; */
-	position: absolute;
-	z-index: 10;
-	width: 100%;
-	bottom: 0px;
-	box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
-}
-#show-trend {
-	position: absolute;
-	z-index: 10;
-	bottom: 82px;
-	left: 20px;
-}
-.box-card-trend {
-	height: 80px;
-	border-radius: 20px;
-}
-.open_trend {
-	animation: open_trend 0.75s !important;
-}
-.close_trend {
-	animation: close_trend 0.5s !important;
-	transform: translateY(82px);
-}
-
-/* 指数均值与区域指数页面窗口 */
-#mean {
-	position: absolute;
-	z-index: 10;
-	width: 100%;
-	bottom: 0;
-}
-#show-mean {
-	position: absolute;
-	z-index: 10;
-	bottom: 452px;
-}
-.box-card-mean {
-	height: 450px;
-}
-.open_mean {
-	animation: open-mean 0.75s !important;
-}
-.close_mean {
-	animation: close-mean 0.5s !important;
-	transform: translateY(452px);
-}
-
-/* 比较窗口 */
-#show-contrast {
-	position: absolute;
-	z-index: 10;
-	bottom: 90px;
-	right: 0;
-}
-#contrast {
-	position: absolute;
-	width: 500px;
-	height: 300px;
-	right: 0;
-	bottom: 90px;
-}
-/*  */
-#contrast_world {
-	position: absolute;
-	width: 700px;
-	height: 450px;
-	right: 0;
-	bottom: 90px;
-}
-#contrast_area {
-	position: absolute;
-	width: 900px;
-	height: 350px;
-	right: 0;
-	bottom: 90px;
-}
-/* 折线图窗口 */
-#show-timeLine {
-	position: absolute;
-	z-index: 10;
-	bottom: 160px;
-	right: 0;
-}
-#timeLine {
-	position: absolute;
-	width: 700px;
-	height: 300px;
-	right: 0;
-	bottom: 160px;
-}
+/* 右侧窗口动画 */
 .open-card-X {
 	animation: result-open-X 0.75s !important;
 }
@@ -127,28 +21,7 @@
 	animation: result-close-X 0.75s !important;
 	transform: translateX(100%);
 }
-/* 时间轴 */
-#time {
-	position: absolute;
-	z-index: 10;
-	width: 100%;
-	bottom: 0;
-}
-#show-time {
-	position: absolute;
-	z-index: 10;
-	bottom: 152px;
-}
-.box-card-time {
-	height: 150px;
-}
-.open_time {
-	animation: open-tean 0.75s !important;
-}
-.close_time {
-	animation: close-time 0.5s !important;
-	transform: translateY(152px);
-}
+/* 背景透明度 */
 #popup,
 #contrast_world,
 #contrast_area,

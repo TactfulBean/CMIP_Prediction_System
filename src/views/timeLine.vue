@@ -6,13 +6,11 @@
 	<div id="time" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
 		<el-card class="box-card-time">
 			<template #header>
-				<div class="card-header">
-					<CMIPValueSelect @changeCMIP="changeCMIP"></CMIPValueSelect>
-					<div id="selectRow" style="float: right">
-						<el-button color="#409EFF" plain @click="reTimeSet()"
-							><span class="iconfont">&#xe782; </span><span>{{ timeSet.message }}</span></el-button
-						>
-					</div>
+				<CMIPValueSelect @changeCMIP="changeCMIP" style="margin-right: auto"></CMIPValueSelect>
+				<div id="selectRow" style="display: flex">
+					<el-button color="#409EFF" plain @click="reTimeSet()"
+						><span class="iconfont">&#xe782; </span><span>{{ timeSet.message }}</span></el-button
+					>
 				</div>
 			</template>
 			<div class="slider-demo-block">
@@ -232,5 +230,41 @@ let drawEchart = () => {
 <style scoped>
 .slider-demo-block {
 	padding: 0 30px;
+}
+#time {
+	position: absolute;
+	z-index: 10;
+	width: 100%;
+	bottom: 0;
+}
+#show-time {
+	position: absolute;
+	z-index: 10;
+	bottom: 149px;
+}
+.open_time {
+	animation: open-tean 0.75s !important;
+}
+.close_time {
+	animation: close-time 0.75s !important;
+	transform: translateY(152px);
+}
+/* 折线图窗口 */
+#show-timeLine {
+	position: absolute;
+	z-index: 10;
+	bottom: 160px;
+	right: 0;
+}
+#timeLine {
+	position: absolute;
+	width: 700px;
+	height: 300px;
+	right: 0;
+	bottom: 160px;
+}
+.box-card-time::v-deep .el-card__header {
+	display: flex;
+	justify-content: flex-end;
 }
 </style>
