@@ -3,6 +3,7 @@
 	<el-button type="primary" id="show-trend" :class="{ open_trend: message.flag, close_trend: !message.flag }" @click="resultShow">{{
 		message.msg
 	}}</el-button>
+	<!-- 指数选择器 -->
 	<el-card id="trend" class="box-card-trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
 		<CMIPValueSelect @changeCMIP="changeCMIP"></CMIPValueSelect>
 		<SSPValueSelect @changeSSP="changeSSP"></SSPValueSelect>
@@ -365,4 +366,42 @@ let DELOverlay = () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#trend {
+	position: absolute;
+	z-index: 10;
+	width: 100%;
+	bottom: 0px;
+	box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
+}
+#show-trend {
+	position: absolute;
+	z-index: 10;
+	bottom: 79px;
+	left: 20px;
+}
+.open_trend {
+	animation: open_trend 0.75s !important;
+}
+.close_trend {
+	animation: close_trend 0.75s !important;
+	transform: translateY(82px);
+}
+#show-contrast {
+	position: absolute;
+	z-index: 10;
+	right: 0;
+	bottom: 90px;
+}
+#contrast_world {
+	position: absolute;
+	width: 700px;
+	height: 450px;
+	right: 0;
+	bottom: 90px;
+}
+#trend ::v-deep .el-card__body {
+	display: flex;
+	justify-content: flex-end;
+}
+</style>

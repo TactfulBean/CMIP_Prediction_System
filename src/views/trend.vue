@@ -6,7 +6,7 @@
 	<el-card id="trend" class="box-card-trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
 		<CMIPValueSelect @changeCMIP="changeCMIP"></CMIPValueSelect>
 		<SSPValueSelect @changeSSP="changeSSP"></SSPValueSelect>
-		<div id="selectRow" style="float: right">
+		<div id="selectRow" style="display: flex; float: right">
 			<el-button color="#409EFF" plain @click="ReLoad()"><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button>
 			<el-button color="#409EFF" plain @click="removeLayer()"><span class="iconfont">&#xe74b; </span><span>清除图层</span></el-button>
 		</div>
@@ -55,7 +55,7 @@ const message = ref({
 	flag: true,
 });
 const contrast = ref({
-	msg: "收起对比窗口",
+	msg: "收起窗口",
 	flag: true,
 });
 let city1 = ref({
@@ -381,4 +381,42 @@ let DELOverlay = () => {
 	overlay.setPosition(undefined);
 };
 </script>
-<style scoped></style>
+<style scoped>
+#trend {
+	position: absolute;
+	z-index: 10;
+	width: 100%;
+	bottom: 0px;
+	box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
+}
+#show-trend {
+	position: absolute;
+	z-index: 10;
+	bottom: 79px;
+	left: 20px;
+}
+.open_trend {
+	animation: open_trend 0.75s !important;
+}
+.close_trend {
+	animation: close_trend 0.75s !important;
+	transform: translateY(82px);
+}
+#show-contrast {
+	position: absolute;
+	z-index: 10;
+	right: 0;
+	bottom: 90px;
+}
+#contrast {
+	position: absolute;
+	width: 500px;
+	height: 300px;
+	right: 0;
+	bottom: 90px;
+}
+#trend ::v-deep .el-card__body {
+	display: flex;
+	justify-content: flex-end;
+}
+</style>

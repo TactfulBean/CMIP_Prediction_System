@@ -1,6 +1,6 @@
 <template>
 	<div id="selectRow">
-		<span class="select-span">极端指数选择：</span>
+		<el-text style="padding: 8px; font-weight: 700" class="mx-1,selectText" size="large">极端指数选择：</el-text>
 		<el-radio-group v-model="CMIP_Value" @change="changeCMIP()">
 			<el-tooltip class="box-item" effect="customized" content="暖期持续时间指数" placement="top">
 				<el-radio-button label="WSDI">WSDI</el-radio-button>
@@ -41,4 +41,8 @@ const changeCMIP = () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#selectRow {
+	display: flex;
+}
+</style>
