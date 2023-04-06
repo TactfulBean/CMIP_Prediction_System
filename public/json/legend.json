@@ -74,13 +74,13 @@
     },
     {
       "type": "CDD",
-      "text": [],
-      "color": []
+      "text": [320, 5],
+      "color": ["#ffffb2", "#ffe88c", "#fed266", "#feb751", "#fd9b43", "#fa7b36", "#f45629", "#ea3421", "#d41a23", "#bd0026"]
     },
     {
       "type": "CWD",
-      "text": [],
-      "color": []
+      "text": [170, 1],
+      "color": ["#ffffb2", "#ffe88c", "#fed266", "#feb751", "#fd9b43", "#fa7b36", "#f45629", "#ea3421", "#d41a23", "#bd0026"]
     }
   ]
 }
