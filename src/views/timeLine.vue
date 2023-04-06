@@ -7,35 +7,7 @@
     <el-card class="box-card-time">
       <template #header>
         <div class="card-header">
-          <div id="selectRow">
-            <span class="select-span">极端指数选择：</span>
-            <el-radio-group v-model="CMIP_Value" @change="RasterLoad()">
-              <el-tooltip class="box-item" effect="customized" content="暖期持续时间指数" placement="top">
-                <el-radio-button label="WSDI">WSDI</el-radio-button>
-              </el-tooltip>
-              <el-tooltip class="box-item" effect="customized" content="寒潮持续时间指数" placement="top">
-                <el-radio-button label="CSDI">CSDI</el-radio-button>
-              </el-tooltip>
-              <el-tooltip class="box-item" effect="customized" content="冷夜指数" placement="top">
-                <el-radio-button label="TN10P">TN10P</el-radio-button>
-              </el-tooltip>
-              <el-tooltip class="box-item" effect="customized" content="暖夜指数" placement="top">
-                <el-radio-button label="TN90P">TN90P</el-radio-button>
-              </el-tooltip>
-              <el-tooltip class="box-item" effect="customized" content="冷昼指数" placement="top">
-                <el-radio-button label="TX10P">TX10P</el-radio-button>
-              </el-tooltip>
-              <el-tooltip class="box-item" effect="customized" content="暖昼指数" placement="top">
-                <el-radio-button label="TX90P">TX90P</el-radio-button>
-              </el-tooltip>
-              <el-tooltip class="box-item" effect="customized" content="持续干旱指数" placement="top">
-                <el-radio-button label="CDD">CDD</el-radio-button>
-              </el-tooltip>
-              <el-tooltip class="box-item" effect="customized" content="持续湿润指数" placement="top">
-                <el-radio-button label="CWD">CWD</el-radio-button>
-              </el-tooltip>
-            </el-radio-group>
-          </div>
+          <CMIPValueSelect @changeCMIP="changeCMIP"></CMIPValueSelect>
           <div id="selectRow" style="float: right">
             <el-button color="#409EFF" plain @click="reTimeSet()"
               ><span class="iconfont">&#xe782; </span><span>{{ timeSet.message }}</span></el-button
@@ -54,8 +26,10 @@
   </el-card>
 </template>
 <script setup>
-import { ref, onMounted, onUnmounted, getCurrentInstance } from "vue";
+import { ref, onMounted, onUnmounted, getCurrentInstance, watch } from "vue";
 import Legend from "@/components/Legend.vue";
+import CMIPValueSelect from "@/components/CMIP_Value_Select.vue";
+
 const global = getCurrentInstance().appContext.config.globalProperties;
 let echarts = global.$echarts;
 let axios = global.$axios;
@@ -93,22 +67,13 @@ const marks = ref({
   2100: "2100",
 });
 let resultShow = () => {
-  if (message.value.flag) {
-    message.value.msg = "展开";
-    message.value.flag = false;
-  } else {
-    message.value.msg = "收起";
-    message.value.flag = true;
-  }
+  message.value.msg = message.value.flag ? "展开" : "收起";
+  message.value.flag = !message.value.flag;
 };
+
 let resultShow1 = () => {
-  if (timeLine.value.flag) {
-    timeLine.value.msg = "展开窗口";
-    timeLine.value.flag = false;
-  } else {
-    timeLine.value.msg = "收起窗口";
-    timeLine.value.flag = true;
-  }
+  timeLine.value.msg = timeLine.value.flag ? "展开窗口" : "收起窗口";
+  timeLine.value.flag = !timeLine.value.flag;
 };
 const CMIP_Value = ref("WSDI");
 const Type = ref(2);
@@ -117,6 +82,14 @@ let timeSet = ref({
   interval: null,
   message: "暂停播放",
   flag: true,
+});
+// 子组件事件
+let changeCMIP = (value) => {
+  CMIP_Value.value = value;
+};
+// 监听数值变化
+watch(CMIP_Value, (newCMIP, oldCMIP) => {
+  RasterLoad();
 });
 
 let RasterLoad = () => {
@@ -163,7 +136,6 @@ let print = () => {
     timeSet.value.message = "继续播放";
   }
   global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
-  // console.log("手动选择" + year.value);
 };
 let base = 2021;
 let data = new Array(80);
