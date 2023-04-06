@@ -7,6 +7,10 @@
 	<el-card id="trend" class="box-card-trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
 		<CMIPValueSelect @changeCMIP="changeCMIP"></CMIPValueSelect>
 		<SSPValueSelect @changeSSP="changeSSP"></SSPValueSelect>
+		<div id="selectRow" style="display: flex; float: right">
+			<el-button color="#409EFF" plain @click="ReLoad()"><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button>
+			<el-button color="#409EFF" plain @click="removeLayer()"><span class="iconfont">&#xe74b; </span><span>清除图层</span></el-button>
+		</div>
 	</el-card>
 	<!-- 对比窗口 -->
 	<el-button type="primary" id="show-contrast" @click="resultShow1">{{ contrast.msg }}</el-button>
