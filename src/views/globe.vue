@@ -4,55 +4,8 @@
     message.msg
   }}</el-button>
   <el-card id="trend" class="box-card-trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
-    <!-- 指数选择器 -->
-    <div id="selectRow">
-      <span class="select-span">极端指数选择：</span>
-      <el-radio-group v-model="CMIP_Value" @change="RasterLoad(), drawEchart()">
-        <el-tooltip class="box-item" effect="customized" content="暖期持续时间指数" placement="top">
-          <el-radio-button label="WSDI">WSDI</el-radio-button>
-        </el-tooltip>
-        <el-tooltip class="box-item" effect="customized" content="寒潮持续时间指数" placement="top">
-          <el-radio-button label="CSDI">CSDI</el-radio-button>
-        </el-tooltip>
-        <el-tooltip class="box-item" effect="customized" content="冷夜指数" placement="top">
-          <el-radio-button label="TN10P">TN10P</el-radio-button>
-        </el-tooltip>
-        <el-tooltip class="box-item" effect="customized" content="暖夜指数" placement="top">
-          <el-radio-button label="TN90P">TN90P</el-radio-button>
-        </el-tooltip>
-        <el-tooltip class="box-item" effect="customized" content="冷昼指数" placement="top">
-          <el-radio-button label="TX10P">TX10P</el-radio-button>
-        </el-tooltip>
-        <el-tooltip class="box-item" effect="customized" content="暖昼指数" placement="top">
-          <el-radio-button label="TX90P">TX90P</el-radio-button>
-        </el-tooltip>
-        <el-tooltip class="box-item" effect="customized" content="持续干旱指数" placement="top">
-          <el-radio-button label="CDD">CDD</el-radio-button>
-        </el-tooltip>
-        <el-tooltip class="box-item" effect="customized" content="持续湿润指数" placement="top">
-          <el-radio-button label="CWD">CWD</el-radio-button>
-        </el-tooltip>
-      </el-radio-group>
-    </div>
-    <!-- 指数选择器 -->
-    <div id="selectRow">
-      <span class="select-span">情景选择：</span>
-      <el-radio-group v-model="SSP_Value" @change="RasterLoad()">
-        <el-tooltip class="box-item" effect="customized" content="低辐射强迫情景（可持续发展路线）" placement="top">
-          <el-radio-button label="SSP1-2.6">SSP1-2.6</el-radio-button>
-        </el-tooltip>
-        <el-tooltip class="box-item" effect="customized" content="中等辐射强迫情景（中等发展路线）" placement="top">
-          <el-radio-button label="SSP2-4.5">SSP2-4.5</el-radio-button>
-        </el-tooltip>
-        <el-tooltip class="box-item" effect="customized" content="高辐射强迫情景（不平衡发展路线）" placement="top">
-          <el-radio-button label="SSP5-8.5">SSP5-8.5</el-radio-button>
-        </el-tooltip>
-      </el-radio-group>
-    </div>
-    <div id="selectRow" style="float: right">
-      <el-button color="#409EFF" plain @click="ReLoad()"><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button>
-      <el-button color="#409EFF" plain @click="removeLayer()"><span class="iconfont">&#xe74b; </span><span>清除图层</span></el-button>
-    </div>
+    <CMIPValueSelect @changeCMIP="changeCMIP"></CMIPValueSelect>
+    <SSPValueSelect @changeSSP="changeSSP"></SSPValueSelect>
   </el-card>
   <!-- 对比窗口 -->
   <el-button type="primary" id="show-contrast" @click="resultShow1">{{ contrast.msg }}</el-button>
@@ -61,9 +14,11 @@
   </el-card>
 </template>
 <script setup>
-import { ref, onMounted, onUnmounted, getCurrentInstance } from "vue";
+import { ref, onMounted, onUnmounted, getCurrentInstance, watch } from "vue";
 import Legend from "@/components/Legend.vue";
 import { Fill, Stroke, Style } from "ol/style.js";
+import CMIPValueSelect from "@/components/CMIP_Value_Select.vue";
+import SSPValueSelect from "@/components/SSP_Value_Select.vue";
 
 const global = getCurrentInstance().appContext.config.globalProperties;
 // 子组件
@@ -92,27 +47,32 @@ const contrast = ref({
   msg: "收起窗口",
   flag: true,
 });
+let resultShow = () => {
+  message.value.msg = message.value.flag ? "展开" : "收起";
+  message.value.flag = !message.value.flag;
+};
+
+let resultShow1 = () => {
+  contrast.value.msg = contrast.value.flag ? "展开窗口" : "收起窗口";
+  contrast.value.flag = !contrast.value.flag;
+};
 const SSP_Value = ref("SSP2-4.5");
 const CMIP_Value = ref("WSDI");
 const Type = ref(1);
-let resultShow = () => {
-  if (message.value.flag) {
-    message.value.msg = "展开";
-    message.value.flag = false;
-  } else {
-    message.value.msg = "收起";
-    message.value.flag = true;
-  }
+// 子组件事件
+let changeCMIP = (value) => {
+  CMIP_Value.value = value;
 };
-let resultShow1 = () => {
-  if (contrast.value.flag) {
-    contrast.value.msg = "展开窗口";
-    contrast.value.flag = false;
-  } else {
-    contrast.value.msg = "收起窗口";
-    contrast.value.flag = true;
-  }
+let changeSSP = (value) => {
+  SSP_Value.value = value;
 };
+// 监听数值变化
+watch([CMIP_Value, SSP_Value], ([newCMIP, oldCMIP], [newSSP, oldSSP]) => {
+  RasterLoad();
+});
+watch(CMIP_Value, (newCMIP, oldCMIP) => {
+  drawEchart();
+});
 // 结果图加载
 let RasterLoad = () => {
   DELOverlay();
@@ -143,8 +103,12 @@ let drawEchart = () => {
       data = res.data.TN90P;
     } else if (CMIP == "TX10P") {
       data = res.data.TX10P;
-    } else {
+    } else if (CMIP == "TX90P") {
       data = res.data.TX90P;
+    } else if (CMIP == "CDD") {
+      data = res.data.CDD;
+    } else {
+      data = res.data.CWD;
     }
     var chartDom = document.getElementById("contrast-content_world");
     var myChart = echarts.init(chartDom);
