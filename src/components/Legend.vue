@@ -89,7 +89,7 @@ defineExpose({
 	width: 75px;
 	height: 220px;
 	position: absolute;
-	left: 2%;
+	left: 10px;
 	bottom: 190px;
 	border: 1px solid #409eff;
 	background-color: rgba(255, 255, 255, 0.9);
