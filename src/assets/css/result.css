@@ -21,11 +21,19 @@
 	animation: result-close-X 0.75s !important;
 	transform: translateX(100%);
 }
+.open-card-X-top {
+	animation: result-open-X 1s !important;
+}
+.close-card-X-top {
+	animation: result-close-X 1s !important;
+	transform: translateX(100%);
+}
 /* 背景透明度 */
 #popup,
 #contrast_world,
 #contrast_area,
 #timeLine,
-#contrast {
+#contrast,
+#contrast-top {
 	background-color: rgba(255, 255, 255, 0.85);
 }

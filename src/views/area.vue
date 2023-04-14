@@ -85,7 +85,7 @@ let drawEchart = () => {
 		var option;
 		option = {
 			title: {
-				text: "区域指数均值盒须图",
+				text: "区域指数均值",
 			},
 			dataset: [
 				{
@@ -122,10 +122,14 @@ let drawEchart = () => {
 			grid: {
 				left: "3%",
 				right: "4%",
-				bottom: "3%",
+				bottom: "10%",
 				containLabel: true,
 			},
 			xAxis: {
+				type: "value",
+				name: "Value",
+			},
+			yAxis: {
 				type: "category",
 				axisLabel: {
 					formatter: function (value) {
@@ -133,10 +137,6 @@ let drawEchart = () => {
 						return regions[value];
 					},
 				},
-			},
-			yAxis: {
-				type: "value",
-				name: "Value",
 			},
 			series: [
 				{
@@ -193,10 +193,13 @@ let drawEchart = () => {
 }
 #contrast_area {
 	position: absolute;
-	width: 900px;
-	height: 350px;
+	width: 450px;
+	height: 700px;
 	right: 0;
 	bottom: 90px;
+}
+#contrast_area::v-deep .el-card__body {
+	height: 100%;
 }
 #trend ::v-deep .el-card__body {
 	display: flex;

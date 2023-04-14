@@ -23,7 +23,7 @@ onMounted(() => {
 .custom-mouse-position {
 	display: inline-block;
 	position: absolute;
-	top: 47px;
+	top: 210px;
 	left: 8px;
 	padding-top: 4px;
 	height: 22px;
@@ -42,7 +42,7 @@ onMounted(() => {
 	display: inline-block;
 	position: absolute;
 	height: 19px;
-	top: 80px;
+	top: 245px;
 	font-weight: 700;
 	background-color: rgba(153, 204, 255);
 	box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
@@ -53,9 +53,9 @@ onMounted(() => {
 	border: 1px solid rgb(67, 67, 148);
 	border-top: none;
 }
+/* 鹰眼 */
 .ol-overviewmap {
-	left: auto;
-	right: 10px;
+	left: 10px;
 	top: 50px;
 	bottom: auto;
 }

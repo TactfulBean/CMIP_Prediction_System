@@ -15,8 +15,9 @@
 	<!-- 对比窗口 -->
 	<el-button type="primary" id="show-contrast" @click="resultShow1">{{ contrast.msg }}</el-button>
 	<el-card id="contrast_world" :class="{ 'open-card-X': contrast.flag, 'close-card-X': !contrast.flag }">
-		<div id="contrast-content_world" style="width: 100%; height: 400px"></div>
+		<div id="contrast-content_world" style="width: 100%; height: 350px"></div>
 	</el-card>
+	<el-card id="contrast-top" :class="{ 'open-card-X-top': contrast.flag, 'close-card-X-top': !contrast.flag }">各时间段数值对比</el-card>
 </template>
 <script setup>
 import { ref, onMounted, onUnmounted, getCurrentInstance, watch } from "vue";
@@ -399,10 +400,17 @@ let DELOverlay = () => {
 }
 #contrast_world {
 	position: absolute;
-	width: 700px;
-	height: 450px;
+	width: 600px;
+	height: 400px;
 	right: 0;
 	bottom: 90px;
+}
+#contrast-top {
+	position: absolute;
+	width: 600px;
+	height: 300px;
+	right: 0;
+	bottom: 500px;
 }
 #trend ::v-deep .el-card__body {
 	display: flex;

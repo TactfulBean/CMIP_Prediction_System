@@ -23,6 +23,8 @@
 		</div>
 		<div id="contrast-content" style="width: 100%; height: 200px"></div>
 	</el-card>
+
+	<el-card id="contrast-top" :class="{ 'open-card-X-top': contrast.flag, 'close-card-X-top': !contrast.flag }">新功能 </el-card>
 </template>
 <script setup>
 import { ref, onMounted, onUnmounted, getCurrentInstance, watch } from "vue";
@@ -414,6 +416,13 @@ let DELOverlay = () => {
 	height: 300px;
 	right: 0;
 	bottom: 90px;
+}
+#contrast-top {
+	position: absolute;
+	width: 500px;
+	height: 400px;
+	right: 0;
+	bottom: 400px;
 }
 #trend ::v-deep .el-card__body {
 	display: flex;
