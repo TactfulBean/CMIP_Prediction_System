@@ -20,31 +20,31 @@
 	</el-menu>
 </template>
 <script setup>
-import { reactive, getCurrentInstance } from "vue";
-let global = getCurrentInstance().appContext.config.globalProperties;
-let default_active = global.$router.currentRoute._value.fullPath.split("/")[1];
+import { reactive, getCurrentInstance } from "vue"
+let global = getCurrentInstance().appContext.config.globalProperties
+let default_active = global.$router.currentRoute._value.fullPath.split("/")[1]
 let menulist = reactive([
 	{
 		name: "极端气候变化格局",
 		router: "timeline",
-		icon: "\ue600",
+		icon: "\ue600"
 	},
 	{
 		name: "气候指数空间趋势",
 		router: "trend",
-		icon: "\ue600",
+		icon: "\ue600"
 	},
 	{
 		name: "区域气候指数对比",
 		router: "area",
-		icon: "\ue626",
+		icon: "\ue626"
 	},
 	{
 		name: "全球空间趋势总览",
 		router: "globe",
-		icon: "\ue76c",
-	},
-]);
+		icon: "\ue76c"
+	}
+])
 </script>
 <style scoped>
 .aside-menu {

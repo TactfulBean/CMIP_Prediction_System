@@ -1,10 +1,10 @@
 <template>
-	<Legend :CMIP_Value="CMIP_Value" :Type="Type" ref="LegendRef"></Legend>
-	<el-button type="primary" id="show-trend" :class="{ open_trend: message.flag, close_trend: !message.flag }" @click="resultShow">{{
-		message.msg
-	}}</el-button>
+	<Legend ref="LegendRef" :CMIP_Value="CMIP_Value" :Type="Type"></Legend>
+	<el-button id="show-trend" :class="{ open_trend: message.flag, close_trend: !message.flag }" type="primary" @click="resultShow()"
+		>{{ message.msg }}
+	</el-button>
 	<!-- 指数选择器 -->
-	<el-card id="trend" class="box-card-trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }">
+	<el-card id="trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }" class="box-card-trend">
 		<CMIPValueSelect @changeCMIP="changeCMIP"></CMIPValueSelect>
 		<SSPValueSelect @changeSSP="changeSSP"></SSPValueSelect>
 		<div id="selectRow" style="display: flex; float: right">
@@ -13,14 +13,14 @@
 		</div>
 	</el-card>
 	<!-- 对比窗口 -->
-	<el-button type="primary" id="show-contrast" @click="resultShow1">{{ contrast.msg }}</el-button>
+	<el-button id="show-contrast" type="primary" @click="resultShow1()">{{ contrast.msg }}</el-button>
 	<el-card id="contrast_world" :class="{ 'open-card-X': contrast.flag, 'close-card-X': !contrast.flag }">
 		<div id="contrast-content_world" style="width: 100%; height: 350px"></div>
 	</el-card>
 	<el-card id="contrast-top" :class="{ 'open-card-X-top': contrast.flag, 'close-card-X-top': !contrast.flag }">各时间段数值对比</el-card>
 </template>
 <script setup>
-import { ref, onMounted, onUnmounted, getCurrentInstance, watch } from "vue";
+import { getCurrentInstance, onMounted, onUnmounted, ref, watch } from "vue";
 import Legend from "@/components/Legend.vue";
 import { Fill, Stroke, Style } from "ol/style.js";
 import CMIPValueSelect from "@/components/CMIP_Value_Select.vue";
@@ -47,11 +47,11 @@ onUnmounted(() => {
 });
 const message = ref({
 	msg: "收起",
-	flag: true,
+	flag: true
 });
 const contrast = ref({
 	msg: "收起窗口",
-	flag: true,
+	flag: true
 });
 let resultShow = () => {
 	message.value.msg = message.value.flag ? "展开" : "收起";
@@ -99,51 +99,51 @@ let drawEchart = () => {
 	let data = null;
 	axios.get(jsonUrl, {}).then((res) => {
 		let CMIP = CMIP_Value.value;
-		if (CMIP == "CSDI") {
+		if (CMIP === "CSDI") {
 			data = res.data.CSDI;
-		} else if (CMIP == "WSDI") {
+		} else if (CMIP === "WSDI") {
 			data = res.data.WSDI;
-		} else if (CMIP == "TN10P") {
+		} else if (CMIP === "TN10P") {
 			data = res.data.TN10P;
-		} else if (CMIP == "TN90P") {
+		} else if (CMIP === "TN90P") {
 			data = res.data.TN90P;
-		} else if (CMIP == "TX10P") {
+		} else if (CMIP === "TX10P") {
 			data = res.data.TX10P;
-		} else if (CMIP == "TX90P") {
+		} else if (CMIP === "TX90P") {
 			data = res.data.TX90P;
-		} else if (CMIP == "CDD") {
+		} else if (CMIP === "CDD") {
 			data = res.data.CDD;
 		} else {
 			data = res.data.CWD;
 		}
-		var chartDom = document.getElementById("contrast-content_world");
-		var myChart = echarts.init(chartDom);
+		let chartDom = document.getElementById("contrast-content_world");
+		let myChart = echarts.init(chartDom);
 		let option = {
 			title: {
-				text: "各洲极端气候指数变化均值对比",
+				text: "各洲极端气候指数变化均值对比"
 			},
 			tooltip: {
 				trigger: "axis",
 				axisPointer: {
-					type: "shadow",
-				},
+					type: "shadow"
+				}
 			},
 			legend: {
-				right: 0,
+				right: 0
 			},
 			grid: {
 				left: "3%",
 				right: "4%",
 				bottom: "3%",
-				containLabel: true,
+				containLabel: true
 			},
 			xAxis: {
 				type: "category",
-				data: ["非洲", "南极洲", "亚洲", "欧洲", "北美洲", "大洋洲", "南美洲"],
+				data: ["非洲", "南极洲", "亚洲", "欧洲", "北美洲", "大洋洲", "南美洲"]
 			},
 			yAxis: {
 				type: "value",
-				boundaryGap: [0, 0.01],
+				boundaryGap: [0, 0.01]
 			},
 			series: [
 				{
@@ -151,26 +151,26 @@ let drawEchart = () => {
 					type: "bar",
 					data: [data[0][0], data[1][0], data[2][0], data[3][0], data[4][0], data[5][0], data[6][0]],
 					itemStyle: {
-						color: "#2ca9e1",
-					},
+						color: "#2ca9e1"
+					}
 				},
 				{
 					name: "SSP2-4.5",
 					type: "bar",
 					data: [data[0][1], data[1][1], data[2][1], data[3][1], data[4][1], data[5][1], data[6][1]],
 					itemStyle: {
-						color: "#f6ad49",
-					},
+						color: "#f6ad49"
+					}
 				},
 				{
 					name: "SSP5-8.5",
 					type: "bar",
 					data: [data[0][2], data[1][2], data[2][2], data[3][2], data[4][2], data[5][2], data[6][2]],
 					itemStyle: {
-						color: "#e83929",
-					},
-				},
-			],
+						color: "#e83929"
+					}
+				}
+			]
 		};
 		myChart.clear();
 		option && myChart.setOption(option);
@@ -181,20 +181,20 @@ let highFeature = null;
 let selectStyle = new Style({
 	stroke: new Stroke({
 		color: "#0095d9",
-		width: 3,
+		width: 3
 	}),
 	fill: new Fill({
-		color: "rgba(56,161,219,0.2)",
-	}),
+		color: "rgba(56,161,219,0.2)"
+	})
 });
 let defaultStyle = new Style({
 	stroke: new Stroke({
 		color: "#007bbb",
-		width: 1.5,
+		width: 1.5
 	}),
 	fill: new Fill({
-		color: "rgba(0,0,0,0)",
-	}),
+		color: "rgba(0,0,0,0)"
+	})
 });
 // 鼠标移动监听器
 let pointermove = (event) => {
@@ -202,7 +202,7 @@ let pointermove = (event) => {
 	let features = global.$mapConfig.getMap().forEachFeatureAtPixel(pixel, function (feature, layer) {
 		return {
 			feature: feature,
-			layer: layer,
+			layer: layer
 		};
 	});
 	if (features) {
@@ -236,7 +236,7 @@ let pointerclick = (event) => {
 	let features = global.$mapConfig.getMap().forEachFeatureAtPixel(pixel, function (feature, layer) {
 		return {
 			feature: feature,
-			layer: layer,
+			layer: layer
 		};
 	});
 	if (features) {
@@ -245,27 +245,27 @@ let pointerclick = (event) => {
 		let data2;
 		let data3;
 		console.log(features.feature.values_);
-		if (CMIP_Value.value == "CSDI") {
+		if (CMIP_Value.value === "CSDI") {
 			data1 = features.feature.values_.CSDI126;
 			data2 = features.feature.values_.CSDI245;
 			data3 = features.feature.values_.CSDI585;
-		} else if (CMIP_Value.value == "WSDI") {
+		} else if (CMIP_Value.value === "WSDI") {
 			data1 = features.feature.values_.WSDI126;
 			data2 = features.feature.values_.WSDI245;
 			data3 = features.feature.values_.WSDI585;
-		} else if (CMIP_Value.value == "TN10P") {
+		} else if (CMIP_Value.value === "TN10P") {
 			data1 = features.feature.values_.TN10P126;
 			data2 = features.feature.values_.TN10P245;
 			data3 = features.feature.values_.TN10P585;
-		} else if (CMIP_Value.value == "TN90P") {
+		} else if (CMIP_Value.value === "TN90P") {
 			data1 = features.feature.values_.TN90P126;
 			data2 = features.feature.values_.TN90P245;
 			data3 = features.feature.values_.TN90P585;
-		} else if (CMIP_Value.value == "TX10P") {
+		} else if (CMIP_Value.value === "TX10P") {
 			data1 = features.feature.values_.TX10P126;
 			data2 = features.feature.values_.TX10P245;
 			data3 = features.feature.values_.TX10P585;
-		} else if (CMIP_Value.value == "TX90P") {
+		} else if (CMIP_Value.value === "TX90P") {
 			data1 = features.feature.values_.TX90P126;
 			data2 = features.feature.values_.TX90P245;
 			data3 = features.feature.values_.TX90P585;
@@ -278,32 +278,32 @@ let pointerclick = (event) => {
 		var myChart = echarts.init(chartDom);
 		var option;
 		const labelRight = {
-			position: "right",
+			position: "right"
 		};
 		option = {
 			title: {
-				text: title,
+				text: title
 			},
 			tooltip: {
 				trigger: "axis",
 				axisPointer: {
-					type: "shadow",
-				},
+					type: "shadow"
+				}
 			},
 			grid: {
 				top: 40,
 				bottom: 20,
 				right: 60,
-				left: 60,
+				left: 60
 			},
 			xAxis: {
 				type: "value",
 				position: "bottom",
 				splitLine: {
 					lineStyle: {
-						type: "dashed",
-					},
-				},
+						type: "dashed"
+					}
+				}
 			},
 			yAxis: {
 				type: "category",
@@ -311,7 +311,7 @@ let pointerclick = (event) => {
 				axisLabel: { show: false },
 				axisTick: { show: false },
 				splitLine: { show: false },
-				data: ["SSP1-2.6", "SSP2-4.5", "SSP5-8.5"],
+				data: ["SSP1-2.6", "SSP2-4.5", "SSP5-8.5"]
 			},
 			series: [
 				{
@@ -320,32 +320,32 @@ let pointerclick = (event) => {
 					stack: "Total",
 					label: {
 						show: true,
-						formatter: "{b}",
+						formatter: "{b}"
 					},
 					data: [
 						{
 							value: data1,
 							label: labelRight,
 							itemStyle: {
-								color: "#2ca9e1",
-							},
+								color: "#2ca9e1"
+							}
 						},
 						{
 							value: data2,
 							label: labelRight,
 							itemStyle: {
-								color: "#f6ad49",
-							},
+								color: "#f6ad49"
+							}
 						},
 						{
 							value: data3,
 							itemStyle: {
-								color: "#e83929",
-							},
-						},
-					],
-				},
-			],
+								color: "#e83929"
+							}
+						}
+					]
+				}
+			]
 		};
 		myChart.clear();
 		option && myChart.setOption(option);
@@ -376,28 +376,33 @@ let DELOverlay = () => {
 	position: absolute;
 	z-index: 10;
 	width: 100%;
-	bottom: 0px;
+	bottom: 0;
 	box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
 }
+
 #show-trend {
 	position: absolute;
 	z-index: 10;
 	bottom: 79px;
 	left: 20px;
 }
+
 .open_trend {
 	animation: open_trend 0.75s !important;
 }
+
 .close_trend {
 	animation: close_trend 0.75s !important;
 	transform: translateY(82px);
 }
+
 #show-contrast {
 	position: absolute;
 	z-index: 10;
 	right: 0;
 	bottom: 90px;
 }
+
 #contrast_world {
 	position: absolute;
 	width: 600px;
@@ -405,6 +410,7 @@ let DELOverlay = () => {
 	right: 0;
 	bottom: 90px;
 }
+
 #contrast-top {
 	position: absolute;
 	width: 600px;
@@ -412,6 +418,7 @@ let DELOverlay = () => {
 	right: 0;
 	bottom: 500px;
 }
+
 #trend ::v-deep .el-card__body {
 	display: flex;
 	justify-content: flex-end;

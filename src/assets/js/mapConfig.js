@@ -19,16 +19,16 @@ let map = null;
 const BaseLayer = new TileLayer({});
 const CVALayer = new TileLayer({});
 const VEC = new XYZ({
-	url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
+	url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9"
 });
 const CAV = new XYZ({
-	url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
+	url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9"
 });
 const IMG = new XYZ({
-	url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
+	url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9"
 });
 const CIA = new XYZ({
-	url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=cia_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9",
+	url: "http://t" + Math.round(Math.random() * 7) + ".tianditu.com/DataServer?T=cia_w&x={x}&y={y}&l={z}&tk=a09b07dabc667ef1fbc9df093f3fbce9"
 });
 const vectorLayer = new VectorLayer({});
 const featureLayer = new TileLayer({});
@@ -42,24 +42,24 @@ const initMap = () => {
 		target: "map",
 		view: new View({
 			center: fromLonLat([110, 35]),
-			zoom: 4.5,
+			zoom: 4.5
 		}),
 		controls: defaults({
 			zoom: false,
-			attribution: false,
-		}).extend([scaleControl, mousePositionControl, overviewMapControl]),
+			attribution: false
+		}).extend([scaleControl, mousePositionControl, overviewMapControl])
 	});
 };
 // 点击弹窗
-var container = document.getElementById("popup");
-var content = document.getElementById("popup-content");
-var closer = document.getElementById("popup-closer");
-var overlay = new Overlay({
+let container = document.getElementById("popup");
+let content = document.getElementById("popup-content");
+let closer = document.getElementById("popup-closer");
+let overlay = new Overlay({
 	element: container,
 	autoPan: true,
 	autoPanAnimation: {
-		duration: 250,
-	},
+		duration: 250
+	}
 });
 // 关闭弹窗
 closer.onclick = function () {
@@ -91,8 +91,8 @@ const changeRaster = (value) => {
 	let source = new TileWMS({
 		url: urlRoot,
 		params: {
-			LAYERS: value,
-		},
+			LAYERS: value
+		}
 	});
 	rasterLayer.setSource(source);
 };
@@ -101,8 +101,8 @@ const changeFeature = (value) => {
 	let source = new TileWMS({
 		url: urlRoot,
 		params: {
-			LAYERS: value,
-		},
+			LAYERS: value
+		}
 	});
 	featureLayer.setSource(source);
 };
@@ -111,16 +111,16 @@ const changeVector = (value, width) => {
 	let source = new VectorSource({
 		projection: "EPSG:3857",
 		url: value,
-		format: new GeoJSON(),
+		format: new GeoJSON()
 	});
 	let style = new Style({
 		stroke: new Stroke({
 			color: "#007bbb",
-			width: width,
+			width: width
 		}),
 		fill: new Fill({
-			color: "rgba(0,0,0,0)",
-		}),
+			color: "rgba(0,0,0,0)"
+		})
 	});
 	vectorLayer.setSource(source);
 	vectorLayer.setStyle(style);
@@ -133,23 +133,23 @@ const removeLayer = () => {
 // 底图缩放
 let MapZoom = (lon, lat, zoom) => {
 	let view = map.getView();
-	var loc = fromLonLat([lon, lat]);
+	let loc = fromLonLat([lon, lat]);
 	view.animate({
 		center: loc,
-		duration: 0,
+		duration: 0
 	});
 	view.setZoom(zoom);
 };
 // 比例尺
 const scaleControl = new ScaleLine({
-	units: "metric",
+	units: "metric"
 });
 // 鼠标位置
 const mousePositionControl = new MousePosition({
 	coordinateFormat: createStringXY(2),
 	projection: "EPSG:4326",
 	className: "custom-mouse-position",
-	target: document.getElementById("mouse-position"),
+	target: document.getElementById("mouse-position")
 });
 // 鹰眼
 const overviewMapControl = new OverviewMap({
@@ -157,10 +157,10 @@ const overviewMapControl = new OverviewMap({
 	layers: [
 		new TileLayer({
 			source: new OSM({
-				url: "https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=214369c2e1984d369e2f13fcaed16233",
-			}),
-		}),
-	],
+				url: "https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=214369c2e1984d369e2f13fcaed16233"
+			})
+		})
+	]
 });
 
 export default {
@@ -173,5 +173,5 @@ export default {
 	menuClickEvent,
 	getOverlay,
 	getContent,
-	MapZoom,
+	MapZoom
 };

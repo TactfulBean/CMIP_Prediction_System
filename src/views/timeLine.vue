@@ -24,35 +24,35 @@
 	</el-card>
 </template>
 <script setup>
-import { ref, onMounted, onUnmounted, getCurrentInstance, watch } from "vue";
-import Legend from "@/components/Legend.vue";
-import CMIPValueSelect from "@/components/CMIP_Value_Select.vue";
+import { ref, onMounted, onUnmounted, getCurrentInstance, watch } from "vue"
+import Legend from "@/components/Legend.vue"
+import CMIPValueSelect from "@/components/CMIP_Value_Select.vue"
 
-const global = getCurrentInstance().appContext.config.globalProperties;
-let echarts = global.$echarts;
-let axios = global.$axios;
+const global = getCurrentInstance().appContext.config.globalProperties
+let echarts = global.$echarts
+let axios = global.$axios
 onMounted(() => {
-	global.$mapConfig.MapZoom(110, 35, 4.5);
-	global.$mapConfig.removeLayer();
-	global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
-	global.$mapConfig.changeVector("./geojson/China_MK_SEN.geojson", 0.5);
-	drawEchart();
-	RasterLoad();
-});
+	global.$mapConfig.MapZoom(110, 35, 4.5)
+	global.$mapConfig.removeLayer()
+	global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value)
+	global.$mapConfig.changeVector("./geojson/China_MK_SEN.geojson", 0.5)
+	drawEchart()
+	RasterLoad()
+})
 onUnmounted(() => {
-	clearInterval(timeSet.value.interval);
-});
+	clearInterval(timeSet.value.interval)
+})
 // 子组件
-let LegendRef = ref(null);
+let LegendRef = ref(null)
 
 const message = ref({
 	msg: "收起",
-	flag: true,
-});
+	flag: true
+})
 const timeLine = ref({
 	msg: "收起窗口",
-	flag: true,
-});
+	flag: true
+})
 const marks = ref({
 	2021: "2021",
 	2031: "2031",
@@ -62,84 +62,84 @@ const marks = ref({
 	2071: "2071",
 	2081: "2081",
 	2091: "2091",
-	2100: "2100",
-});
+	2100: "2100"
+})
 let resultShow = () => {
-	message.value.msg = message.value.flag ? "展开" : "收起";
-	message.value.flag = !message.value.flag;
-};
+	message.value.msg = message.value.flag ? "展开" : "收起"
+	message.value.flag = !message.value.flag
+}
 
 let resultShow1 = () => {
-	timeLine.value.msg = timeLine.value.flag ? "展开窗口" : "收起窗口";
-	timeLine.value.flag = !timeLine.value.flag;
-};
-const CMIP_Value = ref("WSDI");
-const Type = ref(2);
-const year = ref(2021);
+	timeLine.value.msg = timeLine.value.flag ? "展开窗口" : "收起窗口"
+	timeLine.value.flag = !timeLine.value.flag
+}
+const CMIP_Value = ref("WSDI")
+const Type = ref(2)
+const year = ref(2021)
 let timeSet = ref({
 	interval: null,
 	message: "暂停播放",
-	flag: true,
-});
+	flag: true
+})
 // 子组件事件
 let changeCMIP = (value) => {
-	CMIP_Value.value = value;
-};
+	CMIP_Value.value = value
+}
 // 监听数值变化
 watch(CMIP_Value, (newCMIP, oldCMIP) => {
-	RasterLoad();
-});
+	RasterLoad()
+})
 
 let RasterLoad = () => {
-	year.value = 2021;
-	clearInterval(timeSet.value.interval);
-	LegendRef.value.legendRender();
-	drawEchart();
-	setTimeSet();
-};
+	year.value = 2021
+	clearInterval(timeSet.value.interval)
+	LegendRef.value.legendRender()
+	drawEchart()
+	setTimeSet()
+}
 let setTimeSet = () => {
 	timeSet.value.interval = setInterval(function () {
 		if (!timeSet.value.flag) {
-			if (year.value == 2091) {
-				year.value += 9;
+			if (year.value === 2091) {
+				year.value += 9
 			} else {
-				year.value += 10;
+				year.value += 10
 			}
 		}
-		timeSet.value.flag = false;
-		global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
+		timeSet.value.flag = false
+		global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value)
 		//
 		if (year.value >= 2100) {
-			timeSet.value.message = "重新播放";
-			clearInterval(timeSet.value.interval);
+			timeSet.value.message = "重新播放"
+			clearInterval(timeSet.value.interval)
 		}
-	}, 2500);
-	timeSet.value.message = "暂停播放";
-};
+	}, 2500)
+	timeSet.value.message = "暂停播放"
+}
 let reTimeSet = () => {
-	if (timeSet.value.message == "继续播放") {
-		setTimeSet();
-		timeSet.value.message = "暂停播放";
-	} else if (timeSet.value.message == "暂停播放") {
-		clearInterval(timeSet.value.interval);
-		timeSet.value.message = "继续播放";
-	} else if (timeSet.value.message == "重新播放") {
-		year.value = 2021;
-		setTimeSet();
-		timeSet.value.message = "暂停播放";
+	if (timeSet.value.message === "继续播放") {
+		setTimeSet()
+		timeSet.value.message = "暂停播放"
+	} else if (timeSet.value.message === "暂停播放") {
+		clearInterval(timeSet.value.interval)
+		timeSet.value.message = "继续播放"
+	} else if (timeSet.value.message === "重新播放") {
+		year.value = 2021
+		setTimeSet()
+		timeSet.value.message = "暂停播放"
 	}
-};
+}
 let print = () => {
-	if (year.value != 2100 && timeSet.value.message == "重新播放") {
-		timeSet.value.message = "继续播放";
+	if (year.value !== 2100 && timeSet.value.message === "重新播放") {
+		timeSet.value.message = "继续播放"
 	}
-	global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
-};
-let base = 2021;
-let data = new Array(80);
+	global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value)
+}
+let base = 2021
+let data = new Array(80)
 for (let i = 0; i < data.length; i++) {
-	data[i] = base;
-	base += 1;
+	data[i] = base
+	base += 1
 }
 // 折线图渲染
 let drawEchart = () => {
@@ -151,43 +151,43 @@ let drawEchart = () => {
 		TX10P: "冷昼",
 		TX90P: "暖昼",
 		CDD: "持续干旱指数",
-		CWD: "持续湿润指数",
-	};
+		CWD: "持续湿润指数"
+	}
 
-	const jsonUrl = "./json/SSP.json";
+	const jsonUrl = "./json/SSP.json"
 	axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
-		const CMIP = CMIP_Value.value;
-		const data = res.data[CMIP];
-		const [data1, data2, data3] = [data[0].data, data[1].data, data[2].data];
-		const CMIPText = CMIPTexts[CMIP];
+		const CMIP = CMIP_Value.value
+		const data = res.data[CMIP]
+		const [data1, data2, data3] = [data[0].data, data[1].data, data[2].data]
+		const CMIPText = CMIPTexts[CMIP]
 
-		var chartDom = document.getElementById("timeLine-content");
-		var myChart = echarts.init(chartDom);
-		var option;
+		var chartDom = document.getElementById("timeLine-content")
+		var myChart = echarts.init(chartDom)
+		var option
 
 		option = {
 			title: {
-				text: CMIP_Value.value + "(" + CMIPText + ")" + "年均趋势图",
+				text: CMIP_Value.value + "(" + CMIPText + ")" + "年均趋势图"
 			},
 			grid: {
 				left: "5%",
 				top: "30%",
 				right: "0%",
-				bottom: "10%",
+				bottom: "10%"
 			},
 			tooltip: {
-				trigger: "axis",
+				trigger: "axis"
 			},
 			legend: {
 				data: ["SSP1-2.6", "SSP2-4.5", "SSP5-8.5"],
-				right: 0,
+				right: 0
 			},
 			xAxis: {
 				type: "category",
-				data: data[0].year,
+				data: data[0].year
 			},
 			yAxis: {
-				type: "value",
+				type: "value"
 			},
 			series: [
 				{
@@ -197,8 +197,8 @@ let drawEchart = () => {
 					smooth: true,
 					symbol: "none",
 					itemStyle: {
-						color: "#2ca9e1",
-					},
+						color: "#2ca9e1"
+					}
 				},
 				{
 					name: "SSP2-4.5",
@@ -207,8 +207,8 @@ let drawEchart = () => {
 					smooth: true,
 					symbol: "none",
 					itemStyle: {
-						color: "#f6ad49",
-					},
+						color: "#f6ad49"
+					}
 				},
 				{
 					name: "SSP5-8.5",
@@ -217,15 +217,15 @@ let drawEchart = () => {
 					smooth: true,
 					symbol: "none",
 					itemStyle: {
-						color: "#e83929",
-					},
-				},
-			],
-		};
-		myChart.clear();
-		option && myChart.setOption(option);
-	});
-};
+						color: "#e83929"
+					}
+				}
+			]
+		}
+		myChart.clear()
+		option && myChart.setOption(option)
+	})
+}
 </script>
 <style scoped>
 .slider-demo-block {
