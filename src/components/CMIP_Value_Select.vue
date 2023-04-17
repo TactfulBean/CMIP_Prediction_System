@@ -31,14 +31,14 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-const CMIP_Value = ref("WSDI");
+import { ref } from "vue"
+const CMIP_Value = ref("WSDI")
 
-const emits = defineEmits(["changeCMIP"]);
+const emits = defineEmits(["changeCMIP"])
 
 const changeCMIP = () => {
-	emits("changeCMIP", CMIP_Value.value);
-};
+	emits("changeCMIP", CMIP_Value.value)
+}
 </script>
 
 <style scoped>

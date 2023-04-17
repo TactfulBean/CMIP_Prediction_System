@@ -36,11 +36,11 @@ onMounted(() => {
 });
 const contrast = ref({
 	msg: "收起窗口",
-	flag: true,
+	flag: true
 });
 const message = ref({
 	msg: "收起",
-	flag: true,
+	flag: true
 });
 
 let resultShow = () => {
@@ -85,49 +85,49 @@ let drawEchart = () => {
 		var option;
 		option = {
 			title: {
-				text: "区域指数均值",
+				text: "区域指数均值"
 			},
 			dataset: [
 				{
-					source: data[0],
+					source: data[0]
 				},
 				{
-					source: data[1],
+					source: data[1]
 				},
 				{
-					source: data[2],
+					source: data[2]
 				},
 				{
 					fromDatasetIndex: 0,
-					transform: { type: "boxplot" },
+					transform: { type: "boxplot" }
 				},
 				{
 					fromDatasetIndex: 1,
-					transform: { type: "boxplot" },
+					transform: { type: "boxplot" }
 				},
 				{
 					fromDatasetIndex: 2,
-					transform: { type: "boxplot" },
-				},
+					transform: { type: "boxplot" }
+				}
 			],
 			legend: {
-				right: "0",
+				right: "0"
 			},
 			tooltip: {
 				trigger: "item",
 				axisPointer: {
-					type: "shadow",
-				},
+					type: "shadow"
+				}
 			},
 			grid: {
 				left: "3%",
 				right: "4%",
 				bottom: "10%",
-				containLabel: true,
+				containLabel: true
 			},
 			xAxis: {
 				type: "value",
-				name: "Value",
+				name: "Value"
 			},
 			yAxis: {
 				type: "category",
@@ -135,29 +135,29 @@ let drawEchart = () => {
 					formatter: function (value) {
 						const regions = ["NEC(东北)", "NC(北部)", "NWC(西北)", "EC(东部)", "CC(中部)", "SWC1(西南1)", "SWC2(西南2)", "SC(南部)"];
 						return regions[value];
-					},
-				},
+					}
+				}
 			},
 			series: [
 				{
 					name: "SSP1-2.6",
 					type: "boxplot",
 					datasetIndex: 3,
-					itemStyle: { borderWidth: 2 },
+					itemStyle: { borderWidth: 2 }
 				},
 				{
 					name: "SSP2-4.5",
 					type: "boxplot",
 					datasetIndex: 4,
-					itemStyle: { borderWidth: 2 },
+					itemStyle: { borderWidth: 2 }
 				},
 				{
 					name: "SSP5-8.5",
 					type: "boxplot",
 					datasetIndex: 5,
-					itemStyle: { borderWidth: 2 },
-				},
-			],
+					itemStyle: { borderWidth: 2 }
+				}
+			]
 		};
 		myChart.clear();
 		option && myChart.setOption(option);
@@ -169,7 +169,7 @@ let drawEchart = () => {
 	position: absolute;
 	z-index: 10;
 	width: 100%;
-	bottom: 0px;
+	bottom: 0;
 	box-shadow: 2px 2px 3px rgb(0 0 0 / 30%);
 }
 #show-trend {
