@@ -27,88 +27,88 @@
 	<el-card id="contrast-top" :class="{ 'open-card-X-top': contrast.flag, 'close-card-X-top': !contrast.flag }">新功能 </el-card>
 </template>
 <script setup>
-import { ref, onMounted, onUnmounted, getCurrentInstance, watch } from "vue"
-import { Fill, Stroke, Style } from "ol/style.js"
-import Legend from "@/components/Legend.vue"
-import { ElMessage } from "element-plus"
-import CMIPValueSelect from "@/components/CMIP_Value_Select.vue"
-import SSPValueSelect from "@/components/SSP_Value_Select.vue"
-const global = getCurrentInstance().appContext.config.globalProperties
-let echarts = global.$echarts
+import { ref, onMounted, onUnmounted, getCurrentInstance, watch } from "vue";
+import { Fill, Stroke, Style } from "ol/style.js";
+import Legend from "@/components/Legend.vue";
+import { ElMessage } from "element-plus";
+import CMIPValueSelect from "@/components/CMIP_Value_Select.vue";
+import SSPValueSelect from "@/components/SSP_Value_Select.vue";
+const global = getCurrentInstance().appContext.config.globalProperties;
+let echarts = global.$echarts;
 // 子组件
-let LegendRef = ref(null)
+let LegendRef = ref(null);
 
 onMounted(() => {
-	global.$mapConfig.MapZoom(110, 35, 4.5)
-	global.$mapConfig.removeLayer()
-	ReLoad()
-	LegendRef.value.legendRender()
-	drawContrast()
-	designHoverOnMap()
-	designClickOnMap()
-})
+	global.$mapConfig.MapZoom(110, 35, 4.5);
+	global.$mapConfig.removeLayer();
+	ReLoad();
+	LegendRef.value.legendRender();
+	drawContrast();
+	designHoverOnMap();
+	designClickOnMap();
+});
 onUnmounted(() => {
-	DELOverlay()
-	DELdesignHoverOnMap()
-	DELdesignClickOnMap()
-})
+	DELOverlay();
+	DELdesignHoverOnMap();
+	DELdesignClickOnMap();
+});
 const message = ref({
 	msg: "收起",
 	flag: true
-})
+});
 const contrast = ref({
 	msg: "收起窗口",
 	flag: true
-})
+});
 let city1 = ref({
 	CMIP_Value: "WSDI",
 	name: "河北",
 	data: [1.88229888482, 6.91878883065, 20.0275192027]
-})
+});
 let city2 = ref({
 	CMIP_Value: "WSDI",
 	name: "云南",
 	data: [11.1327442957, 21.3738245735, 38.8525626326]
-})
+});
 let resultShow = () => {
-	message.value.msg = message.value.flag ? "展开" : "收起"
-	message.value.flag = !message.value.flag
-}
+	message.value.msg = message.value.flag ? "展开" : "收起";
+	message.value.flag = !message.value.flag;
+};
 
 let resultShow1 = () => {
-	contrast.value.msg = contrast.value.flag ? "展开窗口" : "收起窗口"
-	contrast.value.flag = !contrast.value.flag
-}
-const SSP_Value = ref("SSP2-4.5")
-const CMIP_Value = ref("WSDI")
-const Type = ref(1)
+	contrast.value.msg = contrast.value.flag ? "展开窗口" : "收起窗口";
+	contrast.value.flag = !contrast.value.flag;
+};
+const SSP_Value = ref("SSP2-4.5");
+const CMIP_Value = ref("WSDI");
+const Type = ref(1);
 // 子组件事件
 let changeCMIP = (value) => {
-	CMIP_Value.value = value
-}
+	CMIP_Value.value = value;
+};
 let changeSSP = (value) => {
-	SSP_Value.value = value
-}
+	SSP_Value.value = value;
+};
 // 监听数值变化
 watch([CMIP_Value, SSP_Value], ([newCMIP, oldCMIP], [newSSP, oldSSP]) => {
-	RasterLoad()
-})
+	RasterLoad();
+});
 // 结果图加载
 let RasterLoad = () => {
-	DELOverlay()
-	global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN")
-	LegendRef.value.legendRender()
-}
+	DELOverlay();
+	global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
+	LegendRef.value.legendRender();
+};
 // 清除图层
 let removeLayer = () => {
-	global.$mapConfig.removeLayer()
-}
+	global.$mapConfig.removeLayer();
+};
 let ReLoad = () => {
-	global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN")
-	global.$mapConfig.changeVector("./geojson/China_MK_SEN.geojson", 0.5)
-}
+	global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN");
+	global.$mapConfig.changeVector("./geojson/China_MK_SEN.geojson", 0.5);
+};
 // 鼠标选中样式
-let highFeature = null
+let highFeature = null;
 let selectStyle = new Style({
 	stroke: new Stroke({
 		color: "#0095d9",
@@ -117,7 +117,7 @@ let selectStyle = new Style({
 	fill: new Fill({
 		color: "rgba(56,161,219,0.2)"
 	})
-})
+});
 let defaultStyle = new Style({
 	stroke: new Stroke({
 		color: "#007bbb",
@@ -126,49 +126,49 @@ let defaultStyle = new Style({
 	fill: new Fill({
 		color: "rgba(0,0,0,0)"
 	})
-})
+});
 // 鼠标移动监听器
 let pointermove = (event) => {
-	let pixel = event.pixel
+	let pixel = event.pixel;
 	let features = global.$mapConfig.getMap().forEachFeatureAtPixel(pixel, function (feature, layer) {
 		return {
 			feature: feature,
 			layer: layer
-		}
-	})
+		};
+	});
 	if (features) {
-		global.$mapConfig.getMap().getTargetElement().style.cursor = "pointer"
+		global.$mapConfig.getMap().getTargetElement().style.cursor = "pointer";
 		if (highFeature != null) {
-			highFeature.setStyle(defaultStyle)
+			highFeature.setStyle(defaultStyle);
 		}
-		features.feature.setStyle(selectStyle)
-		highFeature = features.feature
+		features.feature.setStyle(selectStyle);
+		highFeature = features.feature;
 	} else {
 		if (highFeature) {
-			highFeature.setStyle(defaultStyle)
+			highFeature.setStyle(defaultStyle);
 		}
-		global.$mapConfig.getMap().getTargetElement().style.cursor = ""
+		global.$mapConfig.getMap().getTargetElement().style.cursor = "";
 	}
-}
+};
 // 启用监听器
 let designHoverOnMap = () => {
-	global.$mapConfig.getMap().on("pointermove", pointermove)
-}
+	global.$mapConfig.getMap().on("pointermove", pointermove);
+};
 // 终止监听器
 let DELdesignHoverOnMap = () => {
-	global.$mapConfig.getMap().un("pointermove", pointermove)
-}
+	global.$mapConfig.getMap().un("pointermove", pointermove);
+};
 // 对比及地图点击弹窗
 let drawContrast = () => {
-	let chartDom = document.getElementById("contrast-content")
-	let myChart = echarts.init(chartDom)
-	let option
+	let chartDom = document.getElementById("contrast-content");
+	let myChart = echarts.init(chartDom);
+	let option;
 	ElMessage({
 		message: "完成",
 		type: "success",
 		duration: 1000,
 		offset: 5
-	})
+	});
 	option = {
 		title: {
 			text: "区域变化均值对比"
@@ -206,9 +206,9 @@ let drawContrast = () => {
 				data: [city2.value.data[0], city2.value.data[1], city2.value.data[2]]
 			}
 		]
-	}
-	option && myChart.setOption(option)
-}
+	};
+	option && myChart.setOption(option);
+};
 // 对比按钮点击
 let contrastBtn = () => {
 	ElMessage({
@@ -216,56 +216,32 @@ let contrastBtn = () => {
 		duration: 5000,
 		offset: 5,
 		customClass: "elmessage"
-	})
-	city1.value.name = ""
-	city2.value.name = ""
-}
+	});
+	city1.value.name = "";
+	city2.value.name = "";
+};
 // 地图单击事件
-let pointerclick = (event) => {
-	const coordinate = event.coordinate
-	let overlay = global.$mapConfig.getOverlay()
-	let pixel = event.pixel
+let pointerClick = (event) => {
+	const coordinate = event.coordinate;
+	let overlay = global.$mapConfig.getOverlay();
+	let pixel = event.pixel;
 	let features = global.$mapConfig.getMap().forEachFeatureAtPixel(pixel, function (feature, layer) {
 		return {
 			feature: feature,
 			layer: layer
-		}
-	})
+		};
+	});
 	if (features) {
-		let title = features.feature.values_.NAME + "  " + CMIP_Value.value + "区域变化均值(通过95%显著性检验)"
-		let data1
-		let data2
-		let data3
-		if (CMIP_Value.value === "CSDI") {
-			data1 = features.feature.values_.CSDI126
-			data2 = features.feature.values_.CSDI245
-			data3 = features.feature.values_.CSDI585
-		} else if (CMIP_Value.value === "WSDI") {
-			data1 = features.feature.values_.WSDI126
-			data2 = features.feature.values_.WSDI245
-			data3 = features.feature.values_.WSDI585
-		} else if (CMIP_Value.value === "TN10P") {
-			data1 = features.feature.values_.TN10P126
-			data2 = features.feature.values_.TN10P245
-			data3 = features.feature.values_.TN10P585
-		} else if (CMIP_Value.value === "TN90P") {
-			data1 = features.feature.values_.TN90P126
-			data2 = features.feature.values_.TN90P245
-			data3 = features.feature.values_.TN90P585
-		} else if (CMIP_Value.value === "TX10P") {
-			data1 = features.feature.values_.TX10P126
-			data2 = features.feature.values_.TX10P245
-			data3 = features.feature.values_.TX10P585
-		} else if (CMIP_Value.value === "TX90P") {
-			data1 = features.feature.values_.TX90P126
-			data2 = features.feature.values_.TX90P245
-			data3 = features.feature.values_.TX90P585
-		}
+		let title = features.feature.values_["NAME"] + "  " + CMIP_Value.value + "区域变化均值(通过95%显著性检验)";
+		let data1 = features.feature.values_[CMIP_Value.value + "126"];
+		let data2 = features.feature.values_[CMIP_Value.value + "245"];
+		let data3 = features.feature.values_[CMIP_Value.value + "585"];
+
 		// 对比事件数据
 		if (city2.value.name !== "") {
-			overlay.setPosition(coordinate)
+			overlay.setPosition(coordinate);
 		} else {
-			overlay.setPosition(undefined)
+			overlay.setPosition(undefined);
 		}
 		if (city1.value.name === "") {
 			ElMessage({
@@ -273,27 +249,27 @@ let pointerclick = (event) => {
 				duration: 5000,
 				offset: 5,
 				customClass: "elmessage"
-			})
-			city1.value.CMIP_Value = CMIP_Value.value
-			city1.value.name = features.feature.values_.NAME
-			city1.value.data[0] = data1
-			city1.value.data[1] = data2
-			city1.value.data[2] = data3
+			});
+			city1.value.CMIP_Value = CMIP_Value.value;
+			city1.value.name = features.feature.values_.NAME;
+			city1.value.data[0] = data1;
+			city1.value.data[1] = data2;
+			city1.value.data[2] = data3;
 		} else if (city2.value.name === "") {
-			city2.value.CMIP_Value = CMIP_Value.value
-			city2.value.name = features.feature.values_.NAME
-			city2.value.data[0] = data1
-			city2.value.data[1] = data2
-			city2.value.data[2] = data3
-			drawContrast()
+			city2.value.CMIP_Value = CMIP_Value.value;
+			city2.value.name = features.feature.values_.NAME;
+			city2.value.data[0] = data1;
+			city2.value.data[1] = data2;
+			city2.value.data[2] = data3;
+			drawContrast();
 		}
 		// 渲染统计表
-		let chartDom = global.$mapConfig.getContent()
-		let myChart = echarts.init(chartDom)
-		let option
+		let chartDom = global.$mapConfig.getContent();
+		let myChart = echarts.init(chartDom);
+		let option;
 		const labelRight = {
 			position: "right"
-		}
+		};
 		option = {
 			title: {
 				text: title
@@ -360,28 +336,28 @@ let pointerclick = (event) => {
 					]
 				}
 			]
-		}
-		myChart.clear()
-		option && myChart.setOption(option)
+		};
+		myChart.clear();
+		option && myChart.setOption(option);
 		// 设置弹窗位置
-		global.$mapConfig.getMap().addOverlay(overlay)
+		global.$mapConfig.getMap().addOverlay(overlay);
 	} else {
-		DELOverlay()
+		DELOverlay();
 	}
-}
+};
 // 启用监听器
 let designClickOnMap = () => {
-	global.$mapConfig.getMap().on("singleclick", pointerclick)
-}
+	global.$mapConfig.getMap().on("singleclick", pointerClick);
+};
 // 终止监听器
 let DELdesignClickOnMap = () => {
-	global.$mapConfig.getMap().un("singleclick", pointerclick)
-}
+	global.$mapConfig.getMap().un("singleclick", pointerClick);
+};
 // 弹出框隐藏
 let DELOverlay = () => {
-	let overlay = global.$mapConfig.getOverlay()
-	overlay.setPosition(undefined)
-}
+	let overlay = global.$mapConfig.getOverlay();
+	overlay.setPosition(undefined);
+};
 </script>
 <style scoped>
 #trend {
