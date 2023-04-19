@@ -80,9 +80,9 @@ let drawEchart = () => {
 	axios.get(jsonUrl, {}).then((res) => {
 		let CMIP = CMIP_Value.value;
 		let data = res.data[CMIP];
-		var chartDom = document.getElementById("chart");
-		var myChart = echarts.init(chartDom);
-		var option;
+		let chartDom = document.getElementById("chart");
+		let myChart = echarts.init(chartDom);
+		let option;
 		option = {
 			title: {
 				text: "区域指数均值"

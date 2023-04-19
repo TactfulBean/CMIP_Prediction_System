@@ -7,6 +7,12 @@
 	<el-card id="trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }" class="box-card-trend">
 		<CMIPValueSelect @changeCMIP="changeCMIP"></CMIPValueSelect>
 		<SSPValueSelect @changeSSP="changeSSP"></SSPValueSelect>
+		<div id="selectRow">
+			<el-text style="padding: 8px; font-weight: 700" class="mx-1" size="large">时间选择：</el-text>
+			<el-select v-model="Time_Value" class="m-2" placeholder="Select" @change="RasterLoad()">
+				<el-option v-for="item in Time_Options" :key="item.value" :label="item.label" :value="item.value" />
+			</el-select>
+		</div>
 		<div id="selectRow" style="display: flex; float: right">
 			<el-button color="#409EFF" plain @click="ReLoad()"><span class="iconfont">&#xe782; </span><span>重新加载</span></el-button>
 			<el-button color="#409EFF" plain @click="removeLayer()"><span class="iconfont">&#xe74b; </span><span>清除图层</span></el-button>
@@ -53,6 +59,13 @@ const contrast = ref({
 	msg: "收起窗口",
 	flag: true
 });
+const Time_Options = [
+	{ value: "", label: "2021-2100" },
+	{ value: "_2021-2040", label: "2021-2040" },
+	{ value: "_2041-2060", label: "2041-2060" },
+	{ value: "_2061-2080", label: "2061-2080" },
+	{ value: "_2081-2100", label: "2081-2100" }
+];
 let resultShow = () => {
 	message.value.msg = message.value.flag ? "展开" : "收起";
 	message.value.flag = !message.value.flag;
@@ -64,6 +77,7 @@ let resultShow1 = () => {
 };
 const SSP_Value = ref("SSP2-4.5");
 const CMIP_Value = ref("WSDI");
+const Time_Value = ref("");
 const Type = ref(1);
 // 子组件事件
 let changeCMIP = (value) => {
@@ -82,11 +96,11 @@ watch(CMIP_Value, (newCMIP, oldCMIP) => {
 // 结果图加载
 let RasterLoad = () => {
 	DELOverlay();
-	global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN_World");
+	global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + Time_Value.value + "_MK_SEN_World");
 	LegendRef.value.legendRender();
 };
 let ReLoad = () => {
-	global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + "_MK_SEN_World");
+	global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_" + SSP_Value.value + Time_Value.value + "_MK_SEN_World");
 	// global.$mapConfig.changeFeature("CMIP:World");
 	global.$mapConfig.changeVector("./geojson/World_MK_SEN.geojson", 1.5);
 };
@@ -229,7 +243,7 @@ let DELdesignHoverOnMap = () => {
 };
 
 // 地图单击事件
-let pointerclick = (event) => {
+let pointerClick = (event) => {
 	const coordinate = event.coordinate;
 	let overlay = global.$mapConfig.getOverlay();
 	let pixel = event.pixel;
@@ -240,43 +254,21 @@ let pointerclick = (event) => {
 		};
 	});
 	if (features) {
-		let title = features.feature.values_.NAME + "  " + CMIP_Value.value + "区域变化均值(通过95%显著性检验)";
+		let title = features.feature.values_["NAME"] + "  " + CMIP_Value.value + "区域变化均值(通过95%显著性检验)";
 		let data1;
 		let data2;
 		let data3;
 		console.log(features.feature.values_);
-		if (CMIP_Value.value === "CSDI") {
-			data1 = features.feature.values_.CSDI126;
-			data2 = features.feature.values_.CSDI245;
-			data3 = features.feature.values_.CSDI585;
-		} else if (CMIP_Value.value === "WSDI") {
-			data1 = features.feature.values_.WSDI126;
-			data2 = features.feature.values_.WSDI245;
-			data3 = features.feature.values_.WSDI585;
-		} else if (CMIP_Value.value === "TN10P") {
-			data1 = features.feature.values_.TN10P126;
-			data2 = features.feature.values_.TN10P245;
-			data3 = features.feature.values_.TN10P585;
-		} else if (CMIP_Value.value === "TN90P") {
-			data1 = features.feature.values_.TN90P126;
-			data2 = features.feature.values_.TN90P245;
-			data3 = features.feature.values_.TN90P585;
-		} else if (CMIP_Value.value === "TX10P") {
-			data1 = features.feature.values_.TX10P126;
-			data2 = features.feature.values_.TX10P245;
-			data3 = features.feature.values_.TX10P585;
-		} else if (CMIP_Value.value === "TX90P") {
-			data1 = features.feature.values_.TX90P126;
-			data2 = features.feature.values_.TX90P245;
-			data3 = features.feature.values_.TX90P585;
-		}
+		data1 = features.feature.values_[CMIP_Value.value + "126"];
+		data2 = features.feature.values_[CMIP_Value.value + "245"];
+		data3 = features.feature.values_[CMIP_Value.value + "585"];
 
 		overlay.setPosition(coordinate);
 
 		// 渲染统计表
-		var chartDom = global.$mapConfig.getContent();
-		var myChart = echarts.init(chartDom);
-		var option;
+		let chartDom = global.$mapConfig.getContent();
+		let myChart = echarts.init(chartDom);
+		let option;
 		const labelRight = {
 			position: "right"
 		};
@@ -358,11 +350,11 @@ let pointerclick = (event) => {
 
 // 启用监听器
 let designClickOnMap = () => {
-	global.$mapConfig.getMap().on("singleclick", pointerclick);
+	global.$mapConfig.getMap().on("singleclick", pointerClick);
 };
 // 终止监听器
 let DELdesignClickOnMap = () => {
-	global.$mapConfig.getMap().un("singleclick", pointerclick);
+	global.$mapConfig.getMap().un("singleclick", pointerClick);
 };
 // 弹出框隐藏
 let DELOverlay = () => {
@@ -422,5 +414,9 @@ let DELOverlay = () => {
 #trend ::v-deep .el-card__body {
 	display: flex;
 	justify-content: flex-end;
+}
+#selectRow {
+	display: flex;
+	margin-right: auto;
 }
 </style>
