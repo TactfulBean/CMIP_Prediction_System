@@ -136,9 +136,9 @@ let print = () => {
 	global.$mapConfig.changeRaster("CMIP:" + CMIP_Value.value + "_SSP2-4.5_" + year.value);
 };
 let base = 2021;
-let data = new Array(80);
-for (let i = 0; i < data.length; i++) {
-	data[i] = base;
+let time = new Array(80);
+for (let i = 0; i < time.length; i++) {
+	time[i] = base;
 	base += 1;
 }
 // 折线图渲染
@@ -184,7 +184,7 @@ let drawEchart = () => {
 			},
 			xAxis: {
 				type: "category",
-				data: data[0].year
+				data: time
 			},
 			yAxis: {
 				type: "value"
