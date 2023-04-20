@@ -1,6 +1,6 @@
 <template>
 	<Legend :CMIP_Value="CMIP_Value" :Type="Type" ref="LegendRef"></Legend>
-	<el-button type="primary" id="show-trend" :class="{ open_trend: message.flag, close_trend: !message.flag }" @click="resultShow">{{
+	<el-button type="primary" id="show-trend" :class="{ open_trend: message.flag, close_trend: !message.flag }" @click="resultShow()">{{
 		message.msg
 	}}</el-button>
 	<!-- 指数选择器 -->
@@ -9,7 +9,7 @@
 		<SSPValueSelect @changeSSP="changeSSP"></SSPValueSelect>
 	</el-card>
 	<!-- 对比窗口 -->
-	<el-button type="primary" id="show-contrast" @click="resultShow1">{{ contrast.msg }}</el-button>
+	<el-button type="primary" id="show-contrast" @click="resultShow1()">{{ contrast.msg }}</el-button>
 	<el-card id="contrast_area" :class="{ 'open-card-X': contrast.flag, 'close-card-X': !contrast.flag }">
 		<div id="chart"></div>
 	</el-card>
@@ -64,10 +64,10 @@ let changeSSP = (value) => {
 	SSP_Value.value = value;
 };
 // 监听数值变化
-watch([CMIP_Value, SSP_Value], ([newCMIP, oldCMIP], [newSSP, oldSSP]) => {
+watch([CMIP_Value, SSP_Value], () => {
 	RasterLoad();
 });
-watch(CMIP_Value, (newCMIP, oldCMIP) => {
+watch(CMIP_Value, () => {
 	drawEchart();
 });
 // 结果图加载
@@ -198,10 +198,10 @@ let drawEchart = () => {
 	right: 0;
 	bottom: 90px;
 }
-#contrast_area::v-deep .el-card__body {
+#contrast_area :deep(.el-card__body) {
 	height: 100%;
 }
-#trend ::v-deep .el-card__body {
+#trend :deep(.el-card__body) {
 	display: flex;
 }
 </style>

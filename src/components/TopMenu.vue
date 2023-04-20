@@ -29,10 +29,10 @@
 import { reactive, getCurrentInstance } from "vue";
 const global = getCurrentInstance().appContext.config.globalProperties;
 const menuClick = (menu_router, type) => {
-	if (type == "map") {
+	if (type === "map") {
 		global.$mapConfig.menuClickEvent(menu_router);
 	}
-	if (type == "location") {
+	if (type === "location") {
 		global.$mapConfig.MapZoom(menu_router[0], menu_router[1], 9);
 	}
 };
@@ -47,15 +47,15 @@ const menulist = reactive([
 				name: "天地图",
 				router: "map1",
 				icon: "\ue620",
-				type: "map",
+				type: "map"
 			},
 			{
 				name: "天地图-卫星图",
 				router: "map2",
 				icon: "\ue620",
-				type: "map",
-			},
-		],
+				type: "map"
+			}
+		]
 	},
 	{
 		name: "快速定位",
@@ -67,39 +67,39 @@ const menulist = reactive([
 				name: "北京",
 				router: [116.41667, 39.91667],
 				icon: "\ue60b",
-				type: "location",
+				type: "location"
 			},
 			{
 				name: "石家庄",
 				router: [114.48333, 38.03333],
 				icon: "\ue60b",
-				type: "location",
+				type: "location"
 			},
 			{
 				name: "杭州",
 				router: [120.2, 30.26667],
 				icon: "\ue60b",
-				type: "location",
+				type: "location"
 			},
 			{
 				name: "上海",
 				router: [121.43333, 31.22],
 				icon: "\ue60b",
-				type: "location",
+				type: "location"
 			},
 			{
 				name: "成都",
 				router: [104.04, 30.4],
 				icon: "\ue60b",
-				type: "location",
-			},
-		],
-	},
+				type: "location"
+			}
+		]
+	}
 ]);
 </script>
 <style>
 .el-menu {
-	border: 0px;
+	border: 0;
 }
 .top-menu {
 	height: 30px;

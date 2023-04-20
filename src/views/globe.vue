@@ -6,10 +6,18 @@
 	<!-- 指数选择器 -->
 	<el-card id="trend" :class="{ 'result-open': message.flag, 'result-close': !message.flag }" class="box-card-trend">
 		<CMIPValueSelect @changeCMIP="changeCMIP"></CMIPValueSelect>
-		<SSPValueSelect @changeSSP="changeSSP"></SSPValueSelect>
+		<SSPValueSelect @changeSSP="changeSSP" ref="SSPValueSelectRef"></SSPValueSelect>
 		<div id="selectRow">
 			<el-text style="padding: 8px; font-weight: 700" class="mx-1" size="large">时间选择：</el-text>
-			<el-select v-model="Time_Value" class="m-2" placeholder="Select" @change="RasterLoad()">
+			<el-select
+				v-model="Time_Value"
+				class="m-2"
+				placeholder="Select"
+				@change="
+					RasterLoad();
+					changeSSPValue('SSP2-4.5');
+				"
+			>
 				<el-option v-for="item in Time_Options" :key="item.value" :label="item.label" :value="item.value" />
 			</el-select>
 		</div>
@@ -35,6 +43,7 @@ import SSPValueSelect from "@/components/SSP_Value_Select.vue";
 const global = getCurrentInstance().appContext.config.globalProperties;
 // 子组件
 let LegendRef = ref(null);
+let SSPValueSelectRef = ref(null);
 let echarts = global.$echarts;
 let axios = global.$axios;
 onMounted(() => {
@@ -86,11 +95,14 @@ let changeCMIP = (value) => {
 let changeSSP = (value) => {
 	SSP_Value.value = value;
 };
+let changeSSPValue = (value) => {
+	SSPValueSelectRef.value.changeSSPValue(value);
+};
 // 监听数值变化
-watch([CMIP_Value, SSP_Value], ([newCMIP, oldCMIP], [newSSP, oldSSP]) => {
+watch([CMIP_Value, SSP_Value], () => {
 	RasterLoad();
 });
-watch(CMIP_Value, (newCMIP, oldCMIP) => {
+watch(CMIP_Value, () => {
 	drawEchart();
 });
 // 结果图加载
@@ -411,7 +423,7 @@ let DELOverlay = () => {
 	bottom: 500px;
 }
 
-#trend ::v-deep .el-card__body {
+#trend :deep(.el-card__body) {
 	display: flex;
 	justify-content: flex-end;
 }
