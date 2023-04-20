@@ -90,7 +90,7 @@ let changeSSP = (value) => {
 	SSP_Value.value = value;
 };
 // 监听数值变化
-watch([CMIP_Value, SSP_Value], ([newCMIP, oldCMIP], [newSSP, oldSSP]) => {
+watch([CMIP_Value, SSP_Value], () => {
 	RasterLoad();
 });
 // 结果图加载
@@ -251,13 +251,13 @@ let pointerClick = (event) => {
 				customClass: "elmessage"
 			});
 			city1.value.CMIP_Value = CMIP_Value.value;
-			city1.value.name = features.feature.values_.NAME;
+			city1.value.name = features.feature.values_["NAME"];
 			city1.value.data[0] = data1;
 			city1.value.data[1] = data2;
 			city1.value.data[2] = data3;
 		} else if (city2.value.name === "") {
 			city2.value.CMIP_Value = CMIP_Value.value;
-			city2.value.name = features.feature.values_.NAME;
+			city2.value.name = features.feature.values_["NAME"];
 			city2.value.data[0] = data1;
 			city2.value.data[1] = data2;
 			city2.value.data[2] = data3;
@@ -400,7 +400,7 @@ let DELOverlay = () => {
 	right: 0;
 	bottom: 400px;
 }
-#trend ::v-deep .el-card__body {
+#trend :deep(.el-card__body) {
 	display: flex;
 	justify-content: flex-end;
 }

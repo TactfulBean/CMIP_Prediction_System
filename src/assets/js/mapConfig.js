@@ -74,10 +74,10 @@ let getContent = () => {
 };
 // 切换地图
 const menuClickEvent = (menu_router) => {
-	if (menu_router == "map1") {
+	if (menu_router === "map1") {
 		BaseLayer.setSource(VEC);
 		CVALayer.setSource(CAV);
-	} else if (menu_router == "map2") {
+	} else if (menu_router === "map2") {
 		BaseLayer.setSource(IMG);
 		CVALayer.setSource(CIA);
 	}

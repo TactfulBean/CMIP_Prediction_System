@@ -23,6 +23,11 @@ const emits = defineEmits(["changeSSP"]);
 const changeSSP = () => {
 	emits("changeSSP", SSP_Value.value);
 };
+let changeSSPValue = (value) => {
+	SSP_Value.value = value;
+	changeSSP();
+};
+defineExpose({ changeSSPValue });
 </script>
 <style scoped>
 #selectRow {
