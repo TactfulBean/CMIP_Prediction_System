@@ -10,10 +10,7 @@ const global = getCurrentInstance().appContext.config.globalProperties;
 let axios = global.$axios;
 let echarts = global.$echarts;
 // 接收的值
-const props = defineProps({
-	CMIP_Value: {},
-	Type: {}
-});
+const props = defineProps(["CMIP_Value", "Type"]);
 
 let unit = ref(null);
 
