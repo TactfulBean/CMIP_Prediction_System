@@ -31,7 +31,9 @@
 	<el-card id="contrast_world" :class="{ 'open-card-X': contrast.flag, 'close-card-X': !contrast.flag }">
 		<div id="contrast-content_world" style="width: 100%; height: 350px"></div>
 	</el-card>
-	<el-card id="contrast-top" :class="{ 'open-card-X-top': contrast.flag, 'close-card-X-top': !contrast.flag }">各时间段数值对比</el-card>
+	<el-card id="contrast-top" :class="{ 'open-card-X-top': contrast.flag, 'close-card-X-top': !contrast.flag }">
+		<div id="contrast-top_time" style="width: 100%; height: 275px"></div>
+	</el-card>
 </template>
 <script setup>
 import { getCurrentInstance, onMounted, onUnmounted, ref, watch } from "vue";
@@ -146,7 +148,7 @@ let drawEchart = () => {
 		let myChart = echarts.init(chartDom);
 		let option = {
 			title: {
-				text: "各洲极端气候指数变化均值对比"
+				text: "各洲变化均值对比(" + CMIP + ")"
 			},
 			tooltip: {
 				trigger: "axis",
@@ -192,6 +194,73 @@ let drawEchart = () => {
 					name: "SSP5-8.5",
 					type: "bar",
 					data: [data[0][2], data[1][2], data[2][2], data[3][2], data[4][2], data[5][2], data[6][2]],
+					itemStyle: {
+						color: "#e83929"
+					}
+				}
+			]
+		};
+		myChart.clear();
+		option && myChart.setOption(option);
+	});
+	const jsonUrl2 = "./json/TimeInterval.json";
+	let data2 = [];
+	axios.get(jsonUrl2, {}).then((res) => {
+		let CMIP = CMIP_Value.value;
+		console.log(res.data[CMIP]);
+		data2[0] = res.data[CMIP]["SSP1-2.6"];
+		data2[1] = res.data[CMIP]["SSP2-4.5"];
+		data2[2] = res.data[CMIP]["SSP5-8.5"];
+		let chartDom = document.getElementById("contrast-top_time");
+		let myChart = echarts.init(chartDom);
+		let option = {
+			title: {
+				text: "各时间段均值对比(" + CMIP + ")"
+			},
+			tooltip: {
+				trigger: "axis",
+				axisPointer: {
+					type: "shadow"
+				}
+			},
+			legend: {
+				right: 0
+			},
+			grid: {
+				left: "3%",
+				right: "4%",
+				bottom: "3%",
+				containLabel: true
+			},
+			xAxis: {
+				type: "category",
+				data: ["2021-2040", "2041-2060", "2061-2080", "2081-2100"]
+			},
+			yAxis: {
+				type: "value",
+				boundaryGap: [0, 0.01]
+			},
+			series: [
+				{
+					name: "SSP1-2.6",
+					type: "bar",
+					data: data2[0],
+					itemStyle: {
+						color: "#2ca9e1"
+					}
+				},
+				{
+					name: "SSP2-4.5",
+					type: "bar",
+					data: data2[1],
+					itemStyle: {
+						color: "#f6ad49"
+					}
+				},
+				{
+					name: "SSP5-8.5",
+					type: "bar",
+					data: data2[2],
 					itemStyle: {
 						color: "#e83929"
 					}
