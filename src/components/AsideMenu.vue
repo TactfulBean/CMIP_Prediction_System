@@ -10,7 +10,7 @@
 		mode="horizontal"
 		:ellipsis="false"
 	>
-		<template v-for="item in menulist" :key="index">
+		<template v-for="item in menuList" :key="index">
 			<el-menu-item :index="item.router">
 				<template #title
 					><span class="iconfont">{{ item.icon }} </span><span id="top_menu_title">{{ item.name }}</span>
@@ -20,10 +20,10 @@
 	</el-menu>
 </template>
 <script setup>
-import { reactive, getCurrentInstance } from "vue"
-let global = getCurrentInstance().appContext.config.globalProperties
-let default_active = global.$router.currentRoute._value.fullPath.split("/")[1]
-let menulist = reactive([
+import { reactive, getCurrentInstance } from "vue";
+let global = getCurrentInstance().appContext.config.globalProperties;
+let default_active = global.$router.currentRoute._value.fullPath.split("/")[1];
+let menuList = reactive([
 	{
 		name: "极端气候变化格局",
 		router: "timeline",
@@ -44,7 +44,7 @@ let menulist = reactive([
 		router: "globe",
 		icon: "\ue76c"
 	}
-])
+]);
 </script>
 <style scoped>
 .aside-menu {

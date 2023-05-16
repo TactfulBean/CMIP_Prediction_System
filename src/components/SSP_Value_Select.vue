@@ -1,6 +1,6 @@
 <template>
 	<div id="selectRow">
-		<el-text style="padding: 8px; font-weight: 700" class="mx-1" size="large">极端指数选择：</el-text>
+		<el-text style="padding: 8px; font-weight: 700" class="mx-1" size="large">极端情景选择：</el-text>
 		<el-radio-group v-model="SSP_Value" @change="changeSSP()">
 			<el-tooltip class="box-item" effect="customized" content="低辐射强迫情景（可持续发展路线）" placement="top">
 				<el-radio-button label="SSP1-2.6">SSP1-2.6</el-radio-button>

@@ -27,7 +27,7 @@ let axios = global.$axios;
 let LegendRef = ref(null);
 
 onMounted(() => {
-	global.$mapConfig.MapZoom(110, 35, 4.5);
+	global.$mapConfig.MapZoom(120, 35, 4.5);
 	global.$mapConfig.removeLayer();
 	LegendRef.value.legendRender();
 	drawEchart();
@@ -77,7 +77,7 @@ let RasterLoad = () => {
 };
 let drawEchart = () => {
 	const jsonUrl = "./json/Area.json";
-	axios.get(jsonUrl, {}).then((res) => {
+	axios.get(jsonUrl).then((res) => {
 		let CMIP = CMIP_Value.value;
 		let data = res.data[CMIP];
 		let chartDom = document.getElementById("chart");
@@ -85,7 +85,7 @@ let drawEchart = () => {
 		let option;
 		option = {
 			title: {
-				text: "区域指数均值"
+				text: "区域指数均值(" + CMIP_Value.value + ")"
 			},
 			dataset: [
 				{
@@ -111,7 +111,7 @@ let drawEchart = () => {
 				}
 			],
 			legend: {
-				right: "0"
+				right: "4%"
 			},
 			tooltip: {
 				trigger: "item",
@@ -126,10 +126,6 @@ let drawEchart = () => {
 				containLabel: true
 			},
 			xAxis: {
-				type: "value",
-				name: "Value"
-			},
-			yAxis: {
 				type: "category",
 				axisLabel: {
 					formatter: function (value) {
@@ -137,6 +133,10 @@ let drawEchart = () => {
 						return regions[value];
 					}
 				}
+			},
+			yAxis: {
+				type: "value",
+				name: "Value"
 			},
 			series: [
 				{

@@ -155,7 +155,7 @@ let drawEchart = () => {
 	};
 
 	const jsonUrl = "./json/SSP.json";
-	axios.get(jsonUrl, { headers: {}, emulateJSON: true }).then((res) => {
+	axios.get(jsonUrl).then((res) => {
 		const CMIP = CMIP_Value.value;
 		const data = res.data[CMIP];
 		const [data1, data2, data3] = [data[0].data, data[1].data, data[2].data];

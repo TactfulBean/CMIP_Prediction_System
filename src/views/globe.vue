@@ -125,7 +125,7 @@ let removeLayer = () => {
 let drawEchart = () => {
 	const jsonUrl = "./json/World.json";
 	let data = null;
-	axios.get(jsonUrl, {}).then((res) => {
+	axios.get(jsonUrl).then((res) => {
 		let CMIP = CMIP_Value.value;
 		if (CMIP === "CSDI") {
 			data = res.data.CSDI;
@@ -205,7 +205,7 @@ let drawEchart = () => {
 	});
 	const jsonUrl2 = "./json/TimeInterval.json";
 	let data2 = [];
-	axios.get(jsonUrl2, {}).then((res) => {
+	axios.get(jsonUrl2).then((res) => {
 		let CMIP = CMIP_Value.value;
 		console.log(res.data[CMIP]);
 		data2[0] = res.data[CMIP]["SSP1-2.6"];
@@ -215,7 +215,7 @@ let drawEchart = () => {
 		let myChart = echarts.init(chartDom);
 		let option = {
 			title: {
-				text: "各时间段均值对比(" + CMIP + ")"
+				text: "全球各时间段均值对比(" + CMIP + ")"
 			},
 			tooltip: {
 				trigger: "axis",

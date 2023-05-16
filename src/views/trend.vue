@@ -24,7 +24,7 @@
 		<div id="contrast-content" style="width: 100%; height: 200px"></div>
 	</el-card>
 
-	<el-card id="contrast-top" :class="{ 'open-card-X-top': contrast.flag, 'close-card-X-top': !contrast.flag }">新功能 </el-card>
+	<!--	<el-card id="contrast-top" :class="{ 'open-card-X-top': contrast.flag, 'close-card-X-top': !contrast.flag }">新功能 </el-card>-->
 </template>
 <script setup>
 import { ref, onMounted, onUnmounted, getCurrentInstance, watch } from "vue";
